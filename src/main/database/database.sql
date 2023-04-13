@@ -42,10 +42,12 @@ CREATE TABLE user_workspace (
 
 CREATE TABLE board (
                        board_id SERIAL PRIMARY KEY,
+                       workspace_id INT NOT NULL,
                        name VARCHAR(255) NOT NULL,
                        description VARCHAR(2048),
                        visibility VARCHAR(255),
-                       create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                       create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                       FOREIGN KEY (workspace_id) REFERENCES workspace(workspace_id)                 
 );
 
 CREATE TABLE subboards (
@@ -84,32 +86,20 @@ CREATE TABLE assignee (
                           user_id INT NOT NULL,
                           PRIMARY KEY (activity_id, user_id),
                           FOREIGN KEY (activity_id) REFERENCES activities(activity_id),
-                          FOREIGN KEY (user_id) REFERENCES users(user_id) );
+                          FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
-
-/*CREATE MATERIALIZED VIEW user_workspace_analytics_mv AS
-SELECT
-    uw.user_id,
-    u.username,
-    w.workspace_id,
-    w.workspace_name,
-    COUNT(DISTINCT a.activity_id) AS tot_activities,
-    COUNT(DISTINCT c.comment_id) AS num_comments,
-    COUNT(DISTINCT CASE WHEN a.end_date IS NOT NULL AND s.default_completed_activity_subboard == 1 THEN a.activity_id END) AS num_completed_activities,
-    SUM(a.worked_time) AS total_worked_time,
-    SUM(a.worked_time) / COUNT(DISTINCT a.activity_id) AS worked_time_per_activity
-FROM
-    user_workspace uw
-        LEFT JOIN users u ON uw.user_id = u.user_id
-        LEFT JOIN workspace w ON uw.workspace_id = w.workspace_id
-        LEFT JOIN subboards s ON w.template_id = board_id
-        LEFT JOIN activities a ON s.subboard_id = s.subboard_id
-        LEFT JOIN comments c ON a.activity_id = c.activity_id
-GROUP BY
-    uw.user_id,
-    u.username,
-    w.workspace_id,
-    w.workspace_name;*/
-
-
-
+CREATE VIEW user_analytics_per_workspace AS
+SELECT uw.user_id, u.username, w.workspace_id, w.workspace_name,
+       COUNT(CASE WHEN a.end_date IS NOT NULL AND sb.default_completed_activity_subboard = true THEN 1 END) AS num_completed_activities,
+       COUNT(a.activity_id) AS num_total_activities,
+       SUM(a.worked_time) AS total_worked_time,
+       COUNT(c.comment_id) AS num_comments
+FROM user_workspace uw
+JOIN users u ON uw.user_id = u.user_id
+JOIN workspace w ON uw.workspace_id = w.workspace_id
+JOIN board b ON w.workspace_id = b.workspace_id
+JOIN subboards sb ON b.board_id = sb.board_id
+LEFT JOIN activities a ON sb.subboard_id = a.subboard_id
+LEFT JOIN comments c ON a.activity_id = c.activity_id
+GROUP BY uw.user_id, u.username, w.workspace_id, w.workspace_name;
