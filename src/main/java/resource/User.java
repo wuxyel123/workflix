@@ -106,6 +106,13 @@ public class User {
         this.createDate = createDate;
     }
 
+    /** Get a list of User objects from an InputStream
+     *
+     * @param inputStream InputStream containing a list of user data
+     * @return List of User objects
+     * @throws IOException if an I/O error occurs
+     * @throws JSONException if the input is not valid JSON
+     */
     public static List<User> fromJSONlist(InputStream inputStream) throws IOException, JSONException {
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         JSONObject jobj = new JSONObject(dataString);
@@ -119,24 +126,26 @@ public class User {
         return users;
     }
 
+    /** Get a User object from an InputStream
+     *
+     * @param inputStream InputStream containing the user data
+     * @return User object
+     * @throws IOException if an I/O error occurs
+     * @throws JSONException if the input is not valid JSON
+     */
     public static User fromJSON(InputStream inputStream) throws IOException, JSONException {
         
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        JSONObject jobj = new JSONObject(dataString);
 
-        int userId = jobj.getInt(USER_ID);
-        String username = jobj.getString(USERNAME);
-        String password = jobj.getString(PASSWORD);
-        String email = jobj.getString(EMAIL);
-        String firstName = jobj.getString(FIRST_NAME);
-        String lastName = jobj.getString(LAST_NAME);
-        String profilePicture = jobj.getString(PROFILE_PICTURE);
-        String description = jobj.getString(DESCRIPTION);
-        LocalDateTime createDate = LocalDateTime.parse(jobj.getString(CREATE_DATE));
-
-        return new User(userId, username, password, email, firstName, lastName, profilePicture, description, createDate);
+        return fromJSON(new JSONObject(dataString));
     }
 
+    /** Get a User object from a JSONObject
+     *
+     * @param jobj JSONObject containing the user data
+     * @return User object
+     * @throws JSONException if the input is not valid JSON
+     */
     public static User fromJSON(JSONObject jobj) throws JSONException {
         
         int userId = jobj.getInt(USER_ID);
@@ -149,9 +158,26 @@ public class User {
         String description = jobj.getString(DESCRIPTION);
         LocalDateTime createDate = LocalDateTime.parse(jobj.getString(CREATE_DATE));
 
-        return new User(userId, username, password, email, firstName, lastName, profilePicture, description, createDate);
-    }
+        // Create User object, set values and return. Constructor is not used cause it's not clean with so many parameters.
+        User user = new User();
+        user.setUserId(userId);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setProfilePicture(profilePicture);
+        user.setDescription(description);
+        user.setCreateDate(createDate);
 
+        return user;
+
+    }
+    /** Get a JSONObject from a User object
+     *
+     * @return JSONObject containing the user data
+     * @throws JSONException if the input is not valid JSON
+     */
     public JSONObject toJSON() throws JSONException {
         
         JSONObject userJSON = new JSONObject();
