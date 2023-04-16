@@ -97,8 +97,8 @@ public class Analytics{
 
    /** Get a list of Analytics objects from an InputStream
     *
-    * @param inputStream InputStream containing a list of user data
-    * @return List of User objects
+    * @param inputStream InputStream containing a list of analytics data
+    * @return List of Analytics objects
     * @throws IOException if an I/O error occurs
     * @throws JSONException if the input is not valid JSON
     */
@@ -114,10 +114,10 @@ public class Analytics{
 
         return user_analytics_per_workspace;
     }
-    /** Get a User object from an InputStream
+    /** Get a Analytics object from an InputStream
     *
-    * @param inputStream InputStream containing the user data
-    * @return User object
+    * @param inputStream InputStream containing the analytics data
+    * @return Analytics object
     * @throws IOException if an I/O error occurs
     * @throws JSONException if the input is not valid JSON
     */
@@ -127,10 +127,10 @@ public class Analytics{
 
         return fromJSON(new JSONObject(dataString));
     }
-    /** Get a User object from a JSONObject
+    /** Get a Analytics object from a JSONObject
     *
-    * @param jobj JSONObject containing the user data
-    * @return User object
+    * @param jobj JSONObject containing the analytics data
+    * @return Analytics object
     * @throws JSONException if the input is not valid JSON
     */
 
@@ -145,7 +145,7 @@ public class Analytics{
         String TotalWorkedTime = jobj.getString(TOTAL_WORKED_TIME);
         String NumComments = jobj.getString(NUM_COMMENTS);
 
-        // Create User object, set values and return. Constructor is not used cause it's not clean with so many parameters.
+        // Create Analytics object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         Analytics analytics = new Analytics();
         analytics.setUserId(userId);
         user.setUsername(username);
@@ -159,9 +159,9 @@ public class Analytics{
         return analytics;
 
     }
-    /** Get a JSONObject from a User object
+    /** Get a JSONObject from a Analytics object
     *
-    * @return JSONObject containing the user data
+    * @return JSONObject containing the analytics data
     * @throws JSONException if the input is not valid JSON
     */
     public JSONObject toJSON() throws JSONException {
