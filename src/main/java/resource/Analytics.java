@@ -177,5 +177,4 @@ public class Analytics{
 
         return analyticsJSON;
     }
-
 }
