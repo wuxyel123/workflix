@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class Analytics{
         this.workspaceId = workspaceId;
     }
 
-    public void setWorkspaceName(String workspaaceName) {
+    public void setWorkspaceName(String workspaceName) {
         this.workspaceName = workspaceName;
     }
 
@@ -148,13 +147,13 @@ public class Analytics{
         // Create Analytics object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         Analytics analytics = new Analytics();
         analytics.setUserId(userId);
-        user.setUsername(username);
-        user.setWorkspaceId(workspaceId);
-        user.setWorkspaceName(workspaaceName);
-        user.setNumCompletedActivities(NumCompletedActivities);
-        user.setNumTotalActivities(NumTotalActivities);
-        user.setTotalWorkedTime(TotalWorkedTime);
-        user.setNumComments(NumComments);
+        analytics.setUsername(username);
+        analytics.setWorkspaceId(workspaceId);
+        analytics.setWorkspaceName(workspaaceName);
+        analytics.setNumCompletedActivities(NumCompletedActivities);
+        analytics.setNumTotalActivities(NumTotalActivities);
+        analytics.setTotalWorkedTime(TotalWorkedTime);
+        analytics.setNumComments(NumComments);
 
         return analytics;
 
@@ -167,14 +166,14 @@ public class Analytics{
     public JSONObject toJSON() throws JSONException {
         
         JSONObject analyticsJSON = new JSONObject();
-        userJSON.put(USER_ID, userId);
-        userJSON.put(USERNAME, username);
-        userJSON.put(WORKSPACE_ID, workspace_id);
-        userJSON.put(WORKSPACE_NAME, workspace_name);
-        userJSON.put(NUM_COMPLETED_ACTIVITIES, NumCompletedActivities);
-        userJSON.put(NUM_TOTAL_ACTIVITIES, NumTotalActivities);
-        userJSON.put(TOTAL_WORKED_TIME, TotalWorkedTime);
-        userJSON.put(NUM_COMMENTS, NumComments);
+        analyticsJSON.put(USER_ID, userId);
+        analyticsJSON.put(USERNAME, username);
+        analyticsJSON.put(WORKSPACE_ID, workspaceId);
+        analyticsJSON.put(WORKSPACE_NAME, workspaceName);
+        analyticsJSON.put(NUM_COMPLETED_ACTIVITIES, NumCompletedActivities);
+        analyticsJSON.put(NUM_TOTAL_ACTIVITIES, NumTotalActivities);
+        analyticsJSON.put(TOTAL_WORKED_TIME, TotalWorkedTime);
+        analyticsJSON.put(NUM_COMMENTS, NumComments);
 
         return analyticsJSON;
     }
