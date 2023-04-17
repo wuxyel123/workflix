@@ -58,14 +58,14 @@ public class Subboards {
         this.subboardId = subboardId;
     }
 
-    public void setBoardId(Integer boardId) {
+    public void setBoardId(int boardId) {
         this.boardId = boardId;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-    public void setIndex(Integer index) {
+    public void setIndex(int index) {
         this.index = index;
     }
     public void setGetDefaultCompletedActivitySubboard(Boolean getDefaultCompletedActivitySubboard) {
