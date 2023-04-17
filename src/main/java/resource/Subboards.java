@@ -91,7 +91,7 @@ public class Subboards {
         List<Subboards> subboards = new ArrayList<>();
         JSONArray subboardsJSONList = jobj.getJSONArray("subbaoardsJSONList");
 
-        for(int i=0; i<subbaoardsJSONList.length(); i++){
+        for(int i=0; i<subboardsJSONList.length(); i++){
             subboards.add(fromJSON(subboardsJSONList.getJSONObject(i)));
         }
 
@@ -154,7 +154,7 @@ public class Subboards {
         subboardsJSON.put(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD , defaultCompletedActivitySubboard);
         subboardsJSON.put(CREATION_TIME, creationTime);
 
-        return SubboardsJSON;
+        return subboardsJSON;
     }
 
 
