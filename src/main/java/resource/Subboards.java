@@ -89,10 +89,10 @@ public class Subboards {
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         JSONObject jobj = new JSONObject(dataString);
         List<Subboards> subboards = new ArrayList<>();
-        JSONArray subbaoardsJSONList = jobj.getJSONArray("subbaoardsJSONList");
+        JSONArray subboardsJSONList = jobj.getJSONArray("subbaoardsJSONList");
 
         for(int i=0; i<subbaoardsJSONList.length(); i++){
-            subboards.add(fromJSON(subbaoardsJSONList.getJSONObject(i)));
+            subboards.add(fromJSON(subboardsJSONList.getJSONObject(i)));
         }
 
         return subboards;
@@ -112,10 +112,10 @@ public class Subboards {
         return fromJSON(new JSONObject(dataString));
     }
 
-    /** Get a Subbourds object from a JSONObject
+    /** Get a Subboards object from a JSONObject
      *
-     * @param jobj JSONObject containing the Subbourds data
-     * @return Subbourds object
+     * @param jobj JSONObject containing the Subboards data
+     * @return Subboards object
      * @throws JSONException if the input is not valid JSON
      */
     public static Subboards fromJSON(JSONObject jobj) throws JSONException {
@@ -127,7 +127,7 @@ public class Subboards {
         Boolean defaultCompletedActivitySubboard = jobj.getBoolean(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD);
         LocalDateTime creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
 
-        // Create Subbourds object, set values and return. Constructor is not used cause it's not clean with so many parameters.
+        // Create Subboards object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         Subboards subboard = new Subboards();
         subboard.setSubboardId(subboardId);
         subboard.setBoardId(boardId);
