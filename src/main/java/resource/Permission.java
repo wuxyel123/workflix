@@ -30,10 +30,10 @@ public class Permission {
         return Description;
     }
 
-    public void setPermissionId(int TemplateId) {
+    public void setPermissionId(int PermissionId) {
         this.PermissionId = PermissionId;
     }
-    public void setPermissionName(String ImageUrl) {
+    public void setPermissionName(String PermissionName) {
         this.PermissionName = PermissionName;
     }
     public void setDescription(String Description) {
