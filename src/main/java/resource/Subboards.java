@@ -146,13 +146,13 @@ public class Subboards {
      */
     public JSONObject toJSON() throws JSONException {
         
-        JSONObject SubboardsJSON = new JSONObject();
-        SubboardsJSON.put(SUBBOARD_ID, subboardId);
-        SubboardsJSON.put(BOARD_ID, boardId);
-        SubboardsJSON.put(NAME , name);
-        SubboardsJSON.put(INDEX , index);
-        SubboardsJSON.put(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD , defaultCompletedActivitySubboard);
-        SubboardsJSON.put(CREATION_TIME, creationTime);
+        JSONObject subboardsJSON = new JSONObject();
+        subboardsJSON.put(SUBBOARD_ID, subboardId);
+        subboardsJSON.put(BOARD_ID, boardId);
+        subboardsJSON.put(NAME , name);
+        subboardsJSON.put(INDEX , index);
+        subboardsJSON.put(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD , defaultCompletedActivitySubboard);
+        subboardsJSON.put(CREATION_TIME, creationTime);
 
         return SubboardsJSON;
     }
