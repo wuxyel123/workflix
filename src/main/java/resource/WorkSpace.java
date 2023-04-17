@@ -101,7 +101,7 @@ public class WorkSpace {
         
         Integer workspaceId = jobj.getInt(WORKSPACE_ID);
         String workspaceName = jobj.getString(WORKSPACE_NAME);
-        String templateId = jobj.getString(TEMPLATE_ID);
+        String templateId = jobj.getInt(TEMPLATE_ID);
         LocalDateTime creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
 
         // Create workSpace object, set values and return. Constructor is not used cause it's not clean with so many parameters.
