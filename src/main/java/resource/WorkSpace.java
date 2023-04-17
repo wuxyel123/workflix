@@ -14,10 +14,10 @@ import java.util.List;
 
 public class WorkSpace {
 
-    static final String WORKSPACE_ID = "WORKSPACE_ID";
-    static final String WORKSPACE_NAME = "WORKSPACE_NAME";
-    static final String TEMPLATE_ID = "TEMPLATE_ID";
-    static final String CREATION_TIME = "CREATION_TIME";
+    static final String WORKSPACE_ID = "workspace_id";
+    static final String WORKSPACE_NAME = "workspace_name";
+    static final String TEMPLATE_ID = "template_id";
+    static final String CREATION_TIME = "creation_time";
 
     private Integer workspaceId;
     private String workspaceName;
