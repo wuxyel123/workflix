@@ -20,7 +20,7 @@ public class Permission {
     private String PermissionName;
     private String Description;
 
-    public int getPermissionId() {
+    public Integer getPermissionId() {
         return PermissionId;
     }
     public String getPermissionName(){
@@ -30,7 +30,7 @@ public class Permission {
         return Description;
     }
 
-    public void setPermissionId(int PermissionId) {
+    public void setPermissionId(Integer PermissionId) {
         this.PermissionId = PermissionId;
     }
     public void setPermissionName(String PermissionName) {
@@ -61,7 +61,7 @@ public class Permission {
     }
 
     public static Permission fromJSON(JSONObject jobj) throws JSONException {
-        int permissionId = jobj.getInt(PERMISSION_ID);
+        Integer permissionId = jobj.getInt(PERMISSION_ID);
         String permissionName = jobj.getString(PERMISSION_NAME);
         String description = jobj.getString(DESCRIPTION);
         Permission permission=new Permission();

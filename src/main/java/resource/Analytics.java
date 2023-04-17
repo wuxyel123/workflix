@@ -21,7 +21,7 @@ public class Analytics{
     static final String TOTAL_WORKED_TIME = "total_worked_time";
     static final String NUM_COMMENTS = "num_comments";
 
-    private int userId;
+    private Integer userId;
     private String username;
     private String workspaceId;
     private String workspaceName;
@@ -30,7 +30,7 @@ public class Analytics{
     private String TotalWorkedTime;
     private String NumComments;
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -62,7 +62,7 @@ public class Analytics{
         return NumComments;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -135,7 +135,7 @@ public class Analytics{
 
     public static Analytics fromJSON(JSONObject jobj) throws JSONException {
         
-        int userId = jobj.getInt(USER_ID);
+        Integer userId = jobj.getInt(USER_ID);
         String username = jobj.getString(USERNAME);
         String workspaceId = jobj.getString(WORKSPACE_ID);
         String workspaaceName = jobj.getString(WORKSPACE_NAME);

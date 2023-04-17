@@ -19,12 +19,12 @@ public class WorkSpace {
     static final String TEMPLATE_ID = "TEMPLATE_ID";
     static final String CREATION_TIME = "CREATION_TIME";
 
-    private int workspaceId;
+    private Integer workspaceId;
     private String workspaceName;
-    private int templateId;
+    private Integer templateId;
     private LocalDateTime creationTime;
 
-    public int getWorkspaceId() {
+    public Integer getWorkspaceId() {
         return workspaceId;
     }
 
@@ -32,7 +32,7 @@ public class WorkSpace {
         return workspaceName;
     }
 
-    public int getTemplateId() {
+    public Integer getTemplateId() {
         return templateId;
     }
 
@@ -41,7 +41,7 @@ public class WorkSpace {
     }
 
 
-    public void setWorkspaceId(int workspaceId) {
+    public void setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
     }
 
@@ -49,7 +49,7 @@ public class WorkSpace {
         this.workspaceName = workspaceName;
     }
 
-    public void setTemplateId(int templateId) {
+    public void setTemplateId(Integer templateId) {
         this.templateId = templateId;
     }
 
@@ -99,7 +99,7 @@ public class WorkSpace {
      */
     public static WorkSpace fromJSON(JSONObject jobj) throws JSONException {
         
-        int workspaceId = jobj.getInt(WORKSPACE_ID);
+        Integer workspaceId = jobj.getInt(WORKSPACE_ID);
         String workspaceName = jobj.getString(WORKSPACE_NAME);
         String templateId = jobj.getString(TEMPLATE_ID);
         LocalDateTime creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
