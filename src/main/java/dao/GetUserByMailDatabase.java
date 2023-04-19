@@ -33,7 +33,6 @@ public class GetUserByMailDatabase {
         ResultSet rs = null;
         User user=null;
 
-
         try {
             ps = con.prepareStatement(STATEMENT);
             ps.setString(1, user.getEmail());
@@ -51,17 +50,13 @@ public class GetUserByMailDatabase {
                 user.setDescription(rs.getString(User.DESCRIPTION));
 
             }
-
-
         } finally {
             if (rs != null) {
                 rs.close();
             }
-
             if (ps != null) {
                 ps.close();
             }
-
             con.close();
         }
 

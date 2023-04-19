@@ -7,12 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GetUserByIdDatabase {
-
+public class GetUserByMailPasswordDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT * FROM workflix.users WHERE user_id=?;";
+    private static final String STATEMENT = "SELECT * FROM workflix.users WHERE email=? AND password=md5(?);";
     /**
      * The connection to the database
      */
@@ -23,19 +22,20 @@ public class GetUserByIdDatabase {
      */
     User user;
 
-    public GetUserByIdDatabase(final Connection con, final User u) {
+    public GetUserByMailPasswordDatabase(final Connection con, final User u) {
         this.con = con;
         this.user = u;
     }
 
-    public User getUserByMail() throws SQLException {
+    public User getUserByMailAndPassword() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
         User user=null;
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, user.getUserId());
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getPassword());
 
             rs = ps.executeQuery();
 
@@ -48,7 +48,6 @@ public class GetUserByIdDatabase {
                 user.setLastName(rs.getString(User.LAST_NAME));
                 user.setProfilePicture(rs.getString(User.PROFILE_PICTURE));
                 user.setDescription(rs.getString(User.DESCRIPTION));
-
             }
         } finally {
             if (rs != null) {
@@ -59,7 +58,7 @@ public class GetUserByIdDatabase {
             }
             con.close();
         }
+
         return user;
     }
-
 }

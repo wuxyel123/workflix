@@ -53,14 +53,11 @@ public class DeleteUserDatabase {
             if (rs != null) {
                 rs.close();
             }
-
             if (ps != null) {
                 ps.close();
             }
-
             con.close();
         }
-
         return deletedUser;
     }
 
