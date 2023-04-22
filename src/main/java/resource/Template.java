@@ -17,11 +17,11 @@ public class Template {
     static final String IMAGE_URL="image_url;";
     static final String IMAGE_NAME="image_name";
 
-    private int TemplateId;
+    private Integer TemplateId;
     private String ImageUrl;
     private String ImageName;
 
-    public int getTemplateId() {
+    public Integer getTemplateId() {
         return TemplateId;
     }
     public String getImageUrl(){
@@ -31,7 +31,7 @@ public class Template {
         return ImageName;
     }
 
-    public void setTemplateId(int TemplateId) {
+    public void setTemplateId(Integer TemplateId) {
         this.TemplateId = TemplateId;
     }
     public void setImageUrl(String ImageUrl) {
@@ -62,7 +62,7 @@ public class Template {
     }
 
     public static Template fromJSON(JSONObject jobj) throws JSONException {
-        int templateId = jobj.getInt(TEMPLATE_ID);
+        Integer templateId = jobj.getInt(TEMPLATE_ID);
         String imageUrl = jobj.getString(IMAGE_URL);
         String imageName = jobj.getString(IMAGE_NAME);
         Template template=new Template();

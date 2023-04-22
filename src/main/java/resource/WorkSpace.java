@@ -14,17 +14,17 @@ import java.util.List;
 
 public class WorkSpace {
 
-    static final String WORKSPACE_ID = "WORKSPACE_ID";
-    static final String WORKSPACE_NAME = "WORKSPACE_NAME";
-    static final String TEMPLATE_ID = "TEMPLATE_ID";
-    static final String CREATION_TIME = "CREATION_TIME";
+    static final String WORKSPACE_ID = "workspace_id";
+    static final String WORKSPACE_NAME = "workspace_name";
+    static final String TEMPLATE_ID = "template_id";
+    static final String CREATION_TIME = "creation_time";
 
-    private int workspaceId;
+    private Integer workspaceId;
     private String workspaceName;
-    private int templateId;
+    private Integer templateId;
     private LocalDateTime creationTime;
 
-    public int getWorkspaceId() {
+    public Integer getWorkspaceId() {
         return workspaceId;
     }
 
@@ -32,7 +32,7 @@ public class WorkSpace {
         return workspaceName;
     }
 
-    public int getTemplateId() {
+    public Integer getTemplateId() {
         return templateId;
     }
 
@@ -41,7 +41,7 @@ public class WorkSpace {
     }
 
 
-    public void setWorkspaceId(int workspaceId) {
+    public void setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
     }
 
@@ -49,7 +49,7 @@ public class WorkSpace {
         this.workspaceName = workspaceName;
     }
 
-    public void setTemplateId(int templateId) {
+    public void setTemplateId(Integer templateId) {
         this.templateId = templateId;
     }
 
@@ -64,10 +64,10 @@ public class WorkSpace {
      * @throws IOException if an I/O error occurs
      * @throws JSONException if the input is not valid JSON
      */
-    public static List<workSpace> fromJSONlist(InputStream inputStream) throws IOException, JSONException {
+    public static List<WorkSpace> fromJSONlist(InputStream inputStream) throws IOException, JSONException {
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         JSONObject jobj = new JSONObject(dataString);
-        List<workSpace> workSpaces = new ArrayList<>();
+        List<WorkSpace> workSpaces = new ArrayList<>();
         JSONArray workSpacesJSONList = jobj.getJSONArray("workSpaces-list");
 
         for(int i=0; i<workSpacesJSONList.length(); i++){
@@ -99,17 +99,16 @@ public class WorkSpace {
      */
     public static WorkSpace fromJSON(JSONObject jobj) throws JSONException {
         
-        int workspaceId = jobj.getInt(WORKSPACE_ID);
+        Integer workspaceId = jobj.getInt(WORKSPACE_ID);
         String workspaceName = jobj.getString(WORKSPACE_NAME);
-        String templateId = jobj.getString(TEMPLATE_ID);
+        Integer templateId = jobj.getInt(TEMPLATE_ID);
         LocalDateTime creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
 
-        // Create workSpace object, set values and return. Constructor is not used cause it's not clean with so many parameters.
-        WorkSpace workSpace = new workSpace();
-        workSpace.setworkspaceId(workspaceId);
-        workSpace.setworkspaceName(workspaceName);
-        workSpace.settemplateId(templateId);
-        workSpace.setcreationTime(creationTime);
+        WorkSpace workSpace = new WorkSpace();
+        workSpace.setWorkspaceId(workspaceId);
+        workSpace.setWorkspaceName(workspaceName);
+        workSpace.setTemplateId(templateId);
+        workSpace.setCreationTime(creationTime);
 
         return workSpace;
 

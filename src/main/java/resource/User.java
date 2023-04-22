@@ -24,7 +24,7 @@ public class User {
     static final String DESCRIPTION = "description";
     static final String CREATE_DATE = "create_date";
 
-    private int userId;
+    private Integer userId;
     private String username;
     private String password;
     private String email;
@@ -34,7 +34,7 @@ public class User {
     private String description;
     private LocalDateTime createDate;
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -70,7 +70,7 @@ public class User {
         return createDate;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -147,8 +147,8 @@ public class User {
      * @throws JSONException if the input is not valid JSON
      */
     public static User fromJSON(JSONObject jobj) throws JSONException {
-        
-        int userId = jobj.getInt(USER_ID);
+
+        Integer userId = jobj.getInt(USER_ID);
         String username = jobj.getString(USERNAME);
         String password = jobj.getString(PASSWORD);
         String email = jobj.getString(EMAIL);
