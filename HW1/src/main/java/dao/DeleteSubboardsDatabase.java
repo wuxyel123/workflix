@@ -1,6 +1,6 @@
 package dao;
 
-import resource.Park;
+import resource.Subboards;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ public class UpdateSubboardsDatabase {
     /
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.subboard SET SUBBOARDS_ID=? BOARD_IDD=?, NAME=?,DEFAULT_COMPLETED_ACTIVITY_SUBBOARD WHERE CREATION_TIME=? RETURNING *;";
+    private static final String STATEMENT ="DELETE FROM workflix.subboards WHERE subboard_id=? RETURNING *;";
     /
      * The connection to the database
      */
@@ -39,13 +39,6 @@ public class UpdateSubboardsDatabase {
             pstmt = con.prepareStatement(STATEMENT);
 
             pstmt.Int(1, subboards.getSubboardId());
-            pstmt.setString(2, subboards.getBoardID());
-            pstmt.setString(3, subboards.getName());
-            pstmt.setString(3, subboards.getIndex());
-            pstmt.setBool(3, subboards.setGetDefaultCompletedActivitySubboard());
-            pstmt.setLocalDateTime(4, subboards.getCreationTime());
-
-
 
             rs = pstmt.executeQuery();
 
