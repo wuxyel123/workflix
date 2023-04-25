@@ -28,12 +28,12 @@ public class UpdateSubboardsDatabase {
         this.subboards = s;
     }
 
-    public Subboard updateSubboards() throws SQLException {
+    public Subboards updateSubboards() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         // the created user
-        Subboard updatesubboard = null;
+        Subboards updateSubboards = null;
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
@@ -70,7 +70,7 @@ public class UpdateSubboardsDatabase {
             con.close();
         }
 
-        return updatesubboard;
+        return updateSubboards;
     }
 
 }
