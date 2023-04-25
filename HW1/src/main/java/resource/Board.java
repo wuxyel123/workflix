@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    static final String BOARD_ID = "board_id";
-    static final String WORKSPACE_ID = "workspace_id";
-    static final String NAME = "name";
-    static final String DESCRIPTION = "description";
-    static final String VISIBILITY = "visibility";
-    static final String CREATE_TIME = "create_time";
+    public static final String BOARD_ID = "board_id";
+    public static final String WORKSPACE_ID = "workspace_id";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
+    public static final String VISIBILITY = "visibility";
+    public static final String CREATE_TIME = "create_time";
 
     private int boardId;
     private int workspaceId;
