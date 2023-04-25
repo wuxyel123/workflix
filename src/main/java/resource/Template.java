@@ -13,9 +13,9 @@ import java.util.List;
 
 public class Template {
 
-    static final String TEMPLATE_ID = "template_id";
-    static final String IMAGE_URL="image_url;";
-    static final String IMAGE_NAME="image_name";
+    public static final String TEMPLATE_ID = "template_id";
+    public static final String IMAGE_URL="image_url;";
+    public static final String IMAGE_NAME="image_name";
 
     private Integer TemplateId;
     private String ImageUrl;
