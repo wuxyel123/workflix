@@ -1,163 +1,69 @@
-package resource;
+package dao;
 
-import org.apache.commons.io.IOUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import resource.Subboards;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class Subboards {
+public class UpdateSubboardsDatabase {
 
-    static final String SUBBOARD_ID = "SUBBOARDS_ID";
-    static final String BOARD_ID = "BOARD_ID";
-    static final String NAME = "NAME";
-    static final String INDEX = "INDEX";
-    static final String DEFAULT_COMPLETED_ACTIVITY_SUBBOARD = "DEFAULT_COMPLETED_ACTIVITY_SUBBOARD";
-    static final String CREATION_TIME = "CREATION_TIME";
-
-
-    private int subboardId;
-    private int boardId;
-    private String name;
-    private int index;
-    private BOOL defaultCompletedActivitySubboard;
-    private LocalDateTime creationTime;
-
-
-    public int getSubboardId() {
-        return subboardId;
-    }
-
-    public int getBoardId() {
-        return boardId;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public int getIndex() {
-        return index;
-    }
-    public BOOL getDefaultCompletedActivitySubboard() {
-        return defaultCompletedActivitySubboard;
-    }
-    
-    public LocalDateTime getCreationTime() {
-        return creationTime;
-    }
-
-//------------------------------------------------------------------------------------
-
-    public void setSubboardId(int subboardId) {
-        this.subboardId = subboardId;
-    }
-
-    public void setBoardId(String boardId) {
-        this.boardId = boardId;
-    }
-
-    public void setName(int name) {
-        this.name = name;
-    }
-    public void setIndex(Int index) {
-        this.index = index;
-    }
-
-    public void setGetDefaultCompletedActivitySubboard(BOOL getDefaultCompletedActivitySubboard) {
-        this.getDefaultCompletedActivitySubboard = getDefaultCompletedActivitySubboard;
-    }
-    
-
-    public void setCreationTime(LocalDateTime creationTime) {
-        this.creationTime = creationTime;
-    }
-    //----------------------------------------------------------------
-
-    /** Get a list of Subboards objects from an InputStream
-     *
-     * @param inputStream InputStream containing a list of Subbourds data
-     * @return List of Subbourds objects
-     * @throws IOException if an I/O error occurs
-     * @throws JSONException if the input is not valid JSON
+    /
+     * The SQL statement to be executed
      */
-    public static List<Subboards> fromJSONlist(InputStream inputStream) throws IOException, JSONException {
-        String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        JSONObject jobj = new JSONObject(dataString);
-        List<Subboards> subboards = new ArrayList<>();
-        JSONArray subbaoardsJSONList = jobj.getJSONArray("subbaoardsJSONList");
+    private static final String STATEMENT ="DELETE FROM workflix.subboards WHERE subboard_id=? RETURNING *;";
+    /
+     * The connection to the database
+     */
+    private final Connection con;
 
-        for(int i=0; i<subbaoardsJSONList.length(); i++){
-            subboards.add(fromJSON(subbaoardsJSONList.getJSONObject(i)));
+    /**
+     * The user to be inserted
+     */
+    Subboards subboards;
+
+    public UpdateSubboardsDatabase(final Connection con, final Subboards s) {
+        this.con = con;
+        this.subboards = s;
+    }
+
+    public Subboards updateSubboards() throws SQLException {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        // the created user
+        Subboards updateSubboards = null;
+
+        try {
+            pstmt = con.prepareStatement(STATEMENT);
+
+            pstmt.Int(1, subboards.getSubboardId());
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                updateSubboards = new Subboards();
+                updateSubboards.setSubboardId(rs.getString(Subboards.SUBBOARDS_ID));
+                updateSubboards.setBoardId(rs.getString(Subboards.BOARD_ID));
+                updateSubboards.setName(rs.getString(Subboards.NAME));
+                updateSubboards.setIndex(rs.getString(Subboards.INDEX));
+                updateSubboards.setDefaultCompletedActivitySubboard(rs.getString(Subboards.DEFAULT_COMPLETED_ACTIVITY_SUBBOARD));
+                updateSubboards.setCreationTime(rs.getString(Subboards.CREATION_TIME));
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (pstmt != null) {
+                pstmt.close();
+            }
+
+            con.close();
         }
 
-        return subboards;
+        return updateSubboards;
     }
-
-    /** Get a subboards object from an InputStream
-     *
-     * @param inputStream InputStream containing the Subbourds data
-     * @return subboards object
-     * @throws IOException if an I/O error occurs
-     * @throws JSONException if the input is not valid JSON
-     */
-    public static Subboards fromJSON(InputStream inputStream) throws IOException, JSONException {
-        
-        String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-
-        return fromJSON(new JSONObject(dataString));
-    }
-
-    /** Get a Subbourds object from a JSONObject
-     *
-     * @param jobj JSONObject containing the Subbourds data
-     * @return Subbourds object
-     * @throws JSONException if the input is not valid JSON
-     */
-    public static Subboards fromJSON(JSONObject jobj) throws JSONException {
-        
-        int subboardId = jobj.getInt(SUBBOARD_ID);
-        String boardId = jobj.getString(BOARD_ID);
-        String name = jobj.getString(NAME);
-        String index = jobj.getString(INDEX);
-        String DEFAULT_COMPLETED_ACTIVITY_SUBBOARD = jobj.getString(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD);
-        LocalDateTime creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
-
-        // Create Subbourds object, set values and return. Constructor is not used cause it's not clean with so many parameters.
-        Subboards subboard = new Subboards();
-        subboard.setSubboardId(subboardId);
-        subboard.setBoardId(boardId);
-        subboard.setName(name);
-        subboard.setIndex(index);
-        subboard.setGetDefaultCompletedActivitySubboard(defaultCompletedActivitySubboard);
-        subboard.setCreationTime(creationTime);
-
-        return subboard;
-
-    }
-    /** Get a JSONObject from a Subbourds object
-     *
-     * @return JSONObject containing the Subbourds data
-     * @throws JSONException if the input is not valid JSON
-     */
-    public JSONObject toJSON() throws JSONException {
-        
-        JSONObject SubboardsJSON = new JSONObject();
-        SubboardsJSON.put(SUBBOARD_ID, subboardId);
-        SubboardsJSON.put(BOARD_Id, boardId);
-        SubboardsJSON.put(NAME , name);
-        SubboardsJSON.put(INDEX , index);
-        SubboardsJSON.put(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD , defaultCompletedActivitySubboard);
-        SubboardsJSON.put(CREATION_TIME, creationTime);
-
-        return SubboardsJSON;
-    }
-
-
 
 }
