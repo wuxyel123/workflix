@@ -51,7 +51,7 @@ public class UserRestResource extends RestResource{
      */
     public void GetUserFromId() throws IOException{
         try {
-            User user = getUserFromId(Integer.parseInt(tokens[5]));
+            User user = getUserFromId(Integer.parseInt(tokens[4]));
             if (new GetUserByIdDatabase(con, user).getUserById()==null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {
@@ -138,7 +138,7 @@ public class UserRestResource extends RestResource{
     public void DeleteUser() throws IOException{
         try {
             User user = new User();
-            user.setUserId(Integer.parseInt(tokens[5]));
+            user.setUserId(Integer.parseInt(tokens[4]));
             if (new DeleteUserDatabase(con, user).deleteUser()==null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {
@@ -160,9 +160,9 @@ public class UserRestResource extends RestResource{
         response = ec.toJSON().toString();
     }
 
-    private User getUserFromId(int id) throws SQLException{
+    private User getUserFromId(Integer id) throws SQLException{
         User user = new User();
-        user.setUserId(Integer.parseInt(tokens[5]));
+        user.setUserId(id);
         return new GetUserByIdDatabase(con, user).getUserById();
     }
 }
