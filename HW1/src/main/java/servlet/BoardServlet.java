@@ -19,7 +19,6 @@ public class BoardServlet extends AbstractServlet {
         if (processBoard(req, res)) {
             return;
         }
-
         String op = req.getRequestURI();
         writeError(res, ErrorCode.OPERATION_UNKNOWN);
         logger.warn("requested op " + op);
