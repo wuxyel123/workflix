@@ -22,12 +22,12 @@ public class DeleteTemplateDatabase {
         Template deletedTemplate=null;
         try{
             ps=connection.prepareStatement(STATEMENT);
-            ps.setString(1,template.getImageName());
+            ps.setString(1,template.getTemplateName());
             rs=ps.executeQuery();
             if (rs.next()){
                 deletedTemplate=new Template();
                 deletedTemplate.setTemplateId(rs.getInt(Template.TEMPLATE_ID));
-                deletedTemplate.setImageName(rs.getString(Template.IMAGE_NAME));
+                deletedTemplate.setTemplateName(rs.getString(Template.TEMPLATE_NAME));
                 deletedTemplate.setImageUrl(rs.getString(Template.IMAGE_URL));
             }
         }finally {

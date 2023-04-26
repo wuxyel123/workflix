@@ -12,8 +12,8 @@ CREATE TABLE users (
 
 CREATE TABLE template (
                           template_id SERIAL PRIMARY KEY,
-                          image_url VARCHAR(255) NOT NULL,
-                          image_name VARCHAR(255) NOT NULL
+                          template_name VARCHAR(255) NOT NULL UNIQUE,
+                          image_url VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE permission (

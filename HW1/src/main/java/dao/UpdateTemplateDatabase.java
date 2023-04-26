@@ -12,7 +12,7 @@ public class UpdateTemplateDatabase {
     private final Connection connection;
     Template template;
 
-    public UpdateTemplateDatabase(Connection connection) {
+    public UpdateTemplateDatabase( final Connection connection, final Template template) {
         this.connection = connection;
         this.template= template;
     }
@@ -20,16 +20,15 @@ public class UpdateTemplateDatabase {
     public Template updateTemplate ()throws SQLException {
         PreparedStatement ps=null;
         ResultSet rs=null;
-
         Template updatedTemplate=null;
         try{
             ps=connection.prepareStatement(STATEMENT);
-            ps.setString(1,template.getImageName());
+            ps.setString(1,template.getTemplateName());
             ps.setString(2,template.getImageUrl());
             rs=ps.executeQuery();
             if (rs.next()){
                 updatedTemplate=new Template();
-                updatedTemplate.setImageName(rs.getString(Template.IMAGE_NAME));
+                updatedTemplate.setTemplateName(rs.getString(Template.TEMPLATE_NAME));
                 updatedTemplate.setImageUrl(rs.getString(Template.IMAGE_URL));
             }
         }finally {
