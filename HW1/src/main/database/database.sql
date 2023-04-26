@@ -1,8 +1,8 @@
 CREATE TABLE users (
                       user_id SERIAL PRIMARY KEY,
-                      username VARCHAR(255) NOT NULL,
+                      username VARCHAR(255) NOT NULL UNIQUE,
                       password VARCHAR(255) NOT NULL,
-                      email VARCHAR(255) NOT NULL,
+                      email VARCHAR(255) NOT NULL UNIQUE,
                       first_name VARCHAR(255),
                       last_name VARCHAR(255),
                       profile_picture VARCHAR(255),
@@ -18,7 +18,7 @@ CREATE TABLE template (
 
 CREATE TABLE permission (
                             permission_id SERIAL PRIMARY KEY,
-                            permission_name VARCHAR(255) NOT NULL,
+                            permission_name VARCHAR(255) NOT NULL UNIQUE,
                             description TEXT
 );
 
