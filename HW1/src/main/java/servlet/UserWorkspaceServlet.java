@@ -34,8 +34,6 @@ public class UserWorkspaceServlet extends AbstractServlet {
             return false;
         }
         try {
-
-
             if (tokens.length == 5 && tokens[3].equals("get")) {
             	UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
@@ -59,7 +57,6 @@ public class UserWorkspaceServlet extends AbstractServlet {
             } else {
                 return false;
             }
-
         } catch (NumberFormatException e) {
             writeError(res, ErrorCode.WRONG_REST_FORMAT);
         } catch (NamingException | SQLException e) {
