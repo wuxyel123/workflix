@@ -28,7 +28,7 @@ public class GetUserByIdDatabase {
         this.user = u;
     }
 
-    public User getUserByMail() throws SQLException {
+    public User getUserById() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
         User user=null;

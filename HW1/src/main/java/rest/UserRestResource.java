@@ -1,10 +1,9 @@
 package rest;
 
+import dao.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
-
-import dao.DeleteUserDatabase;
 
 import resource.User;
 
@@ -26,14 +25,120 @@ public class UserRestResource extends RestResource{
     }
 
     /**
+     * Create a user
+     * @throws IOException Error in IO operations
+     */
+    public void CreateUser() throws IOException {
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            User newUser = new InsertUserDatabase(con, user).insertUser();
+            if (newUser == null) {
+                initError(ErrorCode.USER_ALREADY_EXISTS);
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = newUser.toJSON().toString();
+            }
+        } catch (SQLException e){
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally { respond(); }
+    }
+
+    /**
+     * Get a user
+     * @throws IOException Error in IO operations
+     */
+    public void GetUserFromId() throws IOException{
+        try {
+            User user = getUserFromId(Integer.parseInt(tokens[4]));
+            if (new GetUserByIdDatabase(con, user).getUserById()==null) {
+                initError(ErrorCode.USER_NOT_FOUND);
+            } else {
+                ec = ErrorCode.OK;
+            }
+        } catch (SQLException e){
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally { respond(); }
+    }
+
+    /**
+     * Get user from mail and password
+     * @throws IOException Error in IO operations
+     */
+    public void GetUserFromMailAndPassword() throws IOException{
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            User newUser = new GetUserByMailPasswordDatabase(con, user).getUserByMailAndPassword();
+            if (newUser == null) {
+                User checkUser = new GetUserByMailDatabase(con, user).getUserByMail();
+                if (checkUser == null) {
+                    initError(ErrorCode.USER_NOT_FOUND);
+                } else {
+                    initError(ErrorCode.USER_NOT_AUTHORIZED);
+                }
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = newUser.toJSON().toString();
+            }
+        } catch (SQLException e){
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally { respond(); }
+    }
+
+    /**
+     * Update a user
+     * @throws IOException Error in IO operations
+     */
+    public void UpdateUserNoPassword() throws IOException{
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            User newUser = new UpdateUserDatabase(con, user).updateUser();
+            if (newUser == null) {
+                initError(ErrorCode.INTERNAL_ERROR);
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = newUser.toJSON().toString();
+            }
+        } catch (SQLException e){
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally { respond(); }
+    }
+
+    /**
+     * Update user password
+     * @throws IOException Error in IO operations
+     */
+    public void UpdateUserPassword() throws IOException{
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            User newUser = new UpdateUserPasswordDatabase(con, user).updateUserPassword();
+            if (newUser == null) {
+                initError(ErrorCode.INTERNAL_ERROR);
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = newUser.toJSON().toString();
+            }
+        } catch (SQLException e){
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally { respond(); }
+    }
+
+    /**
      * Delete a user
      * @throws IOException Error in IO operations
      */
-
     public void DeleteUser() throws IOException{
         try {
             User user = new User();
-            user.setUserId(Integer.parseInt(tokens[5]));
+            user.setUserId(Integer.parseInt(tokens[4]));
             if (new DeleteUserDatabase(con, user).deleteUser()==null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {
@@ -53,5 +158,11 @@ public class UserRestResource extends RestResource{
     private void initError(ErrorCode ec){
         this.ec = ec;
         response = ec.toJSON().toString();
+    }
+
+    private User getUserFromId(Integer id) throws SQLException{
+        User user = new User();
+        user.setUserId(id);
+        return new GetUserByIdDatabase(con, user).getUserById();
     }
 }

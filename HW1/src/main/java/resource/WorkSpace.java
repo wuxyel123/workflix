@@ -9,20 +9,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class WorkSpace {
 
-    static final String WORKSPACE_ID = "workspace_id";
-    static final String WORKSPACE_NAME = "workspace_name";
-    static final String TEMPLATE_ID = "template_id";
-    static final String CREATION_TIME = "creation_time";
+    public static final String WORKSPACE_ID = "workspace_id";
+    public static final String WORKSPACE_NAME = "workspace_name";
+    public static final String TEMPLATE_ID = "template_id";
+    public static final String CREATION_TIME = "creation_time";
 
     private Integer workspaceId;
     private String workspaceName;
     private Integer templateId;
-    private LocalDateTime creationTime;
+    private Date creationTime;
 
     public Integer getWorkspaceId() {
         return workspaceId;
@@ -36,7 +38,7 @@ public class WorkSpace {
         return templateId;
     }
 
-    public LocalDateTime getCreationTime() {
+    public Date getCreationTime() {
         return creationTime;
     }
 
@@ -53,7 +55,7 @@ public class WorkSpace {
         this.templateId = templateId;
     }
 
-    public void setCreationTime(LocalDateTime creationTime) {
+    public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
     }
 
@@ -102,7 +104,10 @@ public class WorkSpace {
         Integer workspaceId = jobj.getInt(WORKSPACE_ID);
         String workspaceName = jobj.getString(WORKSPACE_NAME);
         Integer templateId = jobj.getInt(TEMPLATE_ID);
-        LocalDateTime creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
+//        Date creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
+        Date creationTime = java.util.Date
+                .from(LocalDateTime.parse(jobj.getString(CREATION_TIME)).atZone(ZoneId.systemDefault())
+                        .toInstant());
 
         WorkSpace workSpace = new WorkSpace();
         workSpace.setWorkspaceId(workspaceId);
