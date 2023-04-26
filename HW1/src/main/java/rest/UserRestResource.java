@@ -1,13 +1,9 @@
 package rest;
 
-import dao.GetUserByIdDatabase;
-import dao.InsertUserDatabase;
-import dao.UpdateUserDatabase;
+import dao.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
-
-import dao.DeleteUserDatabase;
 
 import resource.User;
 
@@ -75,6 +71,27 @@ public class UserRestResource extends RestResource{
         try {
             User user = User.fromJSON(req.getInputStream());
             User newUser = new UpdateUserDatabase(con, user).updateUser();
+            if (newUser == null) {
+                initError(ErrorCode.INTERNAL_ERROR);
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = newUser.toJSON().toString();
+            }
+        } catch (SQLException e){
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally { respond(); }
+    }
+
+    /**
+     * Update user password
+     * @throws IOException Error in IO operations
+     */
+    public void UpdateUserPassword() throws IOException{
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            User newUser = new UpdateUserPasswordDatabase(con, user).updateUserPassword();
             if (newUser == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
