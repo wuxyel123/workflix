@@ -9,26 +9,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Activities {
 
-    static final String ACTIVITY_ID = "ACTIVITY_ID";
-    static final String SUBBOARD_ID = "SUBBOARD_ID";
-    static final String NAME = "NAME";
-    static final String DESCRIPTION = "DESCRIPTION";
-    static final String START_DATE = "START_DATE";
-    static final String END_DATE = "END_DATE";
-    static final String WORKED_TIME = "WORKED_TIME";
-    static final String INDEX = "INDEX";
+    public static final String ACTIVITY_ID = "ACTIVITY_ID";
+    public static final String SUBBOARD_ID = "SUBBOARD_ID";
+    public static final String NAME = "NAME";
+
+    public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String START_DATE = "START_DATE";
+    public static final String END_DATE = "END_DATE";
+    public static final String WORKED_TIME = "WORKED_TIME";
+    public static final String INDEX = "INDEX";
 
     private Integer activityId;
     private Integer subboardId;
     private String name;
     private String description;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private Date startDate;
+    private Date endDate;
     private Integer workedTime;
     private Integer index;
 
@@ -48,11 +51,11 @@ public class Activities {
         return description;
     }
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
@@ -82,11 +85,11 @@ public class Activities {
         this.description = description;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -124,8 +127,12 @@ public class Activities {
         Integer subboardId = jObj.getInt(SUBBOARD_ID);
         String name = jObj.getString(NAME);
         String description = jObj.getString(DESCRIPTION);
-        LocalDateTime startDate = LocalDateTime.parse(jObj.getString(START_DATE));
-        LocalDateTime endDate = LocalDateTime.parse(jObj.getString(END_DATE));
+        Date startDate = java.util.Date
+                .from(LocalDateTime.parse(jObj.getString(START_DATE)).atZone(ZoneId.systemDefault())
+                        .toInstant());
+        Date endDate = java.util.Date
+                .from(LocalDateTime.parse(jObj.getString(END_DATE)).atZone(ZoneId.systemDefault())
+                        .toInstant());
         Integer workedTime = jObj.getInt(WORKED_TIME);
         Integer index = jObj.getInt(INDEX);
 
