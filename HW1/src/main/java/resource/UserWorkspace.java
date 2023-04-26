@@ -18,9 +18,9 @@ import java.util.List;
 
 public class UserWorkspace {
 
-    static final String USER_ID = "user_id";
-    static final String WORKSPACE_ID = "workspace_id";
-    static final String PERMISSION_ID = "permission_id";
+    public static final String USER_ID = "user_id";
+    public static final String WORKSPACE_ID = "workspace_id";
+    public static final String PERMISSION_ID = "permission_id";
 
     private Integer userId;
     private Integer workspaceId;
