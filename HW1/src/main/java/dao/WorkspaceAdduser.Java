@@ -46,9 +46,9 @@ public class WorkspaceAdduser {
 
             if (rs.next()) {
                 insertUserWorkspace = new UserWorkspace();
-                insertUserWorkspace.setUserWorkspaceId(rs.getString(UserWorkspace.USER_ID));
-                insertUserWorkspace.setWorkspaceId(rs.getString(UserWorkspace.WORKSPACE_ID));
-                insertUserWorkspace.setPermissionId(rs.getString(UserWorkspace.PERMISSION_ID));
+                insertUserWorkspace.setWorkspaceId(rs.getInt(UserWorkspace.USER_ID));
+                insertUserWorkspace.setWorkspaceId(rs.getInt(UserWorkspace.WORKSPACE_ID));
+                insertUserWorkspace.setPermissionId(rs.getInt(UserWorkspace.PERMISSION_ID));
             }
         } finally {
             if (rs != null) {
