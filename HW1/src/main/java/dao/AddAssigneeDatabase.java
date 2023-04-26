@@ -23,9 +23,9 @@ public class AddAssigneeDatabase {
      */
     Assignee assignee;
 
-    public AddAssigneeDatabase(final Connection con, final Assignee a) {
+    public AddAssigneeDatabase(final Connection con, final Assignee assignee) {
         this.con = con;
-        this.assignee = a;
+        this.assignee = assignee;
     }
 
     public Assignee addAssignee() throws SQLException {

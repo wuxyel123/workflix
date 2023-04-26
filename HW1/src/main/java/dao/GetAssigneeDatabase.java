@@ -23,15 +23,15 @@ public class GetAssigneeDatabase {
      */
     Assignee assignee;
 
-    public GetAssigneeDatabase(final Connection con, final Assignee a) {
+    public GetAssigneeDatabase(final Connection con, final Assignee assignee) {
         this.con = con;
-        this.assignee = a;
+        this.assignee = assignee;
     }
 
     public Assignee getAssignee() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Assignee assignee = null;
+        Assignee getAssignee = null;
 
         try {
             ps = con.prepareStatement(STATEMENT);
@@ -41,9 +41,9 @@ public class GetAssigneeDatabase {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                assignee = new Assignee();
-                assignee.setActivityId(rs.getInt(Assignee.ACTIVITY_ID));
-                assignee.setUserId(rs.getInt(Assignee.USER_ID));
+                getAssignee = new Assignee();
+                getAssignee.setActivityId(rs.getInt(Assignee.ACTIVITY_ID));
+                getAssignee.setUserId(rs.getInt(Assignee.USER_ID));
             }
 
         } finally {
@@ -55,6 +55,6 @@ public class GetAssigneeDatabase {
             }
             con.close();
         }
-        return assignee;
+        return getAssignee;
     }
 }

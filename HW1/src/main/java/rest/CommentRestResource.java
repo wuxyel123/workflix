@@ -3,7 +3,7 @@ package rest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
-
+import dao.CreateCommentDatabase;
 import dao.GetCommentDatabase;
 
 import resource.Comments;
@@ -40,7 +40,25 @@ public class CommentRestResource extends RestResource {
         } finally {
             respond();
         }
+    }
 
+    public void addComments() throws IOException {
+        try {
+            Comments comments = Comments.fromJSON(req.getInputStream());
+            Comments newComments = new CreateCommentDatabase(con, comments).addComments();
+            if (newComments == null) {
+                initError(ErrorCode.USER_ALREADY_EXISTS);
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = newComments.toJSON().toString();
+            }
+        } catch (SQLException e) {
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally {
+            respond();
+        }
     }
 
     private void respond() throws IOException {
