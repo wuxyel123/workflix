@@ -50,7 +50,7 @@ public class UpdateSubboardDatabase {
                 subboard.setSubboardId(rs.getInt(subboard.SUBBOARD_ID));
                 subboard.setBoardId(rs.getInt(subboard.BOARD_ID));
                 subboard.setName(rs.getString(subboard.NAME));
-                subboard.setIndex(rs.getInt(subboard.BOARD_ID));
+                subboard.setIndex(rs.getInt(subboard.INDEX));
                 subboard.setDefaultCompletedActivitySubboard(rs.getBoolean(subboard.DEFAULT_COMPLETED_ACTIVITY_SUBBOARD));
                 subboard.setCreationTime(rs.getDate(subboard.CREATION_TIME));
                 }

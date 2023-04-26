@@ -41,8 +41,13 @@ public class GetActivityByIdDatabase {
 
             if (rs.next()) {
                 activity = new Activities();
+                activity.setActivityId(rs.getInt(Activities.ACTIVITY_ID));
+                activity.setSubboardId(rs.getInt(Activities.SUBBOARD_ID));
                 activity.setName(rs.getString(Activities.NAME));
                 activity.setDescription(rs.getString(Activities.DESCRIPTION));
+                activity.setStartDate(rs.getDate(Activities.START_DATE));
+                activity.setEndDate(rs.getDate(Activities.END_DATE));
+                activity.setWorkedTime(rs.getInt(Activities.WORKED_TIME));
                 activity.setIndex(rs.getInt(Activities.INDEX));
 
             }
