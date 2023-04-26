@@ -40,6 +40,7 @@ public enum ErrorCode {
     USER_NOT_AUTHORIZED(-102, HttpServletResponse.SC_UNAUTHORIZED, "User not authorized."),
     ASSIGNEE_NOT_FOUND(-200, HttpServletResponse.SC_NOT_FOUND, "Assignee not found."),
     COMMENT_NOT_FOUND(-300, HttpServletResponse.SC_NOT_FOUND, "Comment not found."),
+    TEMPLATE_NOT_FOUND(-100, HttpServletResponse.SC_NOT_FOUND, "Template not found."),
     TEMPLATE_INFORMATION_MISSING(-400, HttpServletResponse.SC_BAD_REQUEST, "Template information missing."),
     INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error."),
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
