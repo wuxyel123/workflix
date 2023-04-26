@@ -12,13 +12,13 @@ CREATE TABLE users (
 
 CREATE TABLE template (
                           template_id SERIAL PRIMARY KEY,
-                          template_name VARCHAR(255) NOT NULL,
+                          template_name VARCHAR(255) NOT NULL UNIQUE,
                           image_url VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE permission (
                             permission_id SERIAL PRIMARY KEY,
-                            permission_name VARCHAR(255) NOT NULL,
+                            permission_name VARCHAR(255) NOT NULL UNIQUE,
                             description TEXT
 );
 
