@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class workspaceAdduser {
+public class WorkspaceAdduser {
 
     /**
      * The SQL statement to be executed
@@ -23,7 +23,7 @@ public class workspaceAdduser {
      */
     UserWorkspace userWorkspace;
 
-    public workspaceAdduser(final Connection con, final UserWorkspace userWorkspace) {
+    public WorkspaceAdduser(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }

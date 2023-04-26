@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class workspaceCreate {
+public class WorkspaceCreate {
 
     /**
      * The SQL statement to be executed
@@ -23,7 +23,7 @@ public class workspaceCreate {
      */
     WorkSpace workspace;
 
-    public workspaceCreate(final Connection con, final WorkSpace workspace) {
+    public WorkspaceCreate(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }

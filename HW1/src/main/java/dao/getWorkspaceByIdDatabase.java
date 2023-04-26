@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class getWorkspaceByIdDatabase {
+public class GetWorkspaceByIdDatabase {
 
     /**
      * The SQL statement to be executed
@@ -23,7 +23,7 @@ public class getWorkspaceByIdDatabase {
      */
     WorkSpace workSpace;
 
-    public getWorkspaceByIdDatabase(final Connection con, final WorkSpace workSpace) {
+    public GetWorkspaceByIdDatabase(final Connection con, final WorkSpace workSpace) {
         this.con = con;
         this.workSpace = workSpace;
     }
