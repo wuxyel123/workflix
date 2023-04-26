@@ -16,7 +16,7 @@ public class Permission {
     static final String PERMISSION_NAME="permission_name;";
     static final String DESCRIPTION="description";
 
-    private int PermissionId;
+    private Integer PermissionId;
     private String PermissionName;
     private String Description;
 

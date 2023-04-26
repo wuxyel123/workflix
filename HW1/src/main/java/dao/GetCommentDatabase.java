@@ -41,11 +41,11 @@ public class GetCommentDatabase {
 
             if (rs.next()) {
                 comments = new Comments();
-                comments.setCommentId(rs.getString(Comments.COMMENT_ID));
-                comments.setActivityId(rs.getString(Comments.ACTIVITY_ID));
-                comments.setUserId(rs.getString(Comments.USER_ID));
+                comments.setCommentId(rs.getInt(Comments.COMMENT_ID));
+                comments.setActivityId(rs.getInt(Comments.ACTIVITY_ID));
+                comments.setUserId(rs.getInt(Comments.USER_ID));
                 comments.setCommentText(rs.getString(Comments.COMMENT_TEXT));
-                comments.setCreationTime(rs.getString(Comments.CREATION_TIME));
+                comments.setCreationTime(rs.getDate(Comments.CREATION_TIME));
             }
 
         } finally {

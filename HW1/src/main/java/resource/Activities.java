@@ -24,20 +24,20 @@ public class Activities {
     static final String WORKED_TIME = "WORKED_TIME";
     static final String INDEX = "INDEX";
 
-    private int activityId;
-    private int subboardId;
+    private Integer activityId;
+    private Integer subboardId;
     private String name;
     private String description;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private int workedTime;
-    private int index;
+    private Integer workedTime;
+    private Integer index;
 
-    public int getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public int getSubboardId() {
+    public Integer getSubboardId() {
         return subboardId;
     }
 
@@ -57,21 +57,21 @@ public class Activities {
         return endDate;
     }
 
-    public int getWorkedTime() {
+    public Integer getWorkedTime() {
         return workedTime;
     }
 
-    public int getIndex() {
+    public Integer getIndex() {
         return index;
     }
 
     // ------------------------------------------------------------------------------------
 
-    public void setActivityId(int activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
 
-    public void setSubboardId(int subboardId) {
+    public void setSubboardId(Integer subboardId) {
         this.subboardId = subboardId;
     }
 
@@ -91,11 +91,11 @@ public class Activities {
         this.endDate = endDate;
     }
 
-    public void setWorkedTime(int workedTime) {
+    public void setWorkedTime(Integer workedTime) {
         this.workedTime = workedTime;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
@@ -121,14 +121,14 @@ public class Activities {
 
     public static Activities fromJSON(JSONObject jObj) throws JSONException {
 
-        int activityId = jObj.getInt(ACTIVITY_ID);
-        int subboardId = jObj.getInt(SUBBOARD_ID);
+        Integer activityId = jObj.getInt(ACTIVITY_ID);
+        Integer subboardId = jObj.getInt(SUBBOARD_ID);
         String name = jObj.getString(NAME);
         String description = jObj.getString(DESCRIPTION);
         LocalDateTime startDate = LocalDateTime.parse(jObj.getString(START_DATE));
         LocalDateTime endDate = LocalDateTime.parse(jObj.getString(END_DATE));
-        int workedTime = jObj.getInt(WORKED_TIME);
-        int index = jObj.getInt(INDEX);
+        Integer workedTime = jObj.getInt(WORKED_TIME);
+        Integer index = jObj.getInt(INDEX);
 
         Activities activities = new Activities();
         activities.setActivityId(activityId);
