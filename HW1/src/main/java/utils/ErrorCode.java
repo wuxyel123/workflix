@@ -1,8 +1,9 @@
 package utils;
+
 import jakarta.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
+
 public enum ErrorCode {
-<<<<<<< HEAD
 
     /**
      * 200
@@ -39,20 +40,12 @@ public enum ErrorCode {
     USER_NOT_AUTHORIZED(-102, HttpServletResponse.SC_UNAUTHORIZED, "User not authorized."),
     ASSIGNEE_NOT_FOUND(-200, HttpServletResponse.SC_NOT_FOUND, "Assignee not found."),
     COMMENT_NOT_FOUND(-300, HttpServletResponse.SC_NOT_FOUND, "Comment not found."),
+    TEMPLATE_INFORMATION_MISSING(-400, HttpServletResponse.SC_BAD_REQUEST, "Template information missing."),
     INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error."),
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
     BAD_REQUEST(-1001, HttpServletResponse.SC_BAD_REQUEST, "Bad request."),
     WRONG_REST_FORMAT(-1002, HttpServletResponse.SC_BAD_REQUEST, "Wrong REST format."),
     OPERATION_UNKNOWN(-1003, HttpServletResponse.SC_BAD_REQUEST, "Operation unknown.");
-=======
-    OK(0, HttpServletResponse.SC_OK,"OK."),
-    USER_NOT_FOUND(-100, HttpServletResponse.SC_NOT_FOUND, "User not found."),
-    USER_ALREADY_EXISTS(-101, HttpServletResponse.SC_CONFLICT, "User already exists."),
-    USER_NOT_AUTHORIZED(-102, HttpServletResponse.SC_UNAUTHORIZED, "User not authorized."),
-    TEMPLATE_NOT_FOUND(-100, HttpServletResponse.SC_NOT_FOUND, "Template not found."),
-    TEMPLATE_INFORMATION_MISSING(-400, HttpServletResponse.SC_BAD_REQUEST, "Template information missing."),
-    INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error.");
->>>>>>> 7ef762a5305784161347fa8d09b57735b194e408
 
     private final int errorCode;
     private final int httpCode;
