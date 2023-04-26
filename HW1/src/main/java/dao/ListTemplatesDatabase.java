@@ -12,7 +12,6 @@ public class ListTemplatesDatabase {
     private static final String STATEMENT= "SELECT * FROM workflix.template;";
     private final Connection connection;
 
-
     public ListTemplatesDatabase(final Connection connection) {
         this.connection = connection;
     }
@@ -27,10 +26,10 @@ public class ListTemplatesDatabase {
             rs=ps.executeQuery();
 
             while (rs.next()){
-//                template_new=new Template();
-//                template.setImageUrl(rs.getString(Template.IMAGE_URL));
-//                template.setTemplateName(rs.getString(Template.TEMPLATE_NAME));
-//                templates.add(template_new)
+                Template template = new Template();
+                template.setImageUrl(rs.getString(Template.IMAGE_URL));
+                template.setTemplateName(rs.getString(Template.TEMPLATE_NAME));
+                templates.add(template);
             }
         }finally {
             if (rs!=null){

@@ -20,6 +20,28 @@ public class TemplateServlet extends AbstractServlet{
         op = op.substring(op.lastIndexOf("template") + 5);
 
         switch (op){
+            case "editable/":
+                String templateName = req.getParameter("template_name");
+                if (templateName==null || templateName.equals("")){
+                }
+                try {
+                    Template template = new Template();
+                    template = new GetTemplateByNameDatabase(getDataSource().getConnection(), template).getTemplateByName();
+                    if (template == null) {
+                        ErrorCode ec = ErrorCode.TEMPLATE_NOT_FOUND;
+                        Message m = new Message(true, "template not found");
+                        res.setStatus(ec.getHTTPCode());
+//                        req.getRequestDispatcher("/jsp/builder-area/edit-model.jsp").forward(req, res);
+                    } else {
+                        req.setAttribute("template", template);
+                        res.setStatus(200);
+                        req.getRequestDispatcher("/jsp/builder-area/edit-model.jsp").forward(req, res);
+                    }
+                } catch(NamingException | SQLException e){
+                    ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                    writeError(res, ec);
+                }
+                break;
             case "list/":
                 try{
                     List<Template> templates = new ListTemplatesDatabase(getDataSource().getConnection()).getTemplates();
