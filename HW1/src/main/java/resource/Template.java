@@ -15,11 +15,11 @@ public class Template {
 
     public static final String TEMPLATE_ID = "template_id";
     public static final String IMAGE_URL="image_url;";
-    public static final String IMAGE_NAME="image_name";
+    public static final String TEMPLATE_NAME="template_name";
 
     private Integer TemplateId;
     private String ImageUrl;
-    private String ImageName;
+    private String TemplateName;
 
     public Integer getTemplateId() {
         return TemplateId;
@@ -27,8 +27,8 @@ public class Template {
     public String getImageUrl(){
         return ImageUrl;
     }
-    public String getImageName(){
-        return ImageName;
+    public String getTemplateName(){
+        return TemplateName;
     }
 
     public void setTemplateId(Integer TemplateId) {
@@ -37,8 +37,8 @@ public class Template {
     public void setImageUrl(String ImageUrl) {
         this.ImageUrl = ImageUrl;
     }
-    public void setImageName(String ImageName) {
-        this.ImageName = ImageName;
+    public void setTemplateName(String TemplateName) {
+        this.TemplateName = TemplateName;
     }
 
 
@@ -64,11 +64,11 @@ public class Template {
     public static Template fromJSON(JSONObject jobj) throws JSONException {
         Integer templateId = jobj.getInt(TEMPLATE_ID);
         String imageUrl = jobj.getString(IMAGE_URL);
-        String imageName = jobj.getString(IMAGE_NAME);
+        String templateName = jobj.getString(TEMPLATE_NAME);
         Template template=new Template();
         template.setTemplateId(templateId);
         template.setImageUrl(imageUrl);
-        template.setImageName(imageName);
+        template.setTemplateName(templateName);
         return template;
     }
     public JSONObject toJSON() throws JSONException {
@@ -76,7 +76,7 @@ public class Template {
 
         templateJSON.put(TEMPLATE_ID, TemplateId);
         templateJSON.put(IMAGE_URL, ImageUrl);
-        templateJSON.put(IMAGE_NAME, ImageName);
+        templateJSON.put(TEMPLATE_NAME, TemplateName);
         return templateJSON;
     }
 }
