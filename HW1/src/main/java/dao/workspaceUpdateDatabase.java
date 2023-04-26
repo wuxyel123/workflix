@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class workspaceUpdateDatabase {
+public class WorkspaceUpdateDatabase {
 
     /**
      * The SQL statement to be executed
@@ -24,7 +24,7 @@ public class workspaceUpdateDatabase {
      */
     WorkSpace workspace;
 
-    public workspaceUpdateDatabase(final Connection con, final WorkSpace workspace) {
+    public WorkspaceUpdateDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }
