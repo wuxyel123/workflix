@@ -7,11 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GetTemplateByIdDatabase {
+public class GetTemplateByNameDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT * FROM workflix.template WHERE template_id=?;";
+    private static final String STATEMENT = "SELECT * FROM workflix.template WHERE template_name=?;";
     /**
      * The connection to the database
      */
@@ -22,12 +22,12 @@ public class GetTemplateByIdDatabase {
      */
     Template template;
 
-    public GetTemplateByIdDatabase(final Connection con, final Template template) {
+    public GetTemplateByNameDatabase(final Connection con, final Template template) {
         this.con = con;
         this.template=template;
     }
 
-    public Template getTemplateById() throws SQLException {
+    public Template getTemplateByName() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
@@ -36,7 +36,7 @@ public class GetTemplateByIdDatabase {
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, template.getTemplateId());
+            pstmt.setString(1, template.getTemplateName());
 
             rs = pstmt.executeQuery();
 

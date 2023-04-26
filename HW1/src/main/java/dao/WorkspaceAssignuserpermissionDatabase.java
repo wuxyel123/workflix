@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class workspaceAssignuserpermissionDatabase {
+public class WorkspaceAssignuserpermissionDatabase {
 
     /**
      * The SQL statement to be executed
@@ -23,7 +23,7 @@ public class workspaceAssignuserpermissionDatabase {
      */
     UserWorkspace userWorkspace;
 
-    public workspaceAssignuserpermissionDatabase(final Connection con, final UserWorkspace userWorkspace) {
+    public WorkspaceAssignuserpermissionDatabase(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }

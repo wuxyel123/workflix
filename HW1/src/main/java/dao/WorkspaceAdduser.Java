@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class userWorkspaceDeleteDatabase {
+public class WorkspaceAdduser {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "DELETE FROM workflix.UserWorkspace WHERE user_id=? workspace_id=? permission_id=? RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.UserWorkspace VALUES(?, ?, ?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -23,20 +23,21 @@ public class userWorkspaceDeleteDatabase {
      */
     UserWorkspace userWorkspace;
 
-    public userWorkspaceDeleteDatabase(final Connection con, final UserWorkspace userWorkspace) {
+    public WorkspaceAdduser(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }
 
-    public UserWorkspace userWorkspaceDelete() throws SQLException {
+    public UserWorkspace insertUserWorkspace() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         // the created user
-        UserWorkspace delUserWorkspace = null;
+        UserWorkspace insertUserWorkspace = null;
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
+
             pstmt.setInt(1, userWorkspace.getUserId());
             pstmt.setInt(2, userWorkspace.getWorkspaceId());
             pstmt.setInt(3, userWorkspace.getPermissionId());
@@ -44,10 +45,10 @@ public class userWorkspaceDeleteDatabase {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                delUserWorkspace = new UserWorkspace();
-                delUserWorkspace.setUserId(rs.getInt(UserWorkspace.USER_ID));
-                delUserWorkspace.setWorkspaceId(rs.getInt(UserWorkspace.WORKSPACE_ID));
-                delUserWorkspace.setPermissionId(rs.getInt(UserWorkspace.PERMISSION_ID));
+                insertUserWorkspace = new UserWorkspace();
+                insertUserWorkspace.setWorkspaceId(rs.getInt(UserWorkspace.USER_ID));
+                insertUserWorkspace.setWorkspaceId(rs.getInt(UserWorkspace.WORKSPACE_ID));
+                insertUserWorkspace.setPermissionId(rs.getInt(UserWorkspace.PERMISSION_ID));
             }
         } finally {
             if (rs != null) {
@@ -61,7 +62,7 @@ public class userWorkspaceDeleteDatabase {
             con.close();
         }
 
-        return delUserWorkspace;
+        return insertUserWorkspace;
     }
 
 }

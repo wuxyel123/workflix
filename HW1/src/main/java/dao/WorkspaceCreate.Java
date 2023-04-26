@@ -3,11 +3,12 @@ package dao;
 import resource.WorkSpace;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class workspaceCreate {
+public class WorkspaceCreate {
 
     /**
      * The SQL statement to be executed
@@ -23,7 +24,7 @@ public class workspaceCreate {
      */
     WorkSpace workspace;
 
-    public workspaceCreate(final Connection con, final WorkSpace workspace) {
+    public WorkspaceCreate(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }
@@ -41,17 +42,17 @@ public class workspaceCreate {
             pstmt.setInt(1, workspace.getWorkspaceId());
             pstmt.setString(2, workspace.getWorkspaceName());
             pstmt.setInt(3, workspace.getTemplateId());
-            pstmt.setLocalDateTime(4, workspace.getCreationTime());
+            pstmt.setDate(4, (Date) workspace.getCreationTime());
 
 
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 insertedWorkspace = new WorkSpace();
-                insertedWorkspace.setWorkspaceId(rs.getString(WorkSpace.WORKSPACE_ID));
+                insertedWorkspace.setWorkspaceId(rs.getInt(WorkSpace.WORKSPACE_ID));
                 insertedWorkspace.setWorkspaceName(rs.getString(WorkSpace.WORKSPACE_NAME));
-                insertedWorkspace.setTemplateId(rs.getString(WorkSpace.TEMPLATE_ID));
-                insertedWorkspace.setCreationTime(rs.getString(WorkSpace.CREATION_TIME));
+                insertedWorkspace.setTemplateId(rs.getInt(WorkSpace.TEMPLATE_ID));
+                insertedWorkspace.setCreationTime(rs.getDate(WorkSpace.CREATION_TIME));
             }
         } finally {
             if (rs != null) {
