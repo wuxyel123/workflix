@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class Assignee {
     private Integer activityId;
     private Integer userId;
 
-    public Integer getActivityId() {
+    public int getActivityId() {
         return activityId;
     }
 
