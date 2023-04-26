@@ -20,9 +20,10 @@ public class TemplateServlet extends AbstractServlet{
         op = op.substring(op.lastIndexOf("template") + 5);
 
         switch (op){
-            case "editable/":
+            case "edit/":
                 String templateName = req.getParameter("template_name");
                 if (templateName==null || templateName.equals("")){
+                    ErrorCode ec = ErrorCode.TEMPLATE_INFORMATION_MISSING;
                 }
                 try {
                     Template template = new Template();
@@ -35,7 +36,7 @@ public class TemplateServlet extends AbstractServlet{
                     } else {
                         req.setAttribute("template", template);
                         res.setStatus(200);
-                        req.getRequestDispatcher("/jsp/builder-area/edit-model.jsp").forward(req, res);
+//                        req.getRequestDispatcher("/jsp/builder-area/edit-model.jsp").forward(req, res);
                     }
                 } catch(NamingException | SQLException e){
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListTemplatesDatabase {
@@ -19,7 +20,7 @@ public class ListTemplatesDatabase {
     public List<Template> getTemplates ()throws SQLException {
         PreparedStatement ps=null;
         ResultSet rs=null;
-        List<Template> templates=null;
+        List<Template> templates=new ArrayList<Template>();
 
         try{
             ps=connection.prepareStatement(STATEMENT);
