@@ -12,22 +12,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Date;
-import java.time.ZoneId;
-
 public class Comments {
     
-    public static final String COMMENT_ID = "COMMENT_ID";
-    public static final String ACTIVITY_ID = "ACTIVITY_ID";
-    public static final String USER_ID = "USER_ID";
-    public static final String COMMENT_TEXT = "COMMENT_TEXT";
-    public static final String CREATION_TIME = "CREATION_TIME";
+    static final String COMMENT_ID = "COMMENT_ID";
+    static final String ACTIVITY_ID = "ACTIVITY_ID";
+    static final String USER_ID = "USER_ID";
+    static final String COMMENT_TEXT = "COMMENT_TEXT";
+    static final String CREATION_TIME = "CREATION_TIME";
 
     private int commentId;
     private int activityId;
     private int userId;
     private String commentText;
-    private Date creationTime;
+    private LocalDateTime creationTime;
 
     public int getCommentId() {
         return commentId;
@@ -45,7 +42,7 @@ public class Comments {
         return commentText;
     }
     
-    public Date getCreationTime() {
+    public LocalDateTime getCreationTime() {
         return creationTime;
     }
 
@@ -67,7 +64,7 @@ public class Comments {
         this.commentText = commentText;
     }
 
-    public void setCreationTime(Date creationTime) {
+    public void setCreationTime(LocalDateTime creationTime) {
         this.creationTime = creationTime;
     }
     //----------------------------------------------------------------
@@ -119,9 +116,7 @@ public class Comments {
         int activityId = jObj.getInt(ACTIVITY_ID);
         int userId = jObj.getInt(USER_ID);
         String commentText = jObj.getString(COMMENT_TEXT);
-        Date creationTime = java.util.Date
-                .from(LocalDateTime.parse(jObj.getString(CREATION_TIME)).atZone(ZoneId.systemDefault())
-                        .toInstant());
+        LocalDateTime creationTime = LocalDateTime.parse(jObj.getString(CREATION_TIME));
 
         // Create Comments object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         Comments comment = new Comments();
