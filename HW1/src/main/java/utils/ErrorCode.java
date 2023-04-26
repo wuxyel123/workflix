@@ -46,7 +46,10 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
     BAD_REQUEST(-1001, HttpServletResponse.SC_BAD_REQUEST, "Bad request."),
     WRONG_REST_FORMAT(-1002, HttpServletResponse.SC_BAD_REQUEST, "Wrong REST format."),
-    OPERATION_UNKNOWN(-1003, HttpServletResponse.SC_BAD_REQUEST, "Operation unknown.");
+    OPERATION_UNKNOWN(-1003, HttpServletResponse.SC_BAD_REQUEST, "Operation unknown."),
+    WORKSPACE_NOT_FOUND(-100,HttpServletResponse.SC_NOT_FOUND, "Workspace not found."),
+    ANALYTICS_NOT_FOUND(-100,HttpServletResponse.SC_NOT_FOUND, "Analytics not found."),
+    ;
 
     private final int errorCode;
     private final int httpCode;

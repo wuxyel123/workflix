@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Analytics{
-    static final String USER_ID = "user_id";
-    static final String USERNAME = "username";
-    static final String WORKSPACE_ID = "workspace_id";
-    static final String WORKSPACE_NAME = "workspace_name";
-    static final String NUM_COMPLETED_ACTIVITIES = "num_completed_activities";
-    static final String NUM_TOTAL_ACTIVITIES = "num_total_activities";
-    static final String TOTAL_WORKED_TIME = "total_worked_time";
-    static final String NUM_COMMENTS = "num_comments";
+    public static final String USER_ID = "user_id";
+    public static final String USERNAME = "username";
+    public static final String WORKSPACE_ID = "workspace_id";
+    public static final String WORKSPACE_NAME = "workspace_name";
+    public static final String NUM_COMPLETED_ACTIVITIES = "num_completed_activities";
+    public static final String NUM_TOTAL_ACTIVITIES = "num_total_activities";
+    public static final String TOTAL_WORKED_TIME = "total_worked_time";
+    public static final String NUM_COMMENTS = "num_comments";
 
     private Integer userId;
     private String username;
