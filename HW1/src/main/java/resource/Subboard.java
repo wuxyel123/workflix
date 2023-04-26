@@ -12,14 +12,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subboards {
+import java.util.Date;
+import java.time.ZoneId;
 
-    static final String SUBBOARD_ID = "subboard_id";
-    static final String BOARD_ID = "board_id";
-    static final String NAME = "name";
-    static final String INDEX = "index";
-    static final String DEFAULT_COMPLETED_ACTIVITY_SUBBOARD = "default_completed_activity_subboard";
-    static final String CREATION_TIME = "creation_time";
+public class Subboard {
+
+    public static final String SUBBOARD_ID = "subboard_id";
+    public static final String BOARD_ID = "board_id";
+    public static final String NAME = "name";
+    public static final String INDEX = "index";
+    public static final String DEFAULT_COMPLETED_ACTIVITY_SUBBOARD = "default_completed_activity_subboard";
+    public static final String CREATION_TIME = "creation_time";
 
 
     private Integer subboardId;
@@ -27,14 +30,14 @@ public class Subboards {
     private String name;
     private Integer index;
     private Boolean defaultCompletedActivitySubboard;
-    private LocalDateTime creationTime;
+    private Date creationTime;
 
 
-    public int getSubboardId() {
+    public Integer getSubboardId() {
         return subboardId;
     }
 
-    public int getBoardId() {
+    public Integer getBoardId() {
         return boardId;
     }
 
@@ -48,32 +51,32 @@ public class Subboards {
         return defaultCompletedActivitySubboard;
     }
     
-    public LocalDateTime getCreationTime() {
+    public Date getCreationTime() {
         return creationTime;
     }
 
 //------------------------------------------------------------------------------------
 
-    public void setSubboardId(int subboardId) {
+    public void setSubboardId(Integer subboardId) {
         this.subboardId = subboardId;
     }
 
-    public void setBoardId(int boardId) {
+    public void setBoardId(Integer boardId) {
         this.boardId = boardId;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-    public void setIndex(int index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
-    public void setGetDefaultCompletedActivitySubboard(Boolean getDefaultCompletedActivitySubboard) {
+    public void setDefaultCompletedActivitySubboard(Boolean getDefaultCompletedActivitySubboard) {
         this.defaultCompletedActivitySubboard = getDefaultCompletedActivitySubboard;
     }
     
 
-    public void setCreationTime(LocalDateTime creationTime) {
+    public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
     }
     //----------------------------------------------------------------
@@ -85,10 +88,10 @@ public class Subboards {
      * @throws IOException if an I/O error occurs
      * @throws JSONException if the input is not valid JSON
      */
-    public static List<Subboards> fromJSONlist(InputStream inputStream) throws IOException, JSONException {
+    public static List<Subboard> fromJSONlist(InputStream inputStream) throws IOException, JSONException {
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         JSONObject jobj = new JSONObject(dataString);
-        List<Subboards> subboards = new ArrayList<>();
+        List<Subboard> subboards = new ArrayList<>();
         JSONArray subboardsJSONList = jobj.getJSONArray("subbaoardsJSONList");
 
         for(int i=0; i<subboardsJSONList.length(); i++){
@@ -105,7 +108,7 @@ public class Subboards {
      * @throws IOException if an I/O error occurs
      * @throws JSONException if the input is not valid JSON
      */
-    public static Subboards fromJSON(InputStream inputStream) throws IOException, JSONException {
+    public static Subboard fromJSON(InputStream inputStream) throws IOException, JSONException {
         
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
 
@@ -118,22 +121,24 @@ public class Subboards {
      * @return Subboards object
      * @throws JSONException if the input is not valid JSON
      */
-    public static Subboards fromJSON(JSONObject jobj) throws JSONException {
+    public static Subboard fromJSON(JSONObject jobj) throws JSONException {
         
         Integer subboardId = jobj.getInt(SUBBOARD_ID);
         Integer boardId = jobj.getInt(BOARD_ID);
         String name = jobj.getString(NAME);
         Integer index = jobj.getInt(INDEX);
         Boolean defaultCompletedActivitySubboard = jobj.getBoolean(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD);
-        LocalDateTime creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
+        Date creationTime = java.util.Date
+                .from(LocalDateTime.parse(jobj.getString(CREATION_TIME)).atZone(ZoneId.systemDefault())
+                        .toInstant());
 
         // Create Subboards object, set values and return. Constructor is not used cause it's not clean with so many parameters.
-        Subboards subboard = new Subboards();
+        Subboard subboard = new Subboard();
         subboard.setSubboardId(subboardId);
         subboard.setBoardId(boardId);
         subboard.setName(name);
         subboard.setIndex(index);
-        subboard.setGetDefaultCompletedActivitySubboard(defaultCompletedActivitySubboard);
+        subboard.setDefaultCompletedActivitySubboard(defaultCompletedActivitySubboard);
         subboard.setCreationTime(creationTime);
 
         return subboard;
@@ -146,15 +151,15 @@ public class Subboards {
      */
     public JSONObject toJSON() throws JSONException {
         
-        JSONObject subboardsJSON = new JSONObject();
-        subboardsJSON.put(SUBBOARD_ID, subboardId);
-        subboardsJSON.put(BOARD_ID, boardId);
-        subboardsJSON.put(NAME , name);
-        subboardsJSON.put(INDEX , index);
-        subboardsJSON.put(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD , defaultCompletedActivitySubboard);
-        subboardsJSON.put(CREATION_TIME, creationTime);
+        JSONObject subboardJSON = new JSONObject();
+        subboardJSON.put(SUBBOARD_ID, subboardId);
+        subboardJSON.put(BOARD_ID, boardId);
+        subboardJSON.put(NAME , name);
+        subboardJSON.put(INDEX , index);
+        subboardJSON.put(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD , defaultCompletedActivitySubboard);
+        subboardJSON.put(CREATION_TIME, creationTime);
 
-        return subboardsJSON;
+        return subboardJSON;
     }
 
 

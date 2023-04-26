@@ -42,8 +42,8 @@ public class GetAssigneeDatabase {
 
             if (rs.next()) {
                 assignee = new Assignee();
-                assignee.setActivityId(rs.getString(Assignee.ACTIVITY_ID));
-                assignee.setUserId(rs.getString(Assignee.USER_ID));
+                assignee.setActivityId(rs.getInt(Assignee.ACTIVITY_ID));
+                assignee.setUserId(rs.getInt(Assignee.USER_ID));
             }
 
         } finally {

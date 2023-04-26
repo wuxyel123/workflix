@@ -22,33 +22,33 @@ public class UserWorkspace {
     static final String WORKSPACE_ID = "workspace_id";
     static final String PERMISSION_ID = "permission_id";
 
-    private int userId;
-    private int workspaceId;
-    private int permissionId;
+    private Integer userId;
+    private Integer workspaceId;
+    private Integer permissionId;
 
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public int getWorkspaceId() {
+    public Integer getWorkspaceId() {
         return workspaceId;
     }
 
-    public int getPermissionId() {
+    public Integer getPermissionId() {
         return permissionId;
     }
 
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public void setWorkspaceId(int workspaceId) {
+    public void setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
     }
 
-    public void setPermissionId(int permissionId) {
+    public void setPermissionId(Integer permissionId) {
         this.permissionId = permissionId;
     }
 
@@ -75,9 +75,9 @@ public class UserWorkspace {
 
     public static UserWorkspace fromJSON(JSONObject jobj) throws JSONException {
         
-        int userId = jobj.getInt(USER_ID);
-        int workspaceId = jobj.getString(WORKSPACE_ID);
-        int permissionId = jobj.getInt(PERMISSION_ID);
+        Integer userId = jobj.getInt(USER_ID);
+        Integer workspaceId = jobj.getInt(WORKSPACE_ID);
+        Integer permissionId = jobj.getInt(PERMISSION_ID);
 
         UserWorkspace userWorkspace = new UserWorkspace();
         userWorkspace.setUserId(userId);

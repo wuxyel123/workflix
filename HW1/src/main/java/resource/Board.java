@@ -25,18 +25,18 @@ public class Board {
     public static final String VISIBILITY = "visibility";
     public static final String CREATE_TIME = "create_time";
 
-    private int boardId;
-    private int workspaceId;
+    private Integer boardId;
+    private Integer workspaceId;
     private String name;
     private String description;
     private String visibility;
     private LocalDateTime createTime;
 
-    public int getBoardId() {
+    public Integer getBoardId() {
         return boardId;
     }
 
-    public int getWorkspaceId() {
+    public Integer getWorkspaceId() {
         return workspaceId;
     }
 
@@ -56,11 +56,11 @@ public class Board {
         return createTime;
     }
 
-    public void setBoardId(int boardId) {
+    public void setBoardId(Integer boardId) {
         this.boardId = boardId;
     }
 
-    public void setWorkspaceId(int workspaceId) {
+    public void setWorkspaceId(Integer workspaceId) {
         this.workspaceId = workspaceId;
     }
 
@@ -125,8 +125,8 @@ public class Board {
      */
     public static Board fromJSON(JSONObject jobj) throws JSONException {
 
-        int boardId = jobj.getInt(BOARD_ID);
-        int workspaceId = jobj.getInt(WORKSPACE_ID);
+        Integer boardId = jobj.getInt(BOARD_ID);
+        Integer workspaceId = jobj.getInt(WORKSPACE_ID);
         String name = jobj.getString(NAME);
         String description = jobj.getString(DESCRIPTION);
         String visibility = jobj.getString(VISIBILITY);

@@ -42,8 +42,8 @@ public class DeleteAssigneeDatabase {
 
             if (rs.next()) {
                 deletedAssignee = new Assignee();
-                deletedAssignee.setActivityId(rs.getString(Assignee.ACTIVITY_ID));
-                deletedAssignee.setUserId(rs.getString(Assignee.USER_ID));
+                deletedAssignee.setActivityId(rs.getInt(Assignee.ACTIVITY_ID));
+                deletedAssignee.setUserId(rs.getInt(Assignee.USER_ID));
             }
 
         } finally {

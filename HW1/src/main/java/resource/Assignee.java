@@ -14,27 +14,27 @@ import java.util.List;
 
 public class Assignee {
 
-    static final String ACTIVITY_ID = "ACTIVITY_ID";
-    static final String USER_ID = "USER_ID";
+    public static final String ACTIVITY_ID = "ACTIVITY_ID";
+    public static final String USER_ID = "USER_ID";
 
-    private int activityId;
-    private int userId;
+    private Integer activityId;
+    private Integer userId;
 
-    public int getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
     // ------------------------------------------------------------------------------------
 
-    public void setActivityId(int activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -86,8 +86,8 @@ public class Assignee {
 
     public static Assignee fromJSON(JSONObject jObj) throws JSONException {
 
-        int activityId = jObj.getInt(ACTIVITY_ID);
-        int userId = jObj.getInt(USER_ID);
+        Integer activityId = jObj.getInt(ACTIVITY_ID);
+        Integer userId = jObj.getInt(USER_ID);
 
         // Create Assignee object, set values and return. Constructor is not used cause
         // it's not clean with so many parameters.
