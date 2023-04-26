@@ -12,7 +12,7 @@ public class UpdateCommentDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.comments SET activity_id=?, user_id=?, comment_text=? WHERE comment_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.comments SET user_id=?, comment_text=? WHERE comment_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -37,9 +37,11 @@ public class UpdateCommentDatabase {
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, comment.getActivityId());
-            ps.setInt(2, comment.getUserId());
-            ps.setString(3, comment.getCommentText());
+//            ps.setInt(1, comment.getActivityId());
+            ps.setInt(1, comment.getUserId());
+            ps.setString(2, comment.getCommentText());
+            ps.setInt(3,comment.getCommentId());
+
             rs = ps.executeQuery();
 
             if (rs.next()) {
