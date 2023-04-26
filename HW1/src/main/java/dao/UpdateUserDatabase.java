@@ -38,11 +38,11 @@ public class UpdateUserDatabase {
         try {
             ps = con.prepareStatement(STATEMENT);
             ps.setString(1, user.getUsername());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getFirstName());
-            ps.setString(5, user.getLastName());
-            ps.setString(6, user.getProfilePicture());
-            ps.setString(7, user.getDescription());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getFirstName());
+            ps.setString(4, user.getLastName());
+            ps.setString(5, user.getProfilePicture());
+            ps.setString(6, user.getDescription());
             rs = ps.executeQuery();
 
             if (rs.next()) {
