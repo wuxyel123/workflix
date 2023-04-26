@@ -49,13 +49,39 @@ public class UserRestResource extends RestResource{
      * Get a user
      * @throws IOException Error in IO operations
      */
-    public void GetUser() throws IOException{
+    public void GetUserFromId() throws IOException{
         try {
-            User user = getUserFromId(Integer.parseInt(tokens[5]));
+            User user = getUserFromId(Integer.parseInt(tokens[4]));
             if (new GetUserByIdDatabase(con, user).getUserById()==null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+            }
+        } catch (SQLException e){
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally { respond(); }
+    }
+
+    /**
+     * Get user from mail and password
+     * @throws IOException Error in IO operations
+     */
+    public void GetUserFromMailAndPassword() throws IOException{
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            User newUser = new GetUserByMailPasswordDatabase(con, user).getUserByMailAndPassword();
+            if (newUser == null) {
+                User checkUser = new GetUserByMailDatabase(con, user).getUserByMail();
+                if (checkUser == null) {
+                    initError(ErrorCode.USER_NOT_FOUND);
+                } else {
+                    initError(ErrorCode.USER_NOT_AUTHORIZED);
+                }
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = newUser.toJSON().toString();
             }
         } catch (SQLException e){
             initError(ErrorCode.INTERNAL_ERROR);
@@ -112,7 +138,7 @@ public class UserRestResource extends RestResource{
     public void DeleteUser() throws IOException{
         try {
             User user = new User();
-            user.setUserId(Integer.parseInt(tokens[5]));
+            user.setUserId(Integer.parseInt(tokens[4]));
             if (new DeleteUserDatabase(con, user).deleteUser()==null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {
@@ -134,9 +160,9 @@ public class UserRestResource extends RestResource{
         response = ec.toJSON().toString();
     }
 
-    private User getUserFromId(int id) throws SQLException{
+    private User getUserFromId(Integer id) throws SQLException{
         User user = new User();
-        user.setUserId(Integer.parseInt(tokens[5]));
+        user.setUserId(id);
         return new GetUserByIdDatabase(con, user).getUserById();
     }
 }
