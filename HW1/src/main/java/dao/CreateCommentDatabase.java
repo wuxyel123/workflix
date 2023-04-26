@@ -23,15 +23,15 @@ public class CreateCommentDatabase {
      */
     Comments comments;
 
-    public CreateCommentDatabase(final Connection con, final Comments c) {
+    public CreateCommentDatabase(final Connection con, final Comments comments) {
         this.con = con;
-        this.comments = c;
+        this.comments = comments;
     }
 
-    public Comments getComments() throws SQLException {
+    public Comments addComments() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Comments comments = null;
+        Comments addComments = null;
 
         try {
             ps = con.prepareStatement(STATEMENT);
@@ -40,12 +40,12 @@ public class CreateCommentDatabase {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                comments = new Comments();
-                comments.setCommentId(rs.getInt(Comments.COMMENT_ID));
-                comments.setActivityId(rs.getInt(Comments.ACTIVITY_ID));
-                comments.setUserId(rs.getInt(Comments.USER_ID));
-                comments.setCommentText(rs.getString(Comments.COMMENT_TEXT));
-                comments.setCreationTime(rs.getDate(Comments.CREATION_TIME));
+                addComments = new Comments();
+                addComments.setCommentId(rs.getInt(Comments.COMMENT_ID));
+                addComments.setActivityId(rs.getInt(Comments.ACTIVITY_ID));
+                addComments.setUserId(rs.getInt(Comments.USER_ID));
+                addComments.setCommentText(rs.getString(Comments.COMMENT_TEXT));
+                addComments.setCreationTime(rs.getDate(Comments.CREATION_TIME));
             }
 
         } finally {
@@ -57,6 +57,6 @@ public class CreateCommentDatabase {
             }
             con.close();
         }
-        return comments;
+        return addComments;
     }
 }
