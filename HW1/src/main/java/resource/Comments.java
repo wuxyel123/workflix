@@ -23,21 +23,21 @@ public class Comments {
     public static final String COMMENT_TEXT = "COMMENT_TEXT";
     public static final String CREATION_TIME = "CREATION_TIME";
 
-    private int commentId;
-    private int activityId;
-    private int userId;
+    private Integer commentId;
+    private Integer activityId;
+    private Integer userId;
     private String commentText;
     private Date creationTime;
 
-    public int getCommentId() {
+    public Integer getCommentId() {
         return commentId;
     }
 
-    public int getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -51,15 +51,15 @@ public class Comments {
 
 //------------------------------------------------------------------------------------
 
-    public void setCommentId(int commentId) {
+    public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
 
-    public void setActivityId(int activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -115,9 +115,9 @@ public class Comments {
 
     public static Comments fromJSON(JSONObject jObj) throws JSONException {
         
-        int commentId = jObj.getInt(COMMENT_ID);
-        int activityId = jObj.getInt(ACTIVITY_ID);
-        int userId = jObj.getInt(USER_ID);
+        Integer commentId = jObj.getInt(COMMENT_ID);
+        Integer activityId = jObj.getInt(ACTIVITY_ID);
+        Integer userId = jObj.getInt(USER_ID);
         String commentText = jObj.getString(COMMENT_TEXT);
         Date creationTime = java.util.Date
                 .from(LocalDateTime.parse(jObj.getString(CREATION_TIME)).atZone(ZoneId.systemDefault())

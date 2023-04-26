@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 public class User {
 
@@ -32,7 +35,7 @@ public class User {
     private String lastName;
     private String profilePicture;
     private String description;
-    private LocalDateTime createDate;
+    private Date createDate;
 
     public Integer getUserId() {
         return userId;
@@ -66,7 +69,7 @@ public class User {
         return description;
     }
 
-    public LocalDateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
@@ -102,7 +105,7 @@ public class User {
         this.description = description;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
@@ -156,7 +159,9 @@ public class User {
         String lastName = jobj.getString(LAST_NAME);
         String profilePicture = jobj.getString(PROFILE_PICTURE);
         String description = jobj.getString(DESCRIPTION);
-        LocalDateTime createDate = LocalDateTime.parse(jobj.getString(CREATE_DATE));
+        Date createDate = java.util.Date
+                .from(LocalDateTime.parse(jobj.getString(CREATE_DATE)).atZone(ZoneId.systemDefault())
+                        .toInstant());
 
         // Create User object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         User user = new User();
