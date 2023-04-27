@@ -6,13 +6,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class GetCommentDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT * FROM workflix.comments WHERE comment_id=?;";
+    private static final String STATEMENT = "SELECT * FROM workflix.comments WHERE activity_id=?;";
     /**
      * The connection to the database
      */
@@ -28,24 +29,28 @@ public class GetCommentDatabase {
         this.comments = comments;
     }
 
-    public Comments getComments() throws SQLException {
+    public List<Comments> getComments() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Comments newComments = null;
+        //List of comments
+        List<Comments> commentsList = null;
+
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, comments.getCommentId());
+            ps.setInt(1, comments.getActivityId());
 
             rs = ps.executeQuery();
 
-            if (rs.next()) {
-                newComments = new Comments();
-                newComments.setCommentId(rs.getInt(Comments.COMMENT_ID));
-                newComments.setActivityId(rs.getInt(Comments.ACTIVITY_ID));
-                newComments.setUserId(rs.getInt(Comments.USER_ID));
-                newComments.setCommentText(rs.getString(Comments.COMMENT_TEXT));
-                newComments.setCreationTime(rs.getDate(Comments.CREATION_TIME));
+
+            while (rs.next()) {
+                Comments comment = new Comments();
+                comment.setCommentId(rs.getInt(Comments.COMMENT_ID));
+                comment.setActivityId(rs.getInt(Comments.ACTIVITY_ID));
+                comment.setUserId(rs.getInt(Comments.USER_ID));
+                comment.setCommentText(rs.getString(Comments.COMMENT_TEXT));
+                comment.setCreationTime(rs.getDate(Comments.CREATION_TIME));
+                commentsList.add(comment);
             }
 
         } finally {
@@ -57,6 +62,6 @@ public class GetCommentDatabase {
             }
             con.close();
         }
-        return newComments;
+        return commentsList;
     }
 }

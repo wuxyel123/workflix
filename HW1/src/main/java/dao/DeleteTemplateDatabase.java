@@ -22,7 +22,7 @@ public class DeleteTemplateDatabase {
         Template deletedTemplate=null;
         try{
             ps=connection.prepareStatement(STATEMENT);
-            ps.setString(1,template.getTemplateName());
+            ps.setInt(1,template.getTemplateId());
             rs=ps.executeQuery();
             if (rs.next()){
                 deletedTemplate=new Template();

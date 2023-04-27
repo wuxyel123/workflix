@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UpdateTemplateDatabase {
-    private static final String STATEMENT= "UPDATE workflix.template SET image_url=?,image_name=? WHERE template_id=? RETURNING *;";
+    private static final String STATEMENT= "UPDATE workflix.template SET image_url=?,template_name=? WHERE template_id=? RETURNING *;";
     private final Connection connection;
     Template template;
 
@@ -23,8 +23,9 @@ public class UpdateTemplateDatabase {
         Template updatedTemplate=null;
         try{
             ps=connection.prepareStatement(STATEMENT);
-            ps.setString(1,template.getTemplateName());
-            ps.setString(2,template.getImageUrl());
+            ps.setString(1,template.getImageUrl());
+            ps.setString(2,template.getTemplateName());
+
             rs=ps.executeQuery();
             if (rs.next()){
                 updatedTemplate=new Template();

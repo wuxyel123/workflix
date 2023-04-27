@@ -38,6 +38,7 @@ public class UpdateUserPasswordDatabase {
         try {
             ps = con.prepareStatement(STATEMENT);
             ps.setString(1, user.getPassword());
+            ps.setInt(2, user.getUserId());
             rs = ps.executeQuery();
 
             if (rs.next()) {

@@ -2,11 +2,7 @@ package dao;
 
 import resource.WorkSpace;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class WorkspaceCreateDatabase {
 
@@ -39,7 +35,7 @@ public class WorkspaceCreateDatabase {
         try {
             pstmt = con.prepareStatement(STATEMENT);
 
-            pstmt.setInt(1, workspace.getWorkspaceId());
+            pstmt.setNull(1, Types.NULL);
             pstmt.setString(2, workspace.getWorkspaceName());
             pstmt.setInt(3, workspace.getTemplateId());
             pstmt.setDate(4, (Date) workspace.getCreationTime());
