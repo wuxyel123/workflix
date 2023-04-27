@@ -7,7 +7,7 @@ CREATE TABLE users (
                       last_name VARCHAR(255),
                       profile_picture VARCHAR(255),
                       description TEXT,
-                      create_date TIMESTAMP NOT NULL
+                      create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE template (
