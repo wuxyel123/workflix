@@ -1,9 +1,4 @@
 package resource;
-import java.beans.Visibility;
-import java.time.LocalDateTime;
-
-import javax.print.DocFlavor.STRING;
-import javax.swing.border.Border;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
@@ -14,8 +9,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 public class Board {
     public static final String BOARD_ID = "board_id";
@@ -30,7 +28,7 @@ public class Board {
     private String name;
     private String description;
     private String visibility;
-    private LocalDateTime createTime;
+    private Date createTime;
 
     public Integer getBoardId() {
         return boardId;
@@ -52,7 +50,7 @@ public class Board {
         return visibility;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
@@ -76,7 +74,7 @@ public class Board {
         this.visibility = visibility;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -130,7 +128,9 @@ public class Board {
         String name = jobj.getString(NAME);
         String description = jobj.getString(DESCRIPTION);
         String visibility = jobj.getString(VISIBILITY);
-        LocalDateTime createTime = LocalDateTime.parse(jobj.getString(CREATE_TIME));
+        Date createTime = java.util.Date
+                .from(LocalDateTime.parse(jobj.getString(CREATE_TIME)).atZone(ZoneId.systemDefault())
+                        .toInstant());
 
         // Create Board object, set values and return. Constructor is not used cause
         // it's not clean with so many parameters.

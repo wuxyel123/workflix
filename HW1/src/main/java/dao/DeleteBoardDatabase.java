@@ -34,7 +34,7 @@ public class DeleteBoardDatabase {
                 deletedBoard.setName(rs.getString(Board.NAME));
                 deletedBoard.setDescription(rs.getString(Board.DESCRIPTION));
                 deletedBoard.setVisibility(rs.getString(Board.VISIBILITY));
-                deletedBoard.setCreateTime(LocalDateTime.parse(rs.getString(Board.CREATE_TIME)));
+                deletedBoard.setCreateTime(rs.getDate(Board.CREATE_TIME));
             }
         } finally {
             if (rs != null) {
