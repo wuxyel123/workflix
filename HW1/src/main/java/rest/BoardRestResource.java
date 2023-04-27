@@ -29,7 +29,7 @@ public class BoardRestResource extends RestResource{
     public void CreateBoard() throws IOException {
         try {
             Board board = Board.fromJSON(req.getInputStream());
-            Board newboard = new CreateBoardDatabase(con, board).addBoard();
+            Board newboard = new InsertBoardDatabase(con, board).addBoard();
 
             if (newboard == null) {
                 initError(ErrorCode.INTERNAL_ERROR);

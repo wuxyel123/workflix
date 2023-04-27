@@ -1,11 +1,11 @@
 package rest;
 
-import dao.WorkspaceAddUserDatabase;
+import dao.InsertUserWorkspaceDatabase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
-import dao.UserWorkspaceDeleteDatabase;
-import dao.WorkspaceAssignuserpermissionDatabase;
+import dao.DeleteUserWorkspaceDatabase;
+import dao.UpdateUserPermissionDatabase;
 
 import resource.UserWorkspace;
 
@@ -32,7 +32,7 @@ public class UserWorkspaceRestResource extends RestResource{
         	UserWorkspace userWorkSpace = new UserWorkspace();
 
             userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[5]));
-            if (new UserWorkspaceDeleteDatabase(con, userWorkSpace).userWorkspaceDelete()==null) {
+            if (new DeleteUserWorkspaceDatabase(con, userWorkSpace).userWorkspaceDelete()==null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
@@ -53,7 +53,7 @@ public class UserWorkspaceRestResource extends RestResource{
             userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[6]));
             userWorkSpace.setPermissionId(Integer.parseInt(tokens[7]));
 
-            if (new WorkspaceAddUserDatabase(con, userWorkSpace).insertUserWorkspace()==null) {
+            if (new InsertUserWorkspaceDatabase(con, userWorkSpace).insertUserWorkspace()==null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
@@ -75,7 +75,7 @@ public class UserWorkspaceRestResource extends RestResource{
             userWorkSpace.setPermissionId(Integer.parseInt(tokens[7]));
 
 
-            if (new WorkspaceAssignuserpermissionDatabase(con, userWorkSpace).workspaceAssignuserpermission()==null) {
+            if (new UpdateUserPermissionDatabase(con, userWorkSpace).workspaceAssignuserpermission()==null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;

@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class WorkspaceAddUserDatabase {
+public class InsertUserWorkspaceDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.UserWorkspace VALUES(?, ?, ?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.user_workspace VALUES(?, ?, ?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -23,7 +23,7 @@ public class WorkspaceAddUserDatabase {
      */
     UserWorkspace userWorkspace;
 
-    public WorkspaceAddUserDatabase(final Connection con, final UserWorkspace userWorkspace) {
+    public InsertUserWorkspaceDatabase(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }

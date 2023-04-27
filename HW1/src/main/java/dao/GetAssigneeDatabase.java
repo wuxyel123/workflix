@@ -12,6 +12,7 @@ public class GetAssigneeDatabase {
     /**
      * The SQL statement to be executed
      */
+    //TODO Put a correct query here
     private static final String STATEMENT = "SELECT * FROM workflix.assignee WHERE activity_id=? AND user_id=?;";
     /**
      * The connection to the database

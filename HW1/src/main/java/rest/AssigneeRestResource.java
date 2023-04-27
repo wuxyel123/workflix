@@ -3,7 +3,7 @@ package rest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
-import dao.AddAssigneeDatabase;
+import dao.InsertAssigneeDatabase;
 import dao.DeleteAssigneeDatabase;
 import dao.GetAssigneeDatabase;
 import resource.Assignee;
@@ -49,7 +49,7 @@ public class AssigneeRestResource extends RestResource {
             Assignee assignee = new Assignee();
             assignee.setActivityId(Integer.parseInt(tokens[6]));
             assignee.setUserId(Integer.parseInt(tokens[7]));
-            if (new AddAssigneeDatabase(con, assignee).addAssignee() == null) {
+            if (new InsertAssigneeDatabase(con, assignee).addAssignee() == null) {
                 initError(ErrorCode.ASSIGNEE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;

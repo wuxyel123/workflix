@@ -2,18 +2,14 @@ package dao;
 
 import resource.WorkSpace;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class WorkspaceCreateDatabase {
+public class InsertWorkspaceDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.workspace VALUES(?, ?, ?, ?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.workspace(workspace_name, template_id) VALUES(?, ?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -24,7 +20,7 @@ public class WorkspaceCreateDatabase {
      */
     WorkSpace workspace;
 
-    public WorkspaceCreateDatabase(final Connection con, final WorkSpace workspace) {
+    public InsertWorkspaceDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }
@@ -39,10 +35,8 @@ public class WorkspaceCreateDatabase {
         try {
             pstmt = con.prepareStatement(STATEMENT);
 
-            pstmt.setInt(1, workspace.getWorkspaceId());
-            pstmt.setString(2, workspace.getWorkspaceName());
-            pstmt.setInt(3, workspace.getTemplateId());
-            pstmt.setDate(4, (Date) workspace.getCreationTime());
+            pstmt.setString(1, workspace.getWorkspaceName());
+            pstmt.setInt(2, workspace.getTemplateId());
 
 
             rs = pstmt.executeQuery();

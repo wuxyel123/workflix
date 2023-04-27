@@ -1,17 +1,13 @@
 package dao;
 import resource.Board;
-import resource.Comments;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
-public class CreateBoardDatabase {
+public class InsertBoardDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.board VALUES(?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.board(workspace_id, name, description, visibility) VALUES(?,?,?,?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -21,7 +17,7 @@ public class CreateBoardDatabase {
      * The user to be searched
      */
     Board board;
-    public CreateBoardDatabase(final Connection con, final Board board) {
+    public InsertBoardDatabase(final Connection con, final Board board) {
         this.con = con;
         this.board = board;
     }
@@ -32,7 +28,10 @@ public class CreateBoardDatabase {
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, board.getBoardId());
+            ps.setInt(1, board.getWorkspaceId());
+            ps.setString(2, board.getName());
+            ps.setString(3, board.getDescription());
+            ps.setString(4, board.getVisibility());
 
             rs = ps.executeQuery();
 

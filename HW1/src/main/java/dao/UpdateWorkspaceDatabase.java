@@ -8,12 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class WorkspaceUpdateDatabase {
+public class UpdateWorkspaceDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.workspace SET name=? template_id=?, creation_time=? WHERE workspace_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.workspace SET name=?, template_id=?, creation_time=? WHERE workspace_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -24,7 +24,7 @@ public class WorkspaceUpdateDatabase {
      */
     WorkSpace workspace;
 
-    public WorkspaceUpdateDatabase(final Connection con, final WorkSpace workspace) {
+    public UpdateWorkspaceDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }

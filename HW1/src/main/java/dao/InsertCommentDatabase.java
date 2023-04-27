@@ -2,17 +2,14 @@ package dao;
 
 import resource.Comments;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class CreateCommentDatabase {
+public class InsertCommentDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.comments VALUES(?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.comments(activity_id, user_id, comment_text) VALUES(?,?,?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -23,7 +20,7 @@ public class CreateCommentDatabase {
      */
     Comments comments;
 
-    public CreateCommentDatabase(final Connection con, final Comments comments) {
+    public InsertCommentDatabase(final Connection con, final Comments comments) {
         this.con = con;
         this.comments = comments;
     }
@@ -35,7 +32,9 @@ public class CreateCommentDatabase {
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, comments.getCommentId());
+            ps.setInt(1, comments.getActivityId());
+            ps.setInt(2, comments.getUserId());
+            ps.setString(3, comments.getCommentText());
 
             rs = ps.executeQuery();
 

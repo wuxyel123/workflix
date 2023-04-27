@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class WorkspaceAssignuserpermissionDatabase {
+public class UpdateUserPermissionDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.UserWorkspace SET permission_id=? WHERE WHERE user_id=? workspace_id=? permission_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.user_workspace SET permission_id=? WHERE WHERE user_id=?, workspace_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -23,7 +23,7 @@ public class WorkspaceAssignuserpermissionDatabase {
      */
     UserWorkspace userWorkspace;
 
-    public WorkspaceAssignuserpermissionDatabase(final Connection con, final UserWorkspace userWorkspace) {
+    public UpdateUserPermissionDatabase(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }
@@ -41,7 +41,6 @@ public class WorkspaceAssignuserpermissionDatabase {
             pstmt.setInt(1, userWorkspace.getPermissionId());
             pstmt.setInt(2, userWorkspace.getUserId());
             pstmt.setInt(3, userWorkspace.getWorkspaceId());
-            pstmt.setInt(4, userWorkspace.getPermissionId());
 
             rs = pstmt.executeQuery();
 

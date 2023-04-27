@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserWorkspaceDeleteDatabase {
+public class DeleteUserWorkspaceDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "DELETE FROM workflix.UserWorkspace WHERE user_id=? workspace_id=? permission_id=? RETURNING *;";
+    private static final String STATEMENT = "DELETE FROM workflix.user_workspace WHERE user_id=?, workspace_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -23,7 +23,7 @@ public class UserWorkspaceDeleteDatabase {
      */
     UserWorkspace userWorkspace;
 
-    public UserWorkspaceDeleteDatabase(final Connection con, final UserWorkspace userWorkspace) {
+    public DeleteUserWorkspaceDatabase(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }
@@ -39,7 +39,6 @@ public class UserWorkspaceDeleteDatabase {
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setInt(1, userWorkspace.getUserId());
             pstmt.setInt(2, userWorkspace.getWorkspaceId());
-            pstmt.setInt(3, userWorkspace.getPermissionId());
 
             rs = pstmt.executeQuery();
 

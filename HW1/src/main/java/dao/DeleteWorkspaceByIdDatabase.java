@@ -4,12 +4,12 @@ import resource.WorkSpace;
 
 import java.sql.*;
 
-public class WorkspaceDeleteByIdDatabase {
+public class DeleteWorkspaceByIdDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "DELETE FROM workflix.workwpace WHERE workspace_id=? RETURNING *;";
+    private static final String STATEMENT = "DELETE FROM workflix.workspace WHERE workspace_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -20,7 +20,7 @@ public class WorkspaceDeleteByIdDatabase {
      */
     WorkSpace workspace;
 
-    public WorkspaceDeleteByIdDatabase(final Connection con, final WorkSpace workspace) {
+    public DeleteWorkspaceByIdDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }
