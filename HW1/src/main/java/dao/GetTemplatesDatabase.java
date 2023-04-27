@@ -9,11 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListTemplatesDatabase {
+public class GetTemplatesDatabase {
     private static final String STATEMENT= "SELECT * FROM workflix.template;";
     private final Connection connection;
 
-    public ListTemplatesDatabase(final Connection connection) {
+    public GetTemplatesDatabase(final Connection connection) {
         this.connection = connection;
     }
 

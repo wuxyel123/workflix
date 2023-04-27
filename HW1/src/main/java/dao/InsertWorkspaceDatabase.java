@@ -4,7 +4,7 @@ import resource.WorkSpace;
 
 import java.sql.*;
 
-public class WorkspaceCreateDatabase {
+public class InsertWorkspaceDatabase {
 
     /**
      * The SQL statement to be executed
@@ -20,7 +20,7 @@ public class WorkspaceCreateDatabase {
      */
     WorkSpace workspace;
 
-    public WorkspaceCreateDatabase(final Connection con, final WorkSpace workspace) {
+    public InsertWorkspaceDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }

@@ -4,7 +4,7 @@ import resource.Comments;
 
 import java.sql.*;
 
-public class CreateCommentDatabase {
+public class InsertCommentDatabase {
 
     /**
      * The SQL statement to be executed
@@ -25,7 +25,7 @@ public class CreateCommentDatabase {
      */
     Comments comments;
 
-    public CreateCommentDatabase(final Connection con, final Comments comments) {
+    public InsertCommentDatabase(final Connection con, final Comments comments) {
         this.con = con;
         this.comments = comments;
     }
