@@ -71,7 +71,7 @@ public class TemplateServlet extends AbstractServlet{
             case "update/":
                 updateOperations(req, res);
                 break;
-            case "insert/":
+            case "create/":
                 insertionOperations(req, res);
                 break;
             default:
@@ -88,23 +88,21 @@ public class TemplateServlet extends AbstractServlet{
 
 
     private void insertionOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
-
+        Message m = null;
         try {
-            String image_url = req.getParameter("image_url");
+            String Image_url = req.getParameter("image_url");
             String template_name = req.getParameter("template_name");
-
             Template template;
             ErrorCode ec = null;
-            Message m = null;
             String dispatchPage = null;
             boolean addTemplate = true;
-            if (template_name == null || template_name.equals("") || image_url == null || image_url.equals("")) {
+            if (template_name == null || template_name.equals("") || Image_url == null || Image_url.equals("")) {
                 ec = ErrorCode.TEMPLATE_NOT_FOUND;
                 m = new Message(true, ec.getErrorMessage());
                 dispatchPage = "/jsp/builder-area/edit-park.jsp";
             } else {
                 template=new Template();
-                template.setImageUrl(image_url);
+                template.setImageUrl(Image_url);
                 template.setTemplateName(template_name);
 
                 if (addTemplate) {
