@@ -1,0 +1,22 @@
+\subsection{REST Error Codes}
+
+Here the list of errors defined in the application. Application specific errors have the application error which follows a progressive numeration starting from -100. METHOD NOT ALLOWED errors are identified with the error code -500. Internal errors, which correspond to crashes, servlet exceptions, or problems with the input/output streams are identified with the Error Code -999.
+
+\begin{longtable}{|p{.15\columnwidth}|p{.3\columnwidth} |p{.5\columnwidth}|} 
+\hline
+\textbf{Error Code} & \textbf{HTTP Status Code} & \textbf{Description} \\\hline
+-200 & OK                       & Indicates that the request has succeeded. \\ \hline
+-201 & Created                  & Indicates that the request has succeeded and a new user/workspace/board/subboard/comment has been created as a result. \\ \hline
+-400 & BAD\_REQUEST             & Request made to the server without specifying all the mandatory params\\ \hline
+-401 & Unauthorized             & Failed login attempt due to unauthorized user information. \\ \hline
+-403 & Forbidden                & Unauthorized request. The client does not have access rights to the content.  \\ \hline
+-404 & NOT\_FOUND               & The server can not find the requested resource. Use a broken link or a mistyped URL. \\ \hline
+-409 & CONFLICT                 & mail already used. \\ \hline
+-409 & CONFLICT                 & The username has already been used. \\ \hline
+-409 & CONFLICT                 & The template name has already been used. \\ \hline
+-500 & Internal\_Server\_Error  & The server encountered an unexpected condition that prevented it from fulfilling the request. \\ \hline
+
+
+\caption{Error codes for the REST interface of the Amusement Park application back-end}
+\label{tab:termGlossary}
+\end{longtable}
