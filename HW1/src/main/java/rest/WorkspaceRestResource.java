@@ -5,7 +5,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
 
 import dao.WorkspaceDeleteByIdDatabase;
-import dao.*;
+import dao.WorkspaceCreateDatabase;
+import dao.GetWorkspaceByIdDatabase;
+import dao.WorkspaceUpdateDatabase;
 
 import resource.WorkSpace;
 
@@ -48,7 +50,7 @@ public class WorkspaceRestResource extends RestResource {
     public void CreateWorkSpace() throws IOException {
         try {
             WorkSpace workSpace = WorkSpace.fromJSON(req.getInputStream());
-            WorkSpace newWorkSpace = new WorkspaceCreate(con, workSpace).insertWorkspace();
+            WorkSpace newWorkSpace = new WorkspaceCreateDatabase(con, workSpace).insertWorkspace();
 
             if (newWorkSpace == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
