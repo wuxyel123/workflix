@@ -12,7 +12,7 @@ public class WorkspaceAddUserDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.UserWorkspace VALUES(?, ?, ?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.user_workspace VALUES(?, ?, ?) RETURNING *;";
     /**
      * The connection to the database
      */

@@ -43,6 +43,7 @@ public class UpdateUserDatabase {
             ps.setString(4, user.getLastName());
             ps.setString(5, user.getProfilePicture());
             ps.setString(6, user.getDescription());
+            ps.setInt(7, user.getUserId());
             rs = ps.executeQuery();
 
             if (rs.next()) {

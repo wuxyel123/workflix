@@ -9,7 +9,7 @@ public class WorkspaceDeleteByIdDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "DELETE FROM workflix.workwpace WHERE workspace_id=? RETURNING *;";
+    private static final String STATEMENT = "DELETE FROM workflix.workspace WHERE workspace_id=? RETURNING *;";
     /**
      * The connection to the database
      */

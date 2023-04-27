@@ -42,7 +42,6 @@ public class GetUserByIdDatabase {
             if (rs.next()) {
                 user = new User();
                 user.setUsername(rs.getString(User.USERNAME));
-                user.setPassword(rs.getString(User.PASSWORD));
                 user.setEmail(rs.getString(User.EMAIL));
                 user.setFirstName(rs.getString(User.FIRST_NAME));
                 user.setLastName(rs.getString(User.LAST_NAME));

@@ -12,7 +12,7 @@ public class UpdateBoardDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.board SET name=?, description=?, visibility=?, create_time=?, workspace_id=?, WHERE board_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.board SET name=?, description=?, visibility=? WHERE board_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -38,6 +38,7 @@ public class UpdateBoardDatabase {
             ps.setString(1, board.getName());
             ps.setString(2, board.getDescription());
             ps.setString(3, board.getVisibility());
+            ps.setInt(4, board.getBoardId());
             rs = ps.executeQuery();
 
             if (rs.next()) {

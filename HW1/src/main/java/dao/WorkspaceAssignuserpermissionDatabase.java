@@ -12,7 +12,7 @@ public class WorkspaceAssignuserpermissionDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.UserWorkspace SET permission_id=? WHERE WHERE user_id=? workspace_id=? permission_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.user_workspace SET permission_id=? WHERE WHERE user_id=?, workspace_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -41,7 +41,6 @@ public class WorkspaceAssignuserpermissionDatabase {
             pstmt.setInt(1, userWorkspace.getPermissionId());
             pstmt.setInt(2, userWorkspace.getUserId());
             pstmt.setInt(3, userWorkspace.getWorkspaceId());
-            pstmt.setInt(4, userWorkspace.getPermissionId());
 
             rs = pstmt.executeQuery();
 
