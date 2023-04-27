@@ -1,12 +1,11 @@
 package rest;
 
+import dao.WorkspaceAddUserDatabase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
 import dao.UserWorkspaceDeleteDatabase;
-import dao.WorkspaceAdduser;
 import dao.WorkspaceAssignuserpermissionDatabase;
-import dao.WorkspaceDeleteByIdDatabase;
 
 import resource.UserWorkspace;
 
@@ -54,7 +53,7 @@ public class UserWorkspaceRestResource extends RestResource{
             userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[6]));
             userWorkSpace.setPermissionId(Integer.parseInt(tokens[7]));
 
-            if (new WorkspaceAdduser(con, userWorkSpace).insertUserWorkspace()==null) {
+            if (new WorkspaceAddUserDatabase(con, userWorkSpace).insertUserWorkspace()==null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
