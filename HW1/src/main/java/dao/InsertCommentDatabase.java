@@ -8,13 +8,8 @@ public class InsertCommentDatabase {
 
     /**
      * The SQL statement to be executed
-     *
-     * activity_id INT NOT NULL,
-     *                           user_id INT NOT NULL,
-     *                           comment_text TEXT NOT NULL,
-     *                           creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
      */
-    private static final String STATEMENT = "INSERT INTO workflix.comments VALUES(?,?,?,?,?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.comments(activity_id, user_id, comment_text) VALUES(?,?,?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -37,11 +32,9 @@ public class InsertCommentDatabase {
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setNull(1, Types.NULL);
-            ps.setInt(2, comments.getActivityId());
-            ps.setInt(3, comments.getUserId());
-            ps.setString(4, comments.getCommentText());
-            ps.setDate(5, new Date(System.currentTimeMillis()));
+            ps.setInt(1, comments.getActivityId());
+            ps.setInt(2, comments.getUserId());
+            ps.setString(3, comments.getCommentText());
 
             rs = ps.executeQuery();
 

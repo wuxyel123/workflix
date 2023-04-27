@@ -6,9 +6,8 @@ import java.time.LocalDateTime;
 public class InsertBoardDatabase {
     /**
      * The SQL statement to be executed
-     *
      */
-    private static final String STATEMENT = "INSERT INTO workflix.board VALUES(?,?,?,?,?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.board(workspace_id, name, description, visibility) VALUES(?,?,?,?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -29,11 +28,10 @@ public class InsertBoardDatabase {
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setNull(1, Types.NULL);
+            ps.setInt(1, board.getWorkspaceId());
             ps.setString(2, board.getName());
             ps.setString(3, board.getDescription());
             ps.setString(4, board.getVisibility());
-            ps.setTimestamp(5, java.sql.Timestamp.valueOf(LocalDateTime.now()));
 
             rs = ps.executeQuery();
 

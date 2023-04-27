@@ -8,7 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class InsertTemplateDatabase {
-    private static final String STATEMENT= "INSERT INTO workflix.template VALUES (?, ?) RETURNING *;";
+
+    /**
+     * The SQL statement to be executed
+     */
+    private static final String STATEMENT= "INSERT INTO workflix.template(template_name, image_url) VALUES (?, ?) RETURNING *;";
     private final Connection connection;
     Template template;
     public InsertTemplateDatabase(final Connection connection, final Template template){
