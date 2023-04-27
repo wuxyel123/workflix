@@ -30,13 +30,13 @@ workspace/removeuser               & DELETE & Enable the manager of a workspace 
 workspace/assignuserpermission     & POST   & Enable the manager of a workspace to assign different kinds of permissions to a user in a workspace & U \\ \hline
 board/{boardid}                    & GET    & Returns all the information related to a board & M \\ \hline
 workspace/{workspaceid}/boards     & GET    & Returns all the boards related to a workspace & M \\ \hline
-board/create                       & POST   & Allows manager and editor of a workspace to create a board & E \\ \hlinee
-board/delete/{boardid}             & DELETE & Allows to pass to the ws of a usnd their mail and password correspond. & E \\ \hlinee
-board/update/{boardid}             & PUT    & Allows manager and editor of a workspace to edit a board by \{board id\} & E \\ \hlinee
+board/create                       & POST   & Allows manager and editor of a workspace to create a board & E \\ \hline
+board/delete/{boardid}             & DELETE & Allows to pass to the ws of a usnd their mail and password correspond. & E \\ \hline
+board/update/{boardid}             & PUT    & Allows manager and editor of a workspace to edit a board by \{board id\} & E \\ \hline
 subboard/{subboardid}              & GET    & Allows manager and editor of a workspace to delete a board by \{board id\}  & U \\ \hline
 board/{boardid}/subboards          & GET    & Returns all subboard data belonging to the current board & U \\ \hline
-subboard/create                    & POST   & Allows to create a new subboard & E \\ \hlinee
-subboard/delete/{subboardid}       & DELETE & Allows to delete the subboard by its \{subboard id\} & E \\ \hlinee
+subboard/create                    & POST   & Allows to create a new subboard & E \\ \hline
+subboard/delete/{subboardid}       & DELETE & Allows to delete the subboard by its \{subboard id\} & E \\ \hline
 subboard/update/{subboardid}       & PUT    & Allows to update the subboard by its \{subboard id\}& U \\ \hline
 subboard/{subboardid}/activities   & GET    & Returns all activitydata belonging to the current subboard with the \{subboard id\}  & U \\ \hline
 activity/{activityid}              & GET    & Returns all subboard data by its  \{activity id\} & U \\ \hline
@@ -50,14 +50,9 @@ activity/comment/get               & GET    & Returns comment  & U \\ \hline
 activity/comment/create            & PUT    & Allows to create new comment & U \\ \hline
 activity/comment/delete/{commentid}& DELETE & Allows to insert comment by its \{comment id\} & U \\ \hline
 activity/comment/update/{commentid}& PUT    & Allows to update comment by its \{comment id\}  & U \\ \hline
-analytics/get                      & GET    & Returns analytics data. & M \\ \hlinee
+analytics/get                      & GET    & Returns analytics data. & M \\ \hline
 \caption{Main REST API entrypoints}
 
-\begin{itemize}
-\item M-Only manager 
-\item U-All user
-\item E-Editor 
-\end{itemize}
 
 
 \label{tab:termGlossary}
