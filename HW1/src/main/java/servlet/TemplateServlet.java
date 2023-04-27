@@ -45,7 +45,7 @@ public class TemplateServlet extends AbstractServlet{
                 break;
             case "list/":
                 try{
-                    List<Template> templates = new ListTemplatesDatabase(getDataSource().getConnection()).getTemplates();
+                    List<Template> templates = new GetTemplatesDatabase(getDataSource().getConnection()).getTemplates();
                     JSONObject resJSON = new JSONObject();
                     resJSON.put("template-list", templates);
                     res.setStatus(HttpServletResponse.SC_OK);

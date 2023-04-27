@@ -1,10 +1,9 @@
 package dao;
 import resource.Board;
-import resource.Comments;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-public class CreateBoardDatabase {
+public class InsertBoardDatabase {
     /**
      * The SQL statement to be executed
      *
@@ -19,7 +18,7 @@ public class CreateBoardDatabase {
      * The user to be searched
      */
     Board board;
-    public CreateBoardDatabase(final Connection con, final Board board) {
+    public InsertBoardDatabase(final Connection con, final Board board) {
         this.con = con;
         this.board = board;
     }

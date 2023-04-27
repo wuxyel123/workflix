@@ -3,7 +3,7 @@ package rest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
-import dao.CreateCommentDatabase;
+import dao.InsertCommentDatabase;
 import dao.GetCommentDatabase;
 
 import resource.Comments;
@@ -45,7 +45,7 @@ public class CommentRestResource extends RestResource {
     public void addComments() throws IOException {
         try {
             Comments comments = Comments.fromJSON(req.getInputStream());
-            Comments newComments = new CreateCommentDatabase(con, comments).addComments();
+            Comments newComments = new InsertCommentDatabase(con, comments).addComments();
             if (newComments == null) {
                 initError(ErrorCode.USER_ALREADY_EXISTS);
             } else {

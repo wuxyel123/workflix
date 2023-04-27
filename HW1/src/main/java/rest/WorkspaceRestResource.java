@@ -4,10 +4,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.ErrorCode;
 
-import dao.WorkspaceDeleteByIdDatabase;
-import dao.WorkspaceCreateDatabase;
+import dao.DeleteWorkspaceByIdDatabase;
+import dao.InsertWorkspaceDatabase;
 import dao.GetWorkspaceByIdDatabase;
-import dao.WorkspaceUpdateDatabase;
+import dao.UpdateWorkspaceDatabase;
 
 import resource.WorkSpace;
 
@@ -33,7 +33,7 @@ public class WorkspaceRestResource extends RestResource {
             WorkSpace workSpace = new WorkSpace();
 
             workSpace.setWorkspaceId(Integer.parseInt(tokens[5]));
-            if (new WorkspaceDeleteByIdDatabase(con, workSpace).workspaceDelete() == null) {
+            if (new DeleteWorkspaceByIdDatabase(con, workSpace).workspaceDelete() == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
@@ -50,7 +50,7 @@ public class WorkspaceRestResource extends RestResource {
     public void CreateWorkSpace() throws IOException {
         try {
             WorkSpace workSpace = WorkSpace.fromJSON(req.getInputStream());
-            WorkSpace newWorkSpace = new WorkspaceCreateDatabase(con, workSpace).insertWorkspace();
+            WorkSpace newWorkSpace = new InsertWorkspaceDatabase(con, workSpace).insertWorkspace();
 
             if (newWorkSpace == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
@@ -94,7 +94,7 @@ public class WorkspaceRestResource extends RestResource {
     public void UpdateWorkSpace() throws IOException {
         try {
             WorkSpace workSpace = WorkSpace.fromJSON(req.getInputStream());
-            WorkSpace newWorkSpace = new WorkspaceUpdateDatabase(con, workSpace).updateWorkspace();
+            WorkSpace newWorkSpace = new UpdateWorkspaceDatabase(con, workSpace).updateWorkspace();
 
             if (newWorkSpace == null) {
                 initError(ErrorCode.INTERNAL_ERROR);

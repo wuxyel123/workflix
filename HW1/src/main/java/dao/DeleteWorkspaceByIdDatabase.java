@@ -4,7 +4,7 @@ import resource.WorkSpace;
 
 import java.sql.*;
 
-public class WorkspaceDeleteByIdDatabase {
+public class DeleteWorkspaceByIdDatabase {
 
     /**
      * The SQL statement to be executed
@@ -20,7 +20,7 @@ public class WorkspaceDeleteByIdDatabase {
      */
     WorkSpace workspace;
 
-    public WorkspaceDeleteByIdDatabase(final Connection con, final WorkSpace workspace) {
+    public DeleteWorkspaceByIdDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }

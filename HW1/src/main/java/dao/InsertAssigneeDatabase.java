@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AddAssigneeDatabase {
+public class InsertAssigneeDatabase {
 
     /**
      * The SQL statement to be executed
@@ -23,7 +23,7 @@ public class AddAssigneeDatabase {
      */
     Assignee assignee;
 
-    public AddAssigneeDatabase(final Connection con, final Assignee assignee) {
+    public InsertAssigneeDatabase(final Connection con, final Assignee assignee) {
         this.con = con;
         this.assignee = assignee;
     }

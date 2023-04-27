@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserWorkspaceDeleteDatabase {
+public class DeleteUserWorkspaceDatabase {
 
     /**
      * The SQL statement to be executed
@@ -23,7 +23,7 @@ public class UserWorkspaceDeleteDatabase {
      */
     UserWorkspace userWorkspace;
 
-    public UserWorkspaceDeleteDatabase(final Connection con, final UserWorkspace userWorkspace) {
+    public DeleteUserWorkspaceDatabase(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }
