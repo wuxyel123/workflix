@@ -17,7 +17,7 @@ public class TemplateServlet extends AbstractServlet{
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("template") + 5);
+        op = op.substring(op.lastIndexOf("template") + 9);
 
         switch (op){
             case "edit/":
@@ -65,13 +65,13 @@ public class TemplateServlet extends AbstractServlet{
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("edit")+5);
+        op = op.substring(op.lastIndexOf("template")+9);
 
         switch (op){
-            case "update/":
+            case "/update":
                 updateOperations(req, res);
                 break;
-            case "create/":
+            case "/create":
                 insertionOperations(req, res);
                 break;
             default:
@@ -94,12 +94,12 @@ public class TemplateServlet extends AbstractServlet{
             String template_name = req.getParameter("template_name");
             Template template;
             ErrorCode ec = null;
-            String dispatchPage = null;
+//            String dispatchPage = null;
             boolean addTemplate = true;
             if (template_name == null || template_name.equals("") || Image_url == null || Image_url.equals("")) {
                 ec = ErrorCode.TEMPLATE_NOT_FOUND;
                 m = new Message(true, ec.getErrorMessage());
-                dispatchPage = "/jsp/builder-area/edit-park.jsp";
+//                dispatchPage = "/jsp/builder-area/edit-park.jsp";
             } else {
                 template=new Template();
                 template.setImageUrl(Image_url);
@@ -110,7 +110,7 @@ public class TemplateServlet extends AbstractServlet{
                     if (template != null) {
                         m = new Message(true, "Park inserted correctly");
                         ec = ErrorCode.OK;
-                        dispatchPage = "/jsp/message-page.jsp";
+//                        dispatchPage = "/jsp/message-page.jsp";
                     } else {
                         writeError(res, ErrorCode.INTERNAL_ERROR);
                         logger.error("unknown error: " + req.getRequestURL());
@@ -120,7 +120,7 @@ public class TemplateServlet extends AbstractServlet{
 
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher(dispatchPage).forward(req, res);
+//            req.getRequestDispatcher(dispatchPage).forward(req, res);
 
         } catch (NamingException | SQLException e){
             writeError(res, ErrorCode.INTERNAL_ERROR);
@@ -130,29 +130,25 @@ public class TemplateServlet extends AbstractServlet{
 
     private void updateOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try {
-            String image_url = req.getParameter("image_url");
-            String template_name = req.getParameter("template_name");
+            String template_id = req.getParameter("template_id");
             Template template;
             ErrorCode ec = null;
             Message m = null;
-            String dispatchPage = null;
             boolean updateTemplate = true;
 
-            if (template_name == null || template_name.equals("") || image_url == null || image_url.equals("")) {
+            if (template_id == null || template_id.equals("")) {
                 updateTemplate=false;
-                ec = ErrorCode.TEMPLATE_INFORMATION_MISSING;
+                ec = ErrorCode.BAD_REQUEST;
                 m = new Message(true, ec.getErrorMessage());
-                dispatchPage = "/jsp/builder-area/edit-park.jsp";
             } else {
                 template=new Template();
-                template.setImageUrl(image_url);
-                template.setTemplateName(template_name);
+                int id=Integer.parseInt(template_id);
+                template.setTemplateId(id);
 
-                if (new GetTemplateByNameDatabase(getDataSource().getConnection(), template).getTemplateByName()==null){
+                if (new GetTemplateByIdDatabase(getDataSource().getConnection(), template).getTemplateById()==null){
                     updateTemplate = false;
-                    ec = ErrorCode.INTERNAL_ERROR;
+                    ec = ErrorCode.TEMPLATE_NOT_FOUND;
                     m = new Message(true, ec.getErrorMessage());
-                    dispatchPage = "/jsp/builder-area/edit-park.jsp";
                 }
 
                 if (updateTemplate){
@@ -160,7 +156,6 @@ public class TemplateServlet extends AbstractServlet{
                     if (template!=null) {
                         ec = ErrorCode.OK;
                         m = new Message(true, "template updated correctly");
-                        dispatchPage= "/jsp/message-page.jsp";
                     } else {
                         writeError(res, ErrorCode.INTERNAL_ERROR);
                         logger.error("problem when updating template: " + req.getRequestURL());
@@ -170,7 +165,7 @@ public class TemplateServlet extends AbstractServlet{
 
             req.setAttribute("message", m);
             res.setStatus(ec.getHTTPCode());
-            req.getRequestDispatcher(dispatchPage).forward(req, res);
+//            req.getRequestDispatcher(dispatchPage).forward(req, res);
 
         } catch (NamingException | SQLException e) {
             writeError(res, ErrorCode.INTERNAL_ERROR);
@@ -179,18 +174,19 @@ public class TemplateServlet extends AbstractServlet{
     }
 
     private void deleteOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        String template_name = req.getParameter("template_name");
+        String template_id = req.getParameter("template_id");
         Template template;
         try {
-            if (template_name == null || template_name.equals("")) {
+            if (template_id == null || template_id.equals("")) {
                 Message m = new Message(true, "template not found");
-                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                ErrorCode ec = ErrorCode.TEMPLATE_NOT_FOUND;
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/builder-area/edit-park.jsp").forward(req, res);
+//                req.getRequestDispatcher("/jsp/builder-area/edit-park.jsp").forward(req, res);
             } else {
                 template=new Template();
-                template.setTemplateName(template_name);
+                int id=Integer.parseInt(template_id);
+                template.setTemplateId(id);
 
                 template = new DeleteTemplateDatabase(getDataSource().getConnection(), template).deleteTemplate();
                 if (template != null) {

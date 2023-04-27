@@ -16,7 +16,7 @@ import java.util.List;
 public class AnalyticsServlet extends AbstractServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("analytics") + 5);
+        op = op.substring(op.lastIndexOf("analytics") + 10);
 
         switch (op) {
             case "get/":
@@ -26,6 +26,7 @@ public class AnalyticsServlet extends AbstractServlet {
                 }
                 try {
                     Analytics analytics = new Analytics();
+                    analytics.setWorkspaceId(workspace_id);
                     analytics = new GetAnalyticsDatabaseByWorkspaceId(getDataSource().getConnection(), analytics).getAnalytics();
                     if (analytics == null) {
                         ErrorCode ec = ErrorCode.ANALYTICS_NOT_FOUND;
@@ -34,7 +35,6 @@ public class AnalyticsServlet extends AbstractServlet {
                     } else {
                         req.setAttribute("analytics", analytics);
                         res.setStatus(200);
-//                        req.getRequestDispatcher("/jsp/builder-area/edit-model.jsp").forward(req, res);
                     }
                 } catch (NamingException | SQLException e) {
                     writeError(res, ErrorCode.INTERNAL_ERROR);
