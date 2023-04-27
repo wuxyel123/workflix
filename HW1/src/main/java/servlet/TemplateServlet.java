@@ -68,10 +68,10 @@ public class TemplateServlet extends AbstractServlet{
         op = op.substring(op.lastIndexOf("template")+9);
 
         switch (op){
-            case "/update":
+            case "update/":
                 updateOperations(req, res);
                 break;
-            case "/create":
+            case "create/":
                 insertionOperations(req, res);
                 break;
             default:
