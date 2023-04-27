@@ -42,7 +42,7 @@ public class UpdateBoardDatabase {
 
             if (rs.next()) {
                 newBoard = new Board();
-                newBoard.setCreateTime(LocalDateTime.parse(rs.getString(Board.CREATE_TIME)));
+                newBoard.setCreateTime(rs.getDate(Board.CREATE_TIME));
                 newBoard.setVisibility(rs.getString(Board.VISIBILITY));
                 newBoard.setDescription(rs.getString(Board.DESCRIPTION));
                 newBoard.setName(rs.getString(Board.NAME));

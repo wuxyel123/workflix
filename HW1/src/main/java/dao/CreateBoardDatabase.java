@@ -38,7 +38,7 @@ public class CreateBoardDatabase {
 
             if (rs.next()) {
                 addBoard = new Board();
-                addBoard.setCreateTime(LocalDateTime.parse(rs.getString(Board.CREATE_TIME)));
+                addBoard.setCreateTime(rs.getDate(Board.CREATE_TIME));
                 addBoard.setVisibility(rs.getString(Board.VISIBILITY));
                 addBoard.setDescription(rs.getString(Board.DESCRIPTION));
                 addBoard.setName(rs.getString(Board.NAME));
