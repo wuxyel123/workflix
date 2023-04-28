@@ -67,6 +67,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              *  user/update/{userid}
              *  user/update/{userid}/password
              *  user/{userid}
+             *  user/{userid}/workspaces
              * */
             // user/login
             if (tokens.length==4 && tokens[3].equals("login")){
@@ -110,14 +111,23 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
             // user/{userid}
             else if (tokens.length==4 && Integer.parseInt(tokens[3])%1==0){
-                Integer.parseInt(tokens[4]);
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetUserFromId();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
-            } else {
-                return  false;
+            }
+
+            // user/{userid}/workspaces
+            else if (tokens.length==5 && tokens[4].equals("workspaces")){
+                WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetWorkSpacesByUserId();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            else{
+                return false;
             }
 
         }
