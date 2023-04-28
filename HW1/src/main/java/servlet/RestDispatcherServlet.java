@@ -35,6 +35,10 @@ public class RestDispatcherServlet extends AbstractServlet{
         if (processBoard(req, res)) {
             return;
         }
+
+        if (processSubboard(req, res)) {
+            return;
+        }
         String op = req.getRequestURI();
         writeError(res, ErrorCode.OPERATION_UNKNOWN);
         logger.warn("requested op " + op);
@@ -278,24 +282,43 @@ public class RestDispatcherServlet extends AbstractServlet{
              * Activity APIs are:
              * activity/comment/get
              * activity/comment/add
+             * activity/comment/delete/{commentid}
+             * activity/comment/update/{commentid}
              **/
 
-            // assignee/get
+            // activity/comment/get
             if (tokens.length == 5 && tokens[4].equals("get")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
-                    case "GET" -> urr.getComments();
+                    case "GET" -> urr.GetComments();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // assignee/add
+            // activity/comment/add
             else if (tokens.length == 5 && tokens[4].equals("add")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
-                    case "POST" -> urr.addComments();
+                    case "POST" -> urr.AddComments();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
-            } else {
+            }
+            // activity/comment/delete/{commentid}
+            else if (tokens.length == 5 && tokens[4].equals("delete")) {
+                CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "DELETE" -> urr.DeleteComment();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            // activity/comment/update/{commentid}
+            else if (tokens.length == 5 && tokens[3].equals("update")) {
+                CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "PUT" -> urr.UpdateComment();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            else {
                 return false;
             }
 
@@ -450,4 +473,73 @@ public class RestDispatcherServlet extends AbstractServlet{
         return true;
     }
 
+    /**
+     * Process subboard dispatcher
+     * @param req Request
+     * @param res Response
+     * @return true if the operation is processed, false otherwise
+     * @throws IOException Error in IO operations
+     * */
+    private boolean processSubboard(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        String op = req.getRequestURI();
+        String[] tokens = op.split("/");
+        // the first token will always be the empty;
+        // the second will be the context;
+        // the third should be "activity";
+        if (tokens.length < 5 || !tokens[4].equals("subboard")) {
+            return false;
+        }
+        try {
+            /**
+             * Subboard APIs are:
+             * subboard/{subboardid}
+             * subboard/create
+             * subboard/delete/{subboardid}
+             * subboard/update/{subboardid}
+             **/
+
+            // subboard/{subboardid}
+            if (tokens.length == 4 && Integer.parseInt(tokens[3])%1==0) {
+                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetSubboardById();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            // subboard/create
+            else if (tokens.length == 4 && tokens[3].equals("create")) {
+                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "POST" -> urr.CreateSubboard();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            // subboard/delete/{subboardid}
+            else if (tokens.length == 5 && tokens[3].equals("delete")) {
+                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "DELETE" -> urr.DeleteSubboard();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            // subboard/update/{subboardid}
+            else if (tokens.length == 5 && tokens[3].equals("update")) {
+                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "POST" -> urr.UpdateSubboards();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }else {
+                return false;
+            }
+
+        } catch (NumberFormatException e) {
+            writeError(res, ErrorCode.WRONG_REST_FORMAT);
+        } catch (NamingException | SQLException e) {
+            writeError(res, ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        }
+
+        return true;
+    }
 }
