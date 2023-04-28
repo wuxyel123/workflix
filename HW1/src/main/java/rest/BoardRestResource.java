@@ -68,7 +68,6 @@ public class BoardRestResource extends RestResource{
     public void DeleteBoard() throws IOException {
         try {
             Board board = new Board();
-
             board.setBoardId(Integer.parseInt(tokens[5]));
             if (new DeleteBoardDatabase(con, board).deleteBoard() == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
