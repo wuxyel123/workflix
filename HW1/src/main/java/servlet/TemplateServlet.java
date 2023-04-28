@@ -17,15 +17,16 @@ public class TemplateServlet extends AbstractServlet{
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("template") + 9);
+        op = op.substring(op.lastIndexOf("template") + 8);
 
         switch (op){
-            case "get/":
+            case "/":
                 try{
                     List<Template> templates = new GetTemplatesDatabase(getDataSource().getConnection()).getTemplates();
                     JSONObject resJSON = new JSONObject();
                     resJSON.put("template-list", templates);
-                    res.setStatus(HttpServletResponse.SC_OK);
+                    ErrorCode ec = ErrorCode.OK;
+                    res.setStatus(ec.getHTTPCode());
                     res.setContentType("application/json");
                     res.getWriter().write((new JSONObject()).put("data", resJSON).toString());
                 } catch (NamingException | SQLException e){
@@ -42,13 +43,13 @@ public class TemplateServlet extends AbstractServlet{
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("template")+9);
+        op = op.substring(op.lastIndexOf("template")+8);
 
         switch (op){
-            case "update/":
+            case "/update":
                 updateOperations(req, res);
                 break;
-            case "create/":
+            case "/create":
                 insertionOperations(req, res);
                 break;
             default:
@@ -60,7 +61,16 @@ public class TemplateServlet extends AbstractServlet{
 
     @Override
     public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-        deleteOperations(req, res);
+        String op = req.getRequestURI();
+        op = op.substring(op.lastIndexOf("template")+8);
+        switch (op){
+            case "/delete":
+                deleteOperations(req, res);
+                break;
+            default:
+                writeError(res, ErrorCode.INTERNAL_ERROR);
+                logger.warn("requested op "+op);
+        }
     }
 
 
@@ -71,12 +81,10 @@ public class TemplateServlet extends AbstractServlet{
             String template_name = req.getParameter("template_name");
             Template template;
             ErrorCode ec = null;
-//            String dispatchPage = null;
             boolean addTemplate = true;
             if (template_name == null || template_name.equals("") || image_url == null || image_url.equals("")) {
                 ec = ErrorCode.TEMPLATE_INFORMATION_MISSING;
                 m = new Message(true, ec.getErrorMessage());
-//                dispatchPage = "/jsp/builder-area/edit-park.jsp";
             } else {
                 template=new Template();
                 template.setImageUrl(image_url);
@@ -117,7 +125,7 @@ public class TemplateServlet extends AbstractServlet{
 
             if (template_id == null || template_id.equals("")) {
                 updateTemplate=false;
-                ec = ErrorCode.BAD_REQUEST;
+                ec = ErrorCode.TEMPLATE_INFORMATION_MISSING;
                 m = new Message(true, ec.getErrorMessage());
             } else {
                 template=new Template();
@@ -144,7 +152,6 @@ public class TemplateServlet extends AbstractServlet{
 
             req.setAttribute("message", m);
             res.setStatus(ec.getHTTPCode());
-//            req.getRequestDispatcher(dispatchPage).forward(req, res);
 
         } catch (NamingException | SQLException e) {
             writeError(res, ErrorCode.INTERNAL_ERROR);
@@ -161,18 +168,15 @@ public class TemplateServlet extends AbstractServlet{
                 ErrorCode ec = ErrorCode.TEMPLATE_NOT_FOUND;
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-//                req.getRequestDispatcher("/jsp/builder-area/edit-park.jsp").forward(req, res);
             } else {
                 template=new Template();
                 int id=Integer.parseInt(template_id);
                 template.setTemplateId(id);
-
                 template = new DeleteTemplateDatabase(getDataSource().getConnection(), template).deleteTemplate();
                 if (template != null) {
                     logger.error("template deleted correctly");
                     Message m = new Message(true, "template deleted correctly");
                     res.setStatus(HttpServletResponse.SC_OK);
-
                     res.getWriter().write(m.toJSON().toString());
                 } else {
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
