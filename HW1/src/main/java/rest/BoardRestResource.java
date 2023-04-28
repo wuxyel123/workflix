@@ -30,7 +30,7 @@ public class BoardRestResource extends RestResource{
     public void GetBoardById() throws IOException {
         try {
             Board board = new Board();
-            board.setBoardId(Integer.parseInt(tokens[6]));
+            board.setBoardId(Integer.parseInt(tokens[3]));
             if (new GetBoardByIdDatabase(con, board).getBoardById() == null) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {

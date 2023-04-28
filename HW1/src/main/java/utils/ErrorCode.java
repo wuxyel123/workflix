@@ -51,7 +51,8 @@ public enum ErrorCode {
     ANALYTICS_NOT_FOUND(-400,HttpServletResponse.SC_NOT_FOUND, "Analytics not found."),
     TEMPLATE_CREATED(-500,HttpServletResponse.SC_NOT_FOUND, "Template inserted correctly."),
     TEMPLATE_NAME_ALREADY_EXIST(-600, HttpServletResponse.SC_CONFLICT, "Template already exists."),
-    BOARD_NOT_FOUND(-700,HttpServletResponse.SC_NOT_FOUND, "Board not found."),;
+    BOARD_NOT_FOUND(-700,HttpServletResponse.SC_NOT_FOUND, "Board not found."),
+    SUBBOARD_NOT_FOUND(-800,HttpServletResponse.SC_NOT_FOUND, "Subboard not found."),;
 
     private final int errorCode;
     private final int httpCode;
