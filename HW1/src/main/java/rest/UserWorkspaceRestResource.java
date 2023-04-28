@@ -3,6 +3,7 @@ package rest;
 import dao.InsertUserWorkspaceDatabase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import resource.User;
 import utils.ErrorCode;
 import dao.DeleteUserWorkspaceDatabase;
 import dao.UpdateUserPermissionDatabase;
@@ -31,7 +32,7 @@ public class UserWorkspaceRestResource extends RestResource{
         try {
         	UserWorkspace userWorkSpace = new UserWorkspace();
 
-            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[5]));
+            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
             if (new DeleteUserWorkspaceDatabase(con, userWorkSpace).userWorkspaceDelete()==null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
@@ -47,11 +48,8 @@ public class UserWorkspaceRestResource extends RestResource{
 
     public void CreateUserWorkSpace() throws IOException{
         try {
-            UserWorkspace userWorkSpace = new UserWorkspace();
 
-            userWorkSpace.setUserId(Integer.parseInt(tokens[5]));
-            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[6]));
-            userWorkSpace.setPermissionId(Integer.parseInt(tokens[7]));
+            UserWorkspace userWorkSpace = UserWorkspace.fromJSON(req.getInputStream());
 
             if (new InsertUserWorkspaceDatabase(con, userWorkSpace).insertUserWorkspace()==null) {
                 initError(ErrorCode.INTERNAL_ERROR);
@@ -68,12 +66,8 @@ public class UserWorkspaceRestResource extends RestResource{
 
     public void AssignUserPermission() throws IOException{
         try {
-            UserWorkspace userWorkSpace = new UserWorkspace();
-
-            userWorkSpace.setUserId(Integer.parseInt(tokens[5]));
-            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[6]));
-            userWorkSpace.setPermissionId(Integer.parseInt(tokens[7]));
-
+            UserWorkspace userWorkSpace = UserWorkspace.fromJSON(req.getInputStream());
+            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
 
             if (new UpdateUserPermissionDatabase(con, userWorkSpace).workspaceAssignuserpermission()==null) {
                 initError(ErrorCode.INTERNAL_ERROR);
@@ -86,6 +80,28 @@ public class UserWorkspaceRestResource extends RestResource{
         } finally { respond(); }
 
     }
+
+    /**Add user
+     * */
+    public void AddUser() throws IOException{
+        try {
+            UserWorkspace userWorkSpace = UserWorkspace.fromJSON(req.getInputStream());
+            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
+
+            if (new InsertUserWorkspaceDatabase(con, userWorkSpace).insertUserWorkspace()==null) {
+                initError(ErrorCode.INTERNAL_ERROR);
+            } else {
+                ec = ErrorCode.OK;
+            }
+        } catch (SQLException e){
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally { respond(); }
+
+    }
+
+
+
 
 
 
