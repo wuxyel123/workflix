@@ -16,7 +16,6 @@ public class GetAssigneeDatabase {
     /**
      * The SQL statement to be executed
      */
-    //TODO Put a correct query here
     private static final String STATEMENT = "SELECT u.user_id, u.username, u.profile_picture FROM users u JOIN assignee a ON u.user_id = a.user_id WHERE a.activity_id =? ;";
     /**
      * The connection to the database
