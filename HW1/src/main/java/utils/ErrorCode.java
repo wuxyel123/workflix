@@ -15,13 +15,8 @@ public enum ErrorCode {
     COMMENT_NOT_FOUND(-109, HttpServletResponse.SC_NOT_FOUND, "Comment not found."),
     ANALYTICS_NOT_FOUND(-106,HttpServletResponse.SC_NOT_FOUND, "Analytics not found."),
     WORKSPACE_NOT_FOUND(-107,HttpServletResponse.SC_NOT_FOUND, "Workspace not found."),
-    TEMPLATE_CREATED(-200,HttpServletResponse.SC_CREATED, "Template inserted correctly."),
-    USER_CREATED(-201,HttpServletResponse.SC_CREATED, "User inserted correctly."),
-    WORKSPACE_CREATED(-202,HttpServletResponse.SC_CREATED, "workspace inserted correctly."),
-    BOARD_CREATED(-203,HttpServletResponse.SC_CREATED, "board inserted correctly."),
-    COMMENT_CREATED(-204,HttpServletResponse.SC_CREATED, "comment inserted correctly."),
-
-
+    BOARD_NOT_FOUND(-110, HttpServletResponse.SC_NOT_FOUND, "Board not found."),
+    SUBBOARD_NOT_FOUND(-111, HttpServletResponse.SC_NOT_FOUND, "Subboard not found."),
     INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error."),
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
     WRONG_REST_FORMAT(-1002, HttpServletResponse.SC_BAD_REQUEST, "Wrong REST format."),

@@ -94,7 +94,7 @@ public class TemplateServlet extends AbstractServlet{
                     template = new InsertTemplateDatabase(getDataSource().getConnection(), template).insertTemplate();
                     if (template != null) {
                         m = new Message(false, ec.getErrorMessage());
-                        ec = ErrorCode.TEMPLATE_CREATED;
+                        ec = ErrorCode.OK;
                     } else if (new GetTemplateByNameDatabase(getDataSource().getConnection(), template).getTemplateByName()==null) {
                         ec = ErrorCode.TEMPLATE_NAME_ALREADY_EXIST;
                         req.setAttribute("message", new Message(true, ec.getErrorMessage()));
