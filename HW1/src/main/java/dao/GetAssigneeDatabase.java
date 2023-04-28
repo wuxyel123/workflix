@@ -1,19 +1,22 @@
 package dao;
 
 import resource.Assignee;
+import resource.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GetAssigneeDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    //TODO Put a correct query here
-    private static final String STATEMENT = "SELECT * FROM workflix.assignee WHERE activity_id=? AND user_id=?;";
+    private static final String STATEMENT = "SELECT u.user_id, u.username, u.profile_picture FROM users u JOIN assignee a ON u.user_id = a.user_id WHERE a.activity_id =? ;";
     /**
      * The connection to the database
      */
@@ -29,22 +32,23 @@ public class GetAssigneeDatabase {
         this.assignee = assignee;
     }
 
-    public Assignee getAssignee() throws SQLException {
+    public List<User> getAssignee() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Assignee getAssignee = null;
+        List<User> users = new ArrayList<>();
 
         try {
             ps = con.prepareStatement(STATEMENT);
             ps.setInt(1, assignee.getActivityId());
-            ps.setInt(2, assignee.getUserId());
 
             rs = ps.executeQuery();
 
-            if (rs.next()) {
-                getAssignee = new Assignee();
-                getAssignee.setActivityId(rs.getInt(Assignee.ACTIVITY_ID));
-                getAssignee.setUserId(rs.getInt(Assignee.USER_ID));
+            while (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt(User.USER_ID));
+                user.setUsername(rs.getString(User.USERNAME));
+                user.setProfilePicture(rs.getString(User.PROFILE_PICTURE));
+                users.add(user);
             }
 
         } finally {
@@ -56,6 +60,6 @@ public class GetAssigneeDatabase {
             }
             con.close();
         }
-        return getAssignee;
+        return users;
     }
 }
