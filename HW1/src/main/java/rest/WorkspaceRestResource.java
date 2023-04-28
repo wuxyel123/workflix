@@ -1,13 +1,10 @@
 package rest;
 
+import dao.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import resource.User;
 import utils.ErrorCode;
-
-import dao.DeleteWorkspaceByIdDatabase;
-import dao.InsertWorkspaceDatabase;
-import dao.GetWorkspaceByIdDatabase;
-import dao.UpdateWorkspaceDatabase;
 
 import resource.WorkSpace;
 
@@ -53,7 +50,7 @@ public class WorkspaceRestResource extends RestResource {
             WorkSpace newWorkSpace = new InsertWorkspaceDatabase(con, workSpace).insertWorkspace();
 
             if (newWorkSpace == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");
@@ -69,7 +66,10 @@ public class WorkspaceRestResource extends RestResource {
     }
 
 
-
+    /**
+     * GetWorkSpace by id
+     * @throws IOException
+     * */
     public void GetWorkSpace() throws IOException {
         try {
             WorkSpace workSpace = new WorkSpace();
@@ -77,7 +77,7 @@ public class WorkspaceRestResource extends RestResource {
             workSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
 
             if (new GetWorkspaceByIdDatabase(con, workSpace).getWorkspaceById() == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
             }
@@ -88,6 +88,28 @@ public class WorkspaceRestResource extends RestResource {
             respond();
         }
 
+    }
+
+    /**
+     * Get workspaces by user id
+     * @throws IOException
+     */
+    public void GetWorkSpacesByUserId() throws IOException {
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            user.setUserId(Integer.parseInt(tokens[3]));
+
+            if (new GetWorkspaceByUserIdDatabase(con, user).getWorkspaceByUserId() == null) {
+                initError(ErrorCode.INTERNAL_ERROR);
+            } else {
+                ec = ErrorCode.OK;
+            }
+        } catch (SQLException e) {
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally {
+            respond();
+        }
     }
 
 
