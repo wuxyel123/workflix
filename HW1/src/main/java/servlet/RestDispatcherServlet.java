@@ -67,6 +67,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              *  user/update/{userid}
              *  user/update/{userid}/password
              *  user/{userid}
+             *  user/{userid}/workspaces
              * */
             // user/login
             if (tokens.length==4 && tokens[3].equals("login")){
@@ -110,14 +111,23 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
             // user/{userid}
             else if (tokens.length==4 && Integer.parseInt(tokens[3])%1==0){
-                Integer.parseInt(tokens[4]);
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetUserFromId();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
-            } else {
-                return  false;
+            }
+
+            // user/{userid}/workspaces
+            else if (tokens.length==5 && tokens[4].equals("workspaces")){
+                WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetWorkSpacesByUserId();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            else{
+                return false;
             }
 
         }
@@ -159,6 +169,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              * /workspace/{workspaceid}/adduser
              * /workspace/{workspaceid}/removeuser
              * workspace/[workspaceid}/assignuserpermission
+             * /workspace/{workspaceid}/boards
              **/
 
             // workspace/{workspaceid}
@@ -220,6 +231,15 @@ public class RestDispatcherServlet extends AbstractServlet{
                 UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.AssignUserPermission();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+
+            // /workspace/{workspaceid}/boards
+            else if (tokens.length == 5 && tokens[4].equals("boards")) {
+                BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetBoardsByWorkspaceId();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             } else {
@@ -372,37 +392,48 @@ public class RestDispatcherServlet extends AbstractServlet{
              * Board/{boardid}
              * board/create
              * board/update/{boardid}
+             * board/delete/{boardid}
+             * board/{boardid}/subboards
              **/
 
-            // board/get
-            if (tokens.length == 5 && tokens[4].equals("get")) {
+            // Board/{boardid}
+            if (tokens.length == 4 && Integer.parseInt(tokens[3])%1==0) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
-                    //case "GET" -> urr.get();
+                    case "GET" -> urr.GetBoardById();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
             // board/create
-            else if (tokens.length == 5 && tokens[4].equals("add")) {
+            else if (tokens.length == 4 && tokens[3].equals("create")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateBoard();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // board/delete
-            else if (tokens.length == 5 && tokens[3].equals("remove")) {
+            // board/delete/{boardid}
+            else if (tokens.length == 5 && tokens[3].equals("delete")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteBoard();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // board/update
+            // board/update/{boardid}
             else if (tokens.length == 5 && tokens[3].equals("update")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.UpdateBoard();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+
+            // board/{boardid}/subboards
+            else if (tokens.length == 5 && tokens[4].equals("subboards")) {
+                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetSubboardsByBoardId();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             } else {

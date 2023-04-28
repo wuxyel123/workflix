@@ -16,7 +16,7 @@ public class GetAssigneeDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT u.user_id, u.username, u.profile_picture FROM users u JOIN assignee a ON u.user_id = a.user_id WHERE a.activity_id =? ;";
+    private static final String STATEMENT = "SELECT u.user_id, u.username, u.profile_picture FROM workflix.users u JOIN workflix.assignee a ON u.user_id = a.user_id WHERE a.activity_id =? ;";
     /**
      * The connection to the database
      */

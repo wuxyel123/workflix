@@ -3,7 +3,11 @@
 In WorkFlix web application project, we have implemented several apis using servlet and REST. In this section, two apis, as examples, are explained with details.
 
 
+<<<<<<< HEAD
 \noindent\textbf{Users}\\
+=======
+\noindent\textbf{User}\\
+>>>>>>> 9cc721dbc99f18404e1771afee44e40a18df8b06
 The following endpoint allows to register a new user.
 
 \begin{itemize}
@@ -81,4 +85,40 @@ The following endpoint allows to create a template.
     
 \end{itemize}
 
+<<<<<<< HEAD
+=======
+\noindent\textbf{Analytics}\\
+The following endpoint allows to get analytics.
+
+\begin{itemize}
+    \item URL: \texttt{analytics/get}
+    \item Method: \texttt{GET}
+    \item URL Parameters: none
+    \item Data Parameters:
+    
+    Required:
+    \begin{itemize}
+        \item \texttt{image\_url = \{string\}}
+        \item \texttt{template\_name = \{string\}}
+    \end{itemize}
+    
+    
+    \item Success Response:\\
+    Code: 201 CREATED\\
+    Content: \texttt{\{``error'': \{``code'': 0, ``message'' : ``ok''\}}\\
+    
+    \item Error Response:\\
+
+    Code: 404 NOT\_FOUND\\
+    Content: \texttt{\{``error'': \{``code'': 404, ``message'' : ``WorkSpace not found''\}}\\
+
+    Code: 404 NOT\_FOUND\\
+    Content: \texttt{\{``error'': \{``code'': 404, ``message'' : ``Analytics not found''\}}\\
+
+    Code: 500 INTERNAL\_SERVER\_ERROR\\
+    Content: \texttt{\{``error'': \{``code'': -999, ``message'' : ``Internal Error.''\}}\\
+    When: if there is a \texttt{SQLException} or a \texttt{NamingException}, this error is return.\\
+    
+\end{itemize}
+>>>>>>> 9cc721dbc99f18404e1771afee44e40a18df8b06
 
