@@ -393,6 +393,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              * board/create
              * board/update/{boardid}
              * board/delete/{boardid}
+             * board/{boardid}/subboards
              **/
 
             // Board/{boardid}
@@ -424,6 +425,15 @@ public class RestDispatcherServlet extends AbstractServlet{
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.UpdateBoard();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+
+            // board/{boardid}/subboards
+            else if (tokens.length == 5 && tokens[4].equals("subboards")) {
+                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetSubboardsByBoardId();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             } else {
