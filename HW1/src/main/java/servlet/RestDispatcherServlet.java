@@ -28,10 +28,6 @@ public class RestDispatcherServlet extends AbstractServlet{
             return;
         }
 
-        if(processUserWorkspace(req, res)){
-            return;
-        }
-
         if (processAssignee(req, res)) {
             return;
         }
@@ -113,7 +109,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // user/{userid}
-            else if (tokens.length==4 && Integer.parseInt(tokens[4])%1==0){
+            else if (tokens.length==4 && Integer.parseInt(tokens[3])%1==0){
                 Integer.parseInt(tokens[4]);
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
@@ -136,7 +132,14 @@ public class RestDispatcherServlet extends AbstractServlet{
 
         return true;
     }
-    
+
+    /**
+     * Process Workspace rest dispatcher
+     * @param req Request
+     * @param res Response
+     * @return true if the operation is processed, false otherwise
+     * @throws IOException Error in IO operations
+     * */
     private boolean processWorkspace(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String op = req.getRequestURI();
         String[] tokens = op.split("/");
@@ -149,45 +152,80 @@ public class RestDispatcherServlet extends AbstractServlet{
         try {
             /**
              * workspace APIs are:
-             * /workspace/get
-             * /workspace/add
-             * /workspace/remove
+             * /workspace/{workspaceid}
+             * /workspace/create
+             * /workspace/delete/{workspaceid}
+             * /workspace/update/{workspaceid}
+             * /workspace/{workspaceid}/adduser
+             * /workspace/{workspaceid}/removeuser
+             * workspace/[workspaceid}/assignuserpermission
              **/
 
-            // workspace/get
-            if (tokens.length == 5 && tokens[3].equals("get")) {
+            // workspace/{workspaceid}
+             if (tokens.length == 4 && Integer.parseInt(tokens[3]) % 1 == 0) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetWorkSpace();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // workspace/add
-            else if (tokens.length == 5 && tokens[3].equals("add")) {
+
+            // workspace/create
+            else if (tokens.length == 4 && tokens[3].equals("create")) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateWorkSpace();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // workspace/remove
-            else if (tokens.length == 5 && tokens[3].equals("remove")) {
+
+            // workspace/delete/{workspaceid}
+            else if (tokens.length == 5 && tokens[3].equals("delete")) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteWorkSpace();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // workspace/update
+
+            // workspace/update/{workspaceid}
             else if (tokens.length == 5 && tokens[3].equals("update")) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.UpdateWorkSpace();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
+            }
+
+            // /workspace/{workspaceid}/adduser
+            else if (tokens.length == 5 && tokens[5].equals("adduser")) {
+                UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "POST" -> urr.AddUser();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+
+            // /workspace/{workspaceid}/removeuser
+            else if (tokens.length == 5 && tokens[4].equals("removeuser")) {
+                UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "DELETE" -> urr.DeleteUserWorkSpace();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+
+            // /workspace/{workspaceid}/assignuserpermission
+            else if (tokens.length == 5 && tokens[4].equals("assignuserpermission")) {
+                UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "PUT" -> urr.AssignUserPermission();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
             } else {
                 return false;
             }
+
 
         } catch (NumberFormatException e) {
             writeError(res, ErrorCode.WRONG_REST_FORMAT);
@@ -199,6 +237,13 @@ public class RestDispatcherServlet extends AbstractServlet{
         return true;
     }
 
+    /**
+     * Process comment rest dispatcher
+     * @param req Request
+     * @param res Response
+     * @return true if the operation is processed, false otherwise
+     * @throws IOException Error in IO operations
+     * */
     private boolean processComment(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String op = req.getRequestURI();
         String[] tokens = op.split("/");
@@ -244,49 +289,13 @@ public class RestDispatcherServlet extends AbstractServlet{
         return true;
     }
 
-    private boolean processUserWorkspace(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        String op = req.getRequestURI();
-        String[] tokens = op.split("/");
-        // the first token will always be the empty;
-        // the second will be the context;
-        // the third should be "activity";
-        if (tokens.length < 5 || !tokens[4].equals("workspace")) {
-            return false;
-        }
-        try {
-            if (tokens.length == 5 && tokens[3].equals("remove")) {
-                UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
-                switch (req.getMethod()) {
-                    case "DELETE" -> urr.DeleteUserWorkSpace();
-                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
-                }
-            }
-            else if (tokens.length == 5 && tokens[3].equals("add")) {
-                UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
-                switch (req.getMethod()) {
-                    case "POST" -> urr.CreateUserWorkSpace();
-                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
-                }
-            }
-            else if (tokens.length == 5 && tokens[3].equals("AssignUser Permission")) {
-                UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
-                switch (req.getMethod()) {
-                    case "PUT" -> urr.AssignUserPermission();
-                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
-                }
-            } else {
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            writeError(res, ErrorCode.WRONG_REST_FORMAT);
-        } catch (NamingException | SQLException e) {
-            writeError(res, ErrorCode.INTERNAL_ERROR);
-            logger.error("stacktrace:", e);
-        }
-
-        return true;
-    }
-
+    /**
+     * Process assignee rest dispatcher
+     * @param req Request
+     * @param res Response
+     * @return true if the operation is processed, false otherwise
+     * @throws IOException Error in IO operations
+     * */
     private boolean processAssignee(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String op = req.getRequestURI();
         String[] tokens = op.split("/");
@@ -341,6 +350,13 @@ public class RestDispatcherServlet extends AbstractServlet{
         return true;
     }
 
+    /**
+     * Process user board dispatcher
+     * @param req Request
+     * @param res Response
+     * @return true if the operation is processed, false otherwise
+     * @throws IOException Error in IO operations
+     * */
     private boolean processBoard(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String op = req.getRequestURI();
         String[] tokens = op.split("/");
