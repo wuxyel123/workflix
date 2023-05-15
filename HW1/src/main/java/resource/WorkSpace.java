@@ -14,18 +14,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/** WorkSpace class, contains all the information about a workSpace */
 public class WorkSpace {
 
+    /** Set of constants with the same value as the DB field, useful in DAOs */
     public static final String WORKSPACE_ID = "workspace_id";
     public static final String WORKSPACE_NAME = "workspace_name";
     public static final String TEMPLATE_ID = "template_id";
     public static final String CREATION_TIME = "creation_time";
 
+    /** Set of private fields, each one is a DB field */
     private Integer workspaceId;
     private String workspaceName;
     private Integer templateId;
     private Date creationTime;
 
+    /** Getters and setters for each private field */
     public Integer getWorkspaceId() {
         return workspaceId;
     }

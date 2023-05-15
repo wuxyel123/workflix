@@ -10,10 +10,20 @@ import javax.naming.NamingException;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Description: Servlet for rest dispatcher
+ * Input: None
+ * Output: None
+ * Usage: Called by frontend
+ */
 public class RestDispatcherServlet extends AbstractServlet{
 
 
-
+    /**
+     * Service method for rest dispatcher
+     * Divide the request in different parts and call the right rest resource
+     * @see HttpServlet.HttpServlet()
+     */
     @Override
     public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         if(processUser(req, res)){

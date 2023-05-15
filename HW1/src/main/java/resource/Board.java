@@ -14,8 +14,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * Class representing a Board object
+ */
 public class Board {
+    /**
+     * Set of constants with the same value as the DB field, useful in DAOs
+     */
     public static final String BOARD_ID = "board_id";
     public static final String WORKSPACE_ID = "workspace_id";
     public static final String NAME = "name";
@@ -23,6 +28,9 @@ public class Board {
     public static final String VISIBILITY = "visibility";
     public static final String CREATE_TIME = "create_time";
 
+    /**
+     * Set of private fields, each one is a DB field
+     */
     private Integer boardId;
     private Integer workspaceId;
     private String name;
@@ -30,6 +38,9 @@ public class Board {
     private String visibility;
     private Date createTime;
 
+    /**
+     * Getters and setters for each private field
+     */
     public Integer getBoardId() {
         return boardId;
     }

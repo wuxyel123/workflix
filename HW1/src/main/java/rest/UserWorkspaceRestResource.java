@@ -14,20 +14,36 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This class represents the REST resource "/user"
+ */
 public class UserWorkspaceRestResource extends RestResource{
 
+    // The operation requested by the client
     protected final String op;
+    // The error code
     protected ErrorCode ec = null;
+    // The response
     protected String response = null;
+    // The tokens of the request
     protected final String[] tokens;
 
+    /**
+     * Constructor
+     * @param req The request
+     * @param res The response
+     * @param con The connection to the database
+     */
     public UserWorkspaceRestResource(HttpServletRequest req, HttpServletResponse res, Connection con) {
         super(req, res, con);
         op = req.getRequestURI();
         tokens = op.split("/");
     }
 
-
+    /**
+     * Create a user
+     * @throws IOException Error in IO operations
+     */
     public void DeleteUserWorkSpace() throws IOException{
         try {
         	UserWorkspace userWorkSpace = new UserWorkspace();
@@ -45,7 +61,10 @@ public class UserWorkspaceRestResource extends RestResource{
 
     }
 
-
+    /**
+     * Create a user
+     * @throws IOException Error in IO operations
+     */
     public void CreateUserWorkSpace() throws IOException{
         try {
 
@@ -63,7 +82,10 @@ public class UserWorkspaceRestResource extends RestResource{
 
     }
 
-
+    /**
+     * Create a user
+     * @throws IOException Error in IO operations
+     */
     public void AssignUserPermission() throws IOException{
         try {
             UserWorkspace userWorkSpace = UserWorkspace.fromJSON(req.getInputStream());
@@ -81,8 +103,10 @@ public class UserWorkspaceRestResource extends RestResource{
 
     }
 
-    /**Add user
-     * */
+    /**
+     * Create a user
+     * @throws IOException Error in IO operations
+     */
     public void AddUser() throws IOException{
         try {
             UserWorkspace userWorkSpace = UserWorkspace.fromJSON(req.getInputStream());

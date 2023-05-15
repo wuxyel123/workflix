@@ -13,7 +13,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Description: Servlet for analytics
+ * Input: None
+ * Output: None
+ * Usage: Called by frontend
+ */
 public class AnalyticsServlet extends AbstractServlet {
+
+    /**
+     * Manage analytics get requests
+     * @see HttpServlet.HttpServlet()
+     */
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("analytics") + 10);

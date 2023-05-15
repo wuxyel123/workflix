@@ -13,9 +13,14 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 
+/**
+ * Abstract servlet class
+ * */
 public class AbstractServlet extends HttpServlet {
 
+    // logger
     Logger logger;
+    // data source
     private static DataSource ds = null;
 
 

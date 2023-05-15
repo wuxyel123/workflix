@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+/** User class, contains all the information about a user
+ *
+ */
 public class User {
 
+    /** Set of constants with the same value as the DB field, useful in DAOs */
     public static final String USER_ID = "user_id";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
@@ -27,6 +30,7 @@ public class User {
     public static final String DESCRIPTION = "description";
     public static final String CREATE_DATE = "create_date";
 
+    /** Set of private fields, each one is a DB field */
     private Integer userId;
     private String username;
     private String password;
@@ -37,6 +41,7 @@ public class User {
     private String description;
     private Date createDate;
 
+    /** Getters and setters for each private field */
     public Integer getUserId() {
         return userId;
     }

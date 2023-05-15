@@ -11,21 +11,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-// user_id
-// workspace_id 
-// permission_id 
-
+/** UserWorkspace class, contains all the information about a userWorkspace */
 public class UserWorkspace {
 
     public static final String USER_ID = "user_id";
     public static final String WORKSPACE_ID = "workspace_id";
     public static final String PERMISSION_ID = "permission_id";
 
+    /** Set of private fields, each one is a DB field */
     private Integer userId;
     private Integer workspaceId;
     private Integer permissionId;
 
-
+    /** Getters and setters for each private field */
     public Integer getUserId() {
         return userId;
     }
@@ -37,7 +35,6 @@ public class UserWorkspace {
     public Integer getPermissionId() {
         return permissionId;
     }
-
 
     public void setUserId(Integer userId) {
         this.userId = userId;
@@ -51,6 +48,14 @@ public class UserWorkspace {
         this.permissionId = permissionId;
     }
 
+    /** Static method to create a UserWorkspace from a JSON
+     *
+     * @param inputStream InputStream from which the JSON is read
+     * @return UserWorkspace object created from the JSON
+     * @throws IOException if the inputStream throws it
+     * @throws JSONException if the JSON is not well formed
+     *
+     * */
     public static List<UserWorkspace> fromJSONlist(InputStream inputStream) throws IOException, JSONException {
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         JSONObject jobj = new JSONObject(dataString);
@@ -64,6 +69,14 @@ public class UserWorkspace {
         return userWorkspace;
     }
 
+    /** Static method to create a UserWorkspace from a JSON
+     *
+     * @param inputStream InputStream from which the JSON is read
+     * @return UserWorkspace object created from the JSON
+     * @throws IOException if the inputStream throws it
+     * @throws JSONException if the JSON is not well formed
+     *
+     * */
     public static UserWorkspace fromJSON(InputStream inputStream) throws IOException, JSONException {
         
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
@@ -71,7 +84,13 @@ public class UserWorkspace {
         return fromJSON(new JSONObject(dataString));
     }
 
-
+    /** Static method to create a UserWorkspace from a JSON
+     *
+     * @param jobj JSONObject from which the UserWorkspace is created
+     * @return UserWorkspace object created from the JSON
+     * @throws JSONException if the JSON is not well formed
+     *
+     * */
     public static UserWorkspace fromJSON(JSONObject jobj) throws JSONException {
         
         Integer userId = jobj.getInt(USER_ID);
@@ -87,6 +106,12 @@ public class UserWorkspace {
 
     }
 
+    /** Method to convert a UserWorkspace to a JSON
+     *
+     * @return JSONObject created from the UserWorkspace
+     * @throws JSONException if the JSON is not well formed
+     *
+     * */
     public JSONObject toJSON() throws JSONException {
         
         JSONObject userWorkspace = new JSONObject();

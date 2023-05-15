@@ -13,7 +13,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * Description: Servlet for templates
+ * Input: None
+ * Output: None
+ * Usage: Called by frontend
+ */
 public class TemplateServlet extends AbstractServlet{
+
+    /**
+     * Manage template get requests
+     * @see HttpServlet.HttpServlet()
+     */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String op = req.getRequestURI();
@@ -40,6 +51,10 @@ public class TemplateServlet extends AbstractServlet{
 
     }
 
+    /**
+     * Manage template post requests
+     * @see HttpServlet.HttpServlet()
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String op = req.getRequestURI();
@@ -59,6 +74,10 @@ public class TemplateServlet extends AbstractServlet{
 
     }
 
+    /**
+     * Manage template delete requests
+     * @see HttpServlet.HttpServlet()
+     */
     @Override
     public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String op = req.getRequestURI();
@@ -73,7 +92,10 @@ public class TemplateServlet extends AbstractServlet{
         }
     }
 
-
+    /**
+     * Manage template put requests
+     * @see HttpServlet.HttpServlet()
+     */
     private void insertionOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
         Message m = null;
         try {
@@ -115,6 +137,10 @@ public class TemplateServlet extends AbstractServlet{
         }
     }
 
+    /**
+     * Manage template update requests
+     * @see HttpServlet.HttpServlet()
+     */
     private void updateOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try {
             String template_id = req.getParameter("template_id");
@@ -159,6 +185,10 @@ public class TemplateServlet extends AbstractServlet{
         }
     }
 
+    /**
+     * Manage template delete requests
+     * @see HttpServlet.HttpServlet()
+     */
     private void deleteOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String template_id = req.getParameter("template_id");
         Template template;
