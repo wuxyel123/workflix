@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO class responsible for getting the assignee from the database
+ */
 public class GetAssigneeDatabase {
 
     /**
@@ -23,15 +26,27 @@ public class GetAssigneeDatabase {
     private final Connection con;
 
     /**
-     * The user to be searched
+     * The assignee to be searched
      */
     Assignee assignee;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param assignee   the assignee to be searched
+     */
     public GetAssigneeDatabase(final Connection con, final Assignee assignee) {
         this.con = con;
         this.assignee = assignee;
     }
 
+    /**
+     * Get the assignee from the database
+     *
+     * @return the assignee
+     * @throws SQLException if an error occurred while trying to get the assignee
+     */
     public List<User> getAssignee() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

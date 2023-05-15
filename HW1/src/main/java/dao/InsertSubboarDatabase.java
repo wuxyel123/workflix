@@ -8,12 +8,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for inserting a subboard to the database
+ */
 public class InsertSubboarDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO amupark.subboards (type, description, rideid, userid, date_performed, planned) VALUES(?::amupark.subboardscategories, ?, ?, ?, TO_DATE(?, 'YYYY/MM/DD'), ?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.subboards (board_id, name, index, default_completed_activity_subboard) VALUES(?,?,?,?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -24,11 +27,23 @@ public class InsertSubboarDatabase {
      */
     Subboard subboard;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be inserted
+     *
+     * @param con the connection to the database
+     * @param s   the subboards to be inserted
+     */
     public InsertSubboarDatabase(final Connection con, final Subboard s) {
         this.con = con;
         this.subboard = s;
     }
 
+    /**
+     * Inserts the subboard to the database
+     *
+     * @return the created subboards
+     * @throws SQLException if an error occurred during the database operation
+     */
     public Subboard insertSubboards() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -38,12 +53,10 @@ public class InsertSubboarDatabase {
         
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, subboard.getSubboardId());
-            pstmt.setInt(2, subboard.getBoardId());
-            pstmt.setString(3, subboard.getName());
-            pstmt.setInt(4, subboard.getIndex());
-            pstmt.setBoolean(5, subboard.getDefaultCompletedActivitySubboard());
-            pstmt.setDate(6, (Date) subboard.getCreationTime());
+            pstmt.setInt(1, subboard.getBoardId());
+            pstmt.setString(2, subboard.getName());
+            pstmt.setInt(3, subboard.getIndex());
+            pstmt.setBoolean(4, subboard.getDefaultCompletedActivitySubboard());
 
 
             rs = pstmt.executeQuery();

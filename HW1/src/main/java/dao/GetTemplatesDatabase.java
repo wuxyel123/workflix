@@ -9,14 +9,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** DAO class responsible for getting all templates from the database */
 public class GetTemplatesDatabase {
     private static final String STATEMENT= "SELECT * FROM workflix.template;";
     private final Connection connection;
 
+    /**
+     * Initialize the DAO object with a connection to the database
+     *
+     * @param connection the connection to the database
+     */
     public GetTemplatesDatabase(final Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Get all templates from the database
+     *
+     * @return the templates
+     * @throws SQLException if an error occurred while trying to get the templates
+     */
     public List<Template> getTemplates ()throws SQLException {
         PreparedStatement ps=null;
         ResultSet rs=null;

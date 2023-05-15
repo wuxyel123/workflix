@@ -4,6 +4,9 @@ import resource.WorkSpace;
 
 import java.sql.*;
 
+/**
+ * DAO class responsible for inserting a workspace to the database
+ */
 public class InsertWorkspaceDatabase {
 
     /**
@@ -20,11 +23,23 @@ public class InsertWorkspaceDatabase {
      */
     WorkSpace workspace;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be inserted
+     *
+     * @param con the connection to the database
+     * @param workspace   the user to be inserted
+     */
     public InsertWorkspaceDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }
 
+    /**
+     * Execute the SQL statement to insert the user to the database
+     *
+     * @return the created user
+     * @throws SQLException if any error occurred when inserting the user to the database
+     */
     public WorkSpace insertWorkspace() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;

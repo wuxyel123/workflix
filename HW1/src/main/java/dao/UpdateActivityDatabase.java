@@ -4,6 +4,9 @@ import resource.Activities;
 
 import java.sql.*;
 
+/**
+ * This class is responsible for updating an activity in the database
+ */
 public class UpdateActivityDatabase {
 
     /**
@@ -20,11 +23,23 @@ public class UpdateActivityDatabase {
      */
     Activities activity;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be updated
+     *
+     * @param con the connection to the database
+     * @param a   the activity to be updated
+     */
     public UpdateActivityDatabase(final Connection con, final Activities a) {
         this.con = con;
         this.activity = a;
     }
 
+    /**
+     * Update the activity in the database
+     *
+     * @return the updated activity
+     * @throws SQLException if an error occurred while trying to update the activity
+     */
     public Activities UpdateActivity() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

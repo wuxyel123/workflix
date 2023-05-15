@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for getting a template from the database
+ */
 public class GetTemplateByIdDatabase {
     /**
      * The SQL statement to be executed
@@ -18,15 +21,27 @@ public class GetTemplateByIdDatabase {
     private final Connection con;
 
     /**
-     * The park to be searched
+     * The template to be searched
      */
     Template template;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param template   the template to be searched
+     */
     public GetTemplateByIdDatabase(final Connection con, final Template template) {
         this.con = con;
         this.template=template;
     }
 
+    /**
+     * Get the template from the database
+     *
+     * @return the template
+     * @throws SQLException if an error occurred while trying to get the template
+     */
     public Template getTemplateById() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;

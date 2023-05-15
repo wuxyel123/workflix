@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for getting an activity from the database
+ */
 public class GetAnalyticsDatabaseByWorkspaceId {
 
     /**
@@ -22,11 +25,23 @@ public class GetAnalyticsDatabaseByWorkspaceId {
      */
     Analytics analytics;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param comments   the user to be searched
+     */
     public GetAnalyticsDatabaseByWorkspaceId(final Connection con, final Analytics comments) {
         this.con = con;
         this.analytics = analytics;
     }
 
+    /**
+     * Get the user from the database
+     *
+     * @return the user
+     * @throws SQLException if an error occurred while trying to get the user
+     */
     public Analytics getAnalytics() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

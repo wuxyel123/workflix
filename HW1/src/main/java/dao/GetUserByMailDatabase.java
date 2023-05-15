@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for getting a user from the database
+ */
 public class GetUserByMailDatabase {
 
     /**
@@ -23,11 +26,23 @@ public class GetUserByMailDatabase {
      */
     User user;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param u   the user to be searched
+     */
     public GetUserByMailDatabase(final Connection con, final User u) {
         this.con = con;
         this.user = u;
     }
 
+    /**
+     * Get the user from the database
+     *
+     * @return the user
+     * @throws SQLException if an error occurred while trying to get the user
+     */
     public User getUserByMail() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

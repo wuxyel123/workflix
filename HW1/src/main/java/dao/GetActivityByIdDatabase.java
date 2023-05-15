@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for getting an activity from the database
+ */
 public class GetActivityByIdDatabase {
 
     /**
@@ -23,11 +26,23 @@ public class GetActivityByIdDatabase {
      */
     Activities activity;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param a   the activity to be searched
+     */
     public GetActivityByIdDatabase(final Connection con, final Activities a) {
         this.con = con;
         this.activity = a;
     }
 
+    /**
+     * Get the activity from the database
+     *
+     * @return the activity
+     * @throws SQLException if an error occurred while trying to get the activity
+     */
     public Activities getActivityById() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

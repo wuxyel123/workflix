@@ -4,6 +4,9 @@ import resource.WorkSpace;
 
 import java.sql.*;
 
+/**
+ * DAO class responsible for deleting a user from the database
+ */
 public class DeleteWorkspaceByIdDatabase {
 
     /**
@@ -16,15 +19,27 @@ public class DeleteWorkspaceByIdDatabase {
     private final Connection con;
 
     /**
-     * The user to be deleted
+     * The workspace to be deleted
      */
     WorkSpace workspace;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be deleted
+     *
+     * @param con the connection to the database
+     * @param workspace   the workspace to be deleted
+     */
     public DeleteWorkspaceByIdDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }
 
+    /**
+     * Delete the workspace from the database
+     *
+     * @return the deleted workspace
+     * @throws SQLException if an error occurred while trying to delete the workspace
+     */
     public WorkSpace workspaceDelete() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

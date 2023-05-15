@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for inserting a user to the database
+ */
 public class InsertUserWorkspaceDatabase {
 
     /**
@@ -23,11 +26,23 @@ public class InsertUserWorkspaceDatabase {
      */
     UserWorkspace userWorkspace;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be inserted
+     *
+     * @param con the connection to the database
+     * @param userWorkspace   the user to be inserted
+     */
     public InsertUserWorkspaceDatabase(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }
 
+    /**
+     * Inserts the user to the database
+     *
+     * @return the created user
+     * @throws SQLException if an error occurred during the database operation
+     */
     public UserWorkspace insertUserWorkspace() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;

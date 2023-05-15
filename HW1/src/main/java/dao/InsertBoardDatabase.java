@@ -3,6 +3,10 @@ import resource.Board;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+
+/**
+ * DAO class responsible for inserting a board to the database
+ */
 public class InsertBoardDatabase {
     /**
      * The SQL statement to be executed
@@ -14,13 +18,27 @@ public class InsertBoardDatabase {
     private final Connection con;
 
     /**
-     * The user to be searched
+     * The board to be inserted
      */
     Board board;
+
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be inserted
+     *
+     * @param con the connection to the database
+     * @param board   the board to be inserted
+     */
     public InsertBoardDatabase(final Connection con, final Board board) {
         this.con = con;
         this.board = board;
     }
+
+    /**
+     * Insert the board from the database
+     *
+     * @return the board
+     * @throws SQLException if an error occurred while trying to insert the board
+     */
     public Board addBoard() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

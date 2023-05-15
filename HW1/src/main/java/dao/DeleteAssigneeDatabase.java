@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class to delete an assignee from the database
+ */
 public class DeleteAssigneeDatabase {
 
     /**
@@ -19,15 +22,27 @@ public class DeleteAssigneeDatabase {
     private final Connection con;
 
     /**
-     * The user to be searched
+     * The assignee to be deleted
      */
     Assignee assignee;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be deleted
+     *
+     * @param con the connection to the database
+     * @param a   the assignee to be deleted
+     */
     public DeleteAssigneeDatabase(final Connection con, final Assignee a) {
         this.con = con;
         this.assignee = a;
     }
 
+    /**
+     * Deletes the assignee from the database
+     *
+     * @return the deleted assignee
+     * @throws SQLException
+     */
     public Assignee deleteAssignee() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for inserting a user to the database
+ */
 public class InsertUserDatabase {
 
     /**
@@ -23,11 +26,23 @@ public class InsertUserDatabase {
      */
     User user;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be inserted
+     *
+     * @param con the connection to the database
+     * @param u   the user to be inserted
+     */
     public InsertUserDatabase(final Connection con, final User u) {
         this.con = con;
         this.user = u;
     }
 
+    /**
+     * Inserts the user to the database
+     *
+     * @return the created user
+     * @throws SQLException if an error occurred during the database operation
+     */
     public User insertUser() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

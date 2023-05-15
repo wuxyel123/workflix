@@ -10,13 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO class responsible for getting a user_workspace from the database
+ */
 public class GetWorkspaceByUserIdDatabase {
 
     /**
      * The SQL statement to be executed
      */
     private static final String STATEMENT = "SELECT * FROM workflix.workspace w JOIN workflix.user_workspace uw ON w.workspace_id = uw.workspace_id WHERE uw.user_id=?;";
-    //TODO fix query here
     /**
      * The connection to the database
      */
@@ -27,11 +29,23 @@ public class GetWorkspaceByUserIdDatabase {
      */
     User user;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param user   the user to be searched
+     */
     public GetWorkspaceByUserIdDatabase(final Connection con, final User user) {
         this.con = con;
         this.user = user;
     }
 
+    /**
+     * Get the user from the database
+     *
+     * @return the user
+     * @throws SQLException if an error occurred while trying to get the user
+     */
     public List<WorkSpace> getWorkspaceByUserId() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

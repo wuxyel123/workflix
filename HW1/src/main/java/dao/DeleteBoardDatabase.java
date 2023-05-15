@@ -3,6 +3,9 @@ import resource.Board;
 import java.sql.*;
 import java.time.LocalDateTime;
 
+/**
+ * DAO class to delete a board from the database
+ */
 public class DeleteBoardDatabase {
     /**
      * The SQL statement to be executed
@@ -16,10 +19,22 @@ public class DeleteBoardDatabase {
      * The board to be deleted
      */
     Board board;
+
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be deleted
+     * @param con The connection to the database
+     * @param b The board to be deleted
+     */
     public DeleteBoardDatabase(final Connection con, final Board b) {
         this.con = con;
         this.board = b;
     }
+
+    /**
+     * Deletes the board from the database
+     * @return The deleted board
+     * @throws SQLException
+     */
     public Board deleteBoard() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
