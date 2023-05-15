@@ -50,7 +50,7 @@ public class UserWorkspaceRestResource extends RestResource{
 
             userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
             if (new DeleteUserWorkspaceDatabase(con, userWorkSpace).userWorkspaceDelete()==null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.USER_WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
             }
@@ -92,7 +92,7 @@ public class UserWorkspaceRestResource extends RestResource{
             userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
 
             if (new UpdateUserPermissionDatabase(con, userWorkSpace).workspaceAssignuserpermission()==null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.USER_WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
             }
@@ -104,7 +104,7 @@ public class UserWorkspaceRestResource extends RestResource{
     }
 
     /**
-     * Create a user
+     * Add a user to a workspace
      * @throws IOException Error in IO operations
      */
     public void AddUser() throws IOException{
@@ -124,15 +124,19 @@ public class UserWorkspaceRestResource extends RestResource{
 
     }
 
-
-
-
-
-
+    /**
+     * Respond to the client
+     * @throws IOException Error in IO operations
+     */
     private void respond() throws IOException {
         res.setStatus(ec.getHTTPCode());
         res.getWriter().write(response);
     }
+
+    /**
+     * Initialize the error
+     * @param ec The error code
+     */
     private void initError(ErrorCode ec){
         this.ec = ec;
         response = ec.toJSON().toString();

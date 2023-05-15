@@ -138,7 +138,7 @@ public class BoardRestResource extends RestResource{
             Board board = new Board();
             board.setBoardId(Integer.parseInt(tokens[4]));
             if (new DeleteBoardDatabase(con, board).deleteBoard() == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
             }

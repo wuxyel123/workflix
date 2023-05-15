@@ -111,7 +111,7 @@ public class UserRestResource extends RestResource{
             User user = User.fromJSON(req.getInputStream());
             User newUser = new UpdateUserDatabase(con, user).updateUser();
             if (newUser == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.USER_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");
@@ -132,7 +132,7 @@ public class UserRestResource extends RestResource{
             User user = User.fromJSON(req.getInputStream());
             User newUser = new UpdateUserPasswordDatabase(con, user).updateUserPassword();
             if (newUser == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.USER_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");

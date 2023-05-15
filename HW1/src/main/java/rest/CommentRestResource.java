@@ -69,7 +69,7 @@ public class CommentRestResource extends RestResource {
             Comments comments = Comments.fromJSON(req.getInputStream());
             Comments newComments = new InsertCommentDatabase(con, comments).addComments();
             if (newComments == null) {
-                initError(ErrorCode.USER_ALREADY_EXISTS);
+                initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");

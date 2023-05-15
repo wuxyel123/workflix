@@ -114,7 +114,7 @@ public class SubboardRestResource extends RestResource {
             Subboard newsubboard = new UpdateSubboardDatabase(con,subboard).UpdateSubboards();
 
             if (newsubboard == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.SUBBOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
                 response = newsubboard.toJSON().toString();
@@ -137,7 +137,7 @@ public class SubboardRestResource extends RestResource {
             Subboard subboard = new Subboard();
             subboard.setSubboardId(Integer.parseInt(tokens[3]));
             if (new DeleteSubboardsDatabase(con, subboard).DeleteSubboard() == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.SUBBOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
             }

@@ -121,7 +121,7 @@ public class WorkspaceRestResource extends RestResource {
             user.setUserId(Integer.parseInt(tokens[3]));
 
             if (new GetWorkspaceByUserIdDatabase(con, user).getWorkspaceByUserId() == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
             }
@@ -144,7 +144,7 @@ public class WorkspaceRestResource extends RestResource {
             WorkSpace newWorkSpace = new UpdateWorkspaceDatabase(con, workSpace).updateWorkspace();
 
             if (newWorkSpace == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
                 response = newWorkSpace.toJSON().toString();

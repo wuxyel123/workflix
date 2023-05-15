@@ -24,6 +24,7 @@ public enum ErrorCode {
     ACTIVITY_NOT_FOUND(-110, HttpServletResponse.SC_NOT_FOUND, "Activity not found."),
     BOARD_NOT_FOUND(-111, HttpServletResponse.SC_NOT_FOUND, "Board not found."),
     SUBBOARD_NOT_FOUND(-112, HttpServletResponse.SC_NOT_FOUND, "Subboard not found."),
+    USER_WORKSPACE_NOT_FOUND(-113, HttpServletResponse.SC_NOT_FOUND, "UserWorkspace not found."),
     INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error."),
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
     WRONG_REST_FORMAT(-1002, HttpServletResponse.SC_BAD_REQUEST, "Wrong REST format."),
