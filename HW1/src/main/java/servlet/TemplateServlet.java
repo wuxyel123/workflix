@@ -211,7 +211,7 @@ public class TemplateServlet extends AbstractServlet{
                 } else {
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                     writeError(res, ec);
-                    logger.error("problem when deleting park: " + req.getRequestURL());
+                    logger.error("problem when deleting template: " + req.getRequestURL());
                 }
             }
         } catch (SQLException | NamingException e) {
