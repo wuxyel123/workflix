@@ -57,6 +57,7 @@ public enum ErrorCode {
     ACTIVITY_INFORMATION_MISSING(-202, HttpServletResponse.SC_BAD_REQUEST, "Activity information missing upon making a request."),
     TEMPLATE_ALREADY_PRESENT(-105, HttpServletResponse.SC_CONFLICT, "Activity already exists."),;
 
+
     private final int errorCode;
     private final int httpCode;
     private final String errorMessage;
