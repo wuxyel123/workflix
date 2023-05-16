@@ -21,6 +21,7 @@ import java.util.List;
 public class ActivitiesServlet extends AbstractServlet{
 
     /**
+     * Manage activities get requests
      * @see HttpServlet.HttpServlet()
      */
     @Override
@@ -29,6 +30,10 @@ public class ActivitiesServlet extends AbstractServlet{
         op = op.substring(op.lastIndexOf("activity") + 9);
     }
 
+    /**
+     * Manage activities post requests
+     * @see HttpServlet.HttpServlet()
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String op = req.getRequestURI();
@@ -47,6 +52,11 @@ public class ActivitiesServlet extends AbstractServlet{
         }
 
     }
+
+    /**
+     * Manage activities delete requests
+     * @see HttpServlet.HttpServlet()
+     */
     private void updateOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try {
             String activity_id = req.getParameter("activity_id");
@@ -94,6 +104,10 @@ public class ActivitiesServlet extends AbstractServlet{
         }
     }
 
+    /**
+     * Manage activities insert requests
+     * @see HttpServlet.HttpServlet()
+     */
     private void insertionOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
         try {
         String name = req.getParameter("name");
@@ -147,12 +161,20 @@ public class ActivitiesServlet extends AbstractServlet{
     }
 }
 
+    /**
+     * Manage activities delete requests
+     * @see HttpServlet.HttpServlet()
+     */
     @Override
     public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         deleteOperations(req, res);
     }
 
 
+    /**
+     * Manage activities delete requests
+     * @see HttpServlet.HttpServlet()
+     */
     public void deleteOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String activity_id = req.getParameter("activity_id");
         Activities activities;
