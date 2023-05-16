@@ -59,7 +59,7 @@ public class ActivitiesServlet extends AbstractServlet{
 
             if (activity_id == null || activity_id.equals("") ) {
                 updatable =false;
-                ec = ErrorCode.BAD_REQUEST;
+                ec = ErrorCode.ACTIVITY_INFORMATION_MISSING;;
                 m = new Message(true, ec.getErrorMessage());
             } else {
                 activities = new Activities();
@@ -118,7 +118,7 @@ public class ActivitiesServlet extends AbstractServlet{
             activities = new Activities();
             if (new GetActivityByIdDatabase(getDataSource().getConnection(), activities).getActivityById() != null) {
                 insertable = false;
-                ec = ErrorCode.TEMPLATE_ALREADY_PRESENT;
+                ec = ErrorCode.ACTIVITY_ALREADY_PRESENT;
 //                dispatchPage = "/jsp/builder-area/edit-activity.jsp";
                 req.setAttribute("message", new Message(true, ec.getErrorMessage()));
                 m = new Message(true, ec.getErrorMessage());
