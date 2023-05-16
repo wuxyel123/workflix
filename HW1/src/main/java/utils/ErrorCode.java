@@ -40,12 +40,8 @@ public enum ErrorCode {
     USER_NOT_AUTHORIZED(-102, HttpServletResponse.SC_UNAUTHORIZED, "User not authorized."),
     ASSIGNEE_NOT_FOUND(-200, HttpServletResponse.SC_NOT_FOUND, "Assignee not found."),
     COMMENT_NOT_FOUND(-300, HttpServletResponse.SC_NOT_FOUND, "Comment not found."),
-    ACTIVITY_NOT_FOUND(-110, HttpServletResponse.SC_NOT_FOUND, "Activity not found."),
-    TEMPLATE_ALREADY_PRESENT(-105, HttpServletResponse.SC_CONFLICT, "Activity already exists."),
     TEMPLATE_NOT_FOUND(-200, HttpServletResponse.SC_NOT_FOUND, "Template not found."),
     TEMPLATE_INFORMATION_MISSING(-201, HttpServletResponse.SC_BAD_REQUEST, "Template information missing upon making a request."),
-    ACTIVITY_INFORMATION_MISSING(-202, HttpServletResponse.SC_BAD_REQUEST, "Activity information missing upon making a request."),
-
     INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error."),
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
     BAD_REQUEST(-1001, HttpServletResponse.SC_BAD_REQUEST, "Bad request."),
@@ -56,7 +52,10 @@ public enum ErrorCode {
     TEMPLATE_CREATED(-500,HttpServletResponse.SC_NOT_FOUND, "Template inserted correctly."),
     TEMPLATE_NAME_ALREADY_EXIST(-600, HttpServletResponse.SC_CONFLICT, "Template already exists."),
     BOARD_NOT_FOUND(-700,HttpServletResponse.SC_NOT_FOUND, "Board not found."),
-    SUBBOARD_NOT_FOUND(-800,HttpServletResponse.SC_NOT_FOUND, "Subboard not found."),;
+    SUBBOARD_NOT_FOUND(-800,HttpServletResponse.SC_NOT_FOUND, "Subboard not found."),
+    ACTIVITY_NOT_FOUND(-110, HttpServletResponse.SC_NOT_FOUND, "Activity not found."),
+    ACTIVITY_INFORMATION_MISSING(-202, HttpServletResponse.SC_BAD_REQUEST, "Activity information missing upon making a request."),
+    TEMPLATE_ALREADY_PRESENT(-105, HttpServletResponse.SC_CONFLICT, "Activity already exists."),;
 
     private final int errorCode;
     private final int httpCode;
