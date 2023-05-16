@@ -55,6 +55,9 @@ public enum ErrorCode {
     SUBBOARD_NOT_FOUND(-800,HttpServletResponse.SC_NOT_FOUND, "Subboard not found."),
     ACTIVITY_NOT_FOUND(-110, HttpServletResponse.SC_NOT_FOUND, "Activity not found."),
     ACTIVITY_INFORMATION_MISSING(-202, HttpServletResponse.SC_BAD_REQUEST, "Activity information missing upon making a request."),
+    TEMPLATE_ALREADY_PRESENT(-105, HttpServletResponse.SC_CONFLICT, "Activity already exists."),
+    ACTIVITY_NOT_FOUND(-110, HttpServletResponse.SC_NOT_FOUND, "Activity not found."),
+    ACTIVITY_INFORMATION_MISSING(-202, HttpServletResponse.SC_BAD_REQUEST, "Activity information missing upon making a request."),
     TEMPLATE_ALREADY_PRESENT(-105, HttpServletResponse.SC_CONFLICT, "Activity already exists."),;
 
 
