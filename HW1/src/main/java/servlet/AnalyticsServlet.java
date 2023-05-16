@@ -23,7 +23,7 @@ public class AnalyticsServlet extends AbstractServlet {
 
     /**
      * Manage analytics get requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String op = req.getRequestURI();

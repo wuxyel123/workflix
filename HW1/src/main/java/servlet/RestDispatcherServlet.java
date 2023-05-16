@@ -290,22 +290,22 @@ public class RestDispatcherServlet extends AbstractServlet{
         try {
             /**
              * Activity APIs are:
-             * activity/comment/get
-             * activity/comment/add
+             * activity/{activityid}/comment/get
+             * activity/{activityid}/comment/add
              * activity/comment/delete/{commentid}
              * activity/comment/update/{commentid}
              **/
 
-            // activity/comment/get
-            if (tokens.length == 5 && tokens[4].equals("get")) {
+            // activity/{activityid}/comment/get
+            if (tokens.length == 6 && tokens[5].equals("get")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetComments();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // activity/comment/add
-            else if (tokens.length == 5 && tokens[4].equals("add")) {
+            // activity/{activityid}/comment/add
+            else if (tokens.length == 6 && tokens[5].equals("add")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.AddComments();
@@ -313,7 +313,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // activity/comment/delete/{commentid}
-            else if (tokens.length == 5 && tokens[4].equals("delete")) {
+            else if (tokens.length == 6 && tokens[4].equals("delete")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteComment();
@@ -321,7 +321,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // activity/comment/update/{commentid}
-            else if (tokens.length == 5 && tokens[3].equals("update")) {
+            else if (tokens.length == 6 && tokens[3].equals("update")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.UpdateComment();
@@ -495,7 +495,7 @@ public class RestDispatcherServlet extends AbstractServlet{
         String[] tokens = op.split("/");
         // the first token will always be the empty;
         // the second will be the context;
-        // the third should be "activity";
+        // the third should be "subboard";
         if (tokens.length < 5 || !tokens[4].equals("subboard")) {
             return false;
         }
@@ -506,6 +506,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              * subboard/create
              * subboard/delete/{subboardid}
              * subboard/update/{subboardid}
+             * subboard/{subboardid}/activities
              **/
 
             // subboard/{subboardid}
@@ -539,7 +540,15 @@ public class RestDispatcherServlet extends AbstractServlet{
                     case "POST" -> urr.UpdateSubboards();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
-            }else {
+            }
+            // subboard/{subboardid}/activities
+            else if (tokens.length == 5 && tokens[4].equals("activities")) {
+                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetActivitiesBySubboardId();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            } else {
                 return false;
             }
 

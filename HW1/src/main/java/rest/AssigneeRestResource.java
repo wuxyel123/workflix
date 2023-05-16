@@ -44,9 +44,7 @@ public class AssigneeRestResource extends RestResource {
      */
     public void deleteAssignee() throws IOException {
         try {
-            Assignee assignee = new Assignee();
-            assignee.setActivityId(Integer.parseInt(tokens[6]));
-            assignee.setUserId(Integer.parseInt(tokens[7]));
+            Assignee assignee = Assignee.fromJSON(req.getInputStream());
             if (new DeleteAssigneeDatabase(con, assignee).deleteAssignee() == null) {
                 initError(ErrorCode.ASSIGNEE_NOT_FOUND);
             } else {
@@ -67,11 +65,9 @@ public class AssigneeRestResource extends RestResource {
      */
     public void addAssignee() throws IOException {
         try {
-            Assignee assignee = new Assignee();
-            assignee.setActivityId(Integer.parseInt(tokens[6]));
-            assignee.setUserId(Integer.parseInt(tokens[7]));
+            Assignee assignee = Assignee.fromJSON(req.getInputStream());
             if (new InsertAssigneeDatabase(con, assignee).addAssignee() == null) {
-                initError(ErrorCode.ASSIGNEE_NOT_FOUND);
+                initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
             }
@@ -89,9 +85,7 @@ public class AssigneeRestResource extends RestResource {
      */
     public void getAssignee() throws IOException {
         try {
-            Assignee assignee = new Assignee();
-            assignee.setActivityId(Integer.parseInt(tokens[6]));
-            assignee.setUserId(Integer.parseInt(tokens[7]));
+            Assignee assignee = Assignee.fromJSON(req.getInputStream());
             if (new GetAssigneeDatabase(con, assignee).getAssignee() == null) {
                 initError(ErrorCode.ASSIGNEE_NOT_FOUND);
             } else {

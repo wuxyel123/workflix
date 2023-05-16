@@ -23,7 +23,7 @@ public class TemplateServlet extends AbstractServlet{
 
     /**
      * Manage template get requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -53,7 +53,7 @@ public class TemplateServlet extends AbstractServlet{
 
     /**
      * Manage template post requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -76,7 +76,7 @@ public class TemplateServlet extends AbstractServlet{
 
     /**
      * Manage template delete requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     @Override
     public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -94,7 +94,7 @@ public class TemplateServlet extends AbstractServlet{
 
     /**
      * Manage template put requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     private void insertionOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
         Message m = null;
@@ -139,7 +139,7 @@ public class TemplateServlet extends AbstractServlet{
 
     /**
      * Manage template update requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     private void updateOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try {
@@ -187,7 +187,7 @@ public class TemplateServlet extends AbstractServlet{
 
     /**
      * Manage template delete requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     private void deleteOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String template_id = req.getParameter("template_id");

@@ -110,7 +110,7 @@ public class SubboardRestResource extends RestResource {
     public void UpdateSubboards() throws IOException {
         try {
             Subboard subboard = Subboard.fromJSON(req.getInputStream());
-            subboard.setSubboardId(Integer.parseInt(tokens[3]));
+            subboard.setSubboardId(Integer.parseInt(tokens[4]));
             Subboard newsubboard = new UpdateSubboardDatabase(con,subboard).UpdateSubboards();
 
             if (newsubboard == null) {
@@ -135,7 +135,7 @@ public class SubboardRestResource extends RestResource {
     public void DeleteSubboard() throws IOException {
         try {
             Subboard subboard = new Subboard();
-            subboard.setSubboardId(Integer.parseInt(tokens[3]));
+            subboard.setSubboardId(Integer.parseInt(tokens[4]));
             if (new DeleteSubboardsDatabase(con, subboard).DeleteSubboard() == null) {
                 initError(ErrorCode.SUBBOARD_NOT_FOUND);
             } else {
@@ -148,6 +148,26 @@ public class SubboardRestResource extends RestResource {
             respond();
         }
 
+    }
+
+    /** Get all activities of a subboard
+     * @throws IOException Error in IO operations
+     */
+    public void GetActivitiesBySubboardId() throws IOException {
+        try {
+            Subboard subboard = new Subboard();
+            subboard.setSubboardId(Integer.parseInt(tokens[3]));
+            if (new GetActivitiesBySubboardIdDatabase(con, subboard).getActivitiesBySubboardId() == null) {
+                initError(ErrorCode.SUBBOARD_NOT_FOUND);
+            } else {
+                ec = ErrorCode.OK;
+            }
+        } catch (SQLException e) {
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        } finally {
+            respond();
+        }
     }
 
     /**

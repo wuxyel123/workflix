@@ -22,7 +22,7 @@ public class ActivitiesServlet extends AbstractServlet{
 
     /**
      * Manage activities get requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
@@ -32,7 +32,7 @@ public class ActivitiesServlet extends AbstractServlet{
 
     /**
      * Manage activities post requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -54,8 +54,8 @@ public class ActivitiesServlet extends AbstractServlet{
     }
 
     /**
-     * Manage activities delete requests
-     * @see HttpServlet.HttpServlet()
+     * Manage update operations
+     * @see AbstractServlet
      */
     private void updateOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         try {
@@ -106,7 +106,7 @@ public class ActivitiesServlet extends AbstractServlet{
 
     /**
      * Manage activities insert requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     private void insertionOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
         try {
@@ -163,7 +163,7 @@ public class ActivitiesServlet extends AbstractServlet{
 
     /**
      * Manage activities delete requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     @Override
     public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -173,7 +173,7 @@ public class ActivitiesServlet extends AbstractServlet{
 
     /**
      * Manage activities delete requests
-     * @see HttpServlet.HttpServlet()
+     * @see AbstractServlet
      */
     public void deleteOperations(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String activity_id = req.getParameter("activity_id");

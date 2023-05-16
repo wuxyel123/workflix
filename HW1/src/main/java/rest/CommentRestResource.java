@@ -40,13 +40,13 @@ public class CommentRestResource extends RestResource {
     }
 
     /**
-     * Get a board
+     * Get a comment
      * @throws IOException Error in IO operations
      */
     public void GetComments() throws IOException {
         try {
             Comments comments = new Comments();
-            comments.setActivityId(Integer.parseInt(tokens[6]));
+            comments.setActivityId(Integer.parseInt(tokens[3]));
             if (new GetCommentDatabase(con, comments).getComments() == null) {
                 initError(ErrorCode.COMMENT_NOT_FOUND);
             } else {
@@ -61,12 +61,13 @@ public class CommentRestResource extends RestResource {
     }
 
     /**
-     * Add a board
+     * Add a comment
      * @throws IOException Error in IO operations
      */
     public void AddComments() throws IOException {
         try {
             Comments comments = Comments.fromJSON(req.getInputStream());
+            comments.setActivityId(Integer.parseInt(tokens[3]));
             Comments newComments = new InsertCommentDatabase(con, comments).addComments();
             if (newComments == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
@@ -89,7 +90,7 @@ public class CommentRestResource extends RestResource {
     public void UpdateComment() throws IOException {
         try {
             Comments comments = Comments.fromJSON((req.getInputStream()));
-            comments.setActivityId(Integer.parseInt(tokens[6]));
+            comments.setActivityId(Integer.parseInt(tokens[5]));
             Comments newcomments = new UpdateCommentDatabase(con,comments).UpdateComment();
 
             if (newcomments == null) {
@@ -115,7 +116,7 @@ public class CommentRestResource extends RestResource {
     public void DeleteComment() throws IOException {
         try {
             Comments comments = new Comments();
-            comments.setActivityId(Integer.parseInt(tokens[6]));
+            comments.setActivityId(Integer.parseInt(tokens[5]));
             if (new DeleteCommentDatabase(con, comments).deleteComments() == null) {
                 initError(ErrorCode.COMMENT_NOT_FOUND);
             } else {
