@@ -27,6 +27,25 @@ public class ActivitiesServlet extends AbstractServlet{
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("activity") + 9);
+        switch (op){
+            case"/":
+                try{
+                    List<Activities> activities = new GetActivityDatabase(getDataSource().getConnection()).getActivity();
+                    JSONObject resJSON = new JSONObject();
+                    resJSON.put("activity-list", activities);
+                    ErrorCode ec = ErrorCode.OK;
+                    res.setStatus(ec.getHTTPCode());
+                    res.setContentType("application/json");
+                    res.getWriter().write((new JSONObject()).put("data", resJSON).toString());
+                } catch (NamingException | SQLException e){
+                    writeError(res, ErrorCode.INTERNAL_ERROR);
+                }
+                break;
+            default:
+                writeError(res, ErrorCode.OPERATION_UNKNOWN);
+                logger.warn("requested op "+op);
+        }
+
     }
 
     @Override
