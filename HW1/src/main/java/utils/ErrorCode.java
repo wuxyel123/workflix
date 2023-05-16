@@ -40,8 +40,12 @@ public enum ErrorCode {
     USER_NOT_AUTHORIZED(-102, HttpServletResponse.SC_UNAUTHORIZED, "User not authorized."),
     ASSIGNEE_NOT_FOUND(-200, HttpServletResponse.SC_NOT_FOUND, "Assignee not found."),
     COMMENT_NOT_FOUND(-300, HttpServletResponse.SC_NOT_FOUND, "Comment not found."),
+    ACTIVITY_NOT_FOUND(-110, HttpServletResponse.SC_NOT_FOUND, "Activity not found."),
+    TEMPLATE_ALREADY_PRESENT(-105, HttpServletResponse.SC_CONFLICT, "Activity already exists."),
     TEMPLATE_NOT_FOUND(-200, HttpServletResponse.SC_NOT_FOUND, "Template not found."),
     TEMPLATE_INFORMATION_MISSING(-201, HttpServletResponse.SC_BAD_REQUEST, "Template information missing upon making a request."),
+    ACTIVITY_INFORMATION_MISSING(-202, HttpServletResponse.SC_BAD_REQUEST, "Activity information missing upon making a request."),
+
     INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error."),
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
     BAD_REQUEST(-1001, HttpServletResponse.SC_BAD_REQUEST, "Bad request."),
