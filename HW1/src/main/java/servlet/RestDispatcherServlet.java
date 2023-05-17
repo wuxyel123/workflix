@@ -55,6 +55,8 @@ public class RestDispatcherServlet extends AbstractServlet{
 
     }
 
+    //TODO: correct token length in all rest resources
+
     /**
      * Process user rest dispatcher
      * @param req Request
@@ -66,14 +68,15 @@ public class RestDispatcherServlet extends AbstractServlet{
 
         String op = req.getRequestURI();
         String[] tokens = op.split("/");
+
         //the first token will always be the empty;
         //the second will be the context;
         //the third should be "user";
-        if (tokens.length<4 || !tokens[3].equals("user")){
+        if (tokens.length<5 || !tokens[3].equals("user")){
             return false;
         }
         try{
-            /**User APIs are:
+            /**User APIs are: start counting from 3 for tokens e.g. user is at index 3
              *  user/login
              *  user/register
              *  user/logout
@@ -84,7 +87,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              *  user/{userid}/workspaces
              * */
             // user/login
-            if (tokens.length==4 && tokens[3].equals("login")){
+            if (tokens.length==5 && tokens[4].equals("login")){
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.GetUserFromMailAndPassword();
@@ -92,7 +95,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // user/register
-            else if (tokens.length==4 && tokens[3].equals("register")){
+            else if (tokens.length==5 && tokens[4].equals("register")){
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateUser();
@@ -100,7 +103,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // user/delete/{userid}
-            else if (tokens.length==5 && tokens[3].equals("delete")){
+            else if (tokens.length==6 && tokens[4].equals("delete")){
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteUser();
@@ -108,7 +111,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // user/update/{userid}
-            else if (tokens.length==5 && tokens[3].equals("update")){
+            else if (tokens.length==6 && tokens[4].equals("update")){
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.UpdateUserNoPassword();
@@ -116,7 +119,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // user/update/{userid}/password
-            else if (tokens.length==6 && tokens[3].equals("update") && tokens[5].equals("password")){
+            else if (tokens.length==7 && tokens[4].equals("update") && tokens[6].equals("password")){
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.UpdateUserPassword();
@@ -124,7 +127,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // user/{userid}
-            else if (tokens.length==4 && Integer.parseInt(tokens[3])%1==0){
+            else if (tokens.length==5 && Integer.parseInt(tokens[4])%1==0){
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetUserFromId();
@@ -133,7 +136,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // user/{userid}/workspaces
-            else if (tokens.length==5 && tokens[4].equals("workspaces")){
+            else if (tokens.length==6 && tokens[5].equals("workspaces")){
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetWorkSpacesByUserId();
@@ -187,7 +190,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              **/
 
             // workspace/{workspaceid}
-             if (tokens.length == 4 && Integer.parseInt(tokens[3]) % 1 == 0) {
+             if (tokens.length == 5 && Integer.parseInt(tokens[4]) % 1 == 0) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetWorkSpace();
@@ -196,7 +199,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // workspace/create
-            else if (tokens.length == 4 && tokens[3].equals("create")) {
+            else if (tokens.length == 5 && tokens[4].equals("create")) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateWorkSpace();
@@ -205,7 +208,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // workspace/delete/{workspaceid}
-            else if (tokens.length == 5 && tokens[3].equals("delete")) {
+            else if (tokens.length == 6 && tokens[4].equals("delete")) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteWorkSpace();
@@ -214,7 +217,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // workspace/update/{workspaceid}
-            else if (tokens.length == 5 && tokens[3].equals("update")) {
+            else if (tokens.length == 6 && tokens[4].equals("update")) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.UpdateWorkSpace();
@@ -223,7 +226,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // /workspace/{workspaceid}/adduser
-            else if (tokens.length == 5 && tokens[5].equals("adduser")) {
+            else if (tokens.length == 6 && tokens[5].equals("adduser")) {
                 UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.AddUser();
@@ -232,7 +235,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // /workspace/{workspaceid}/removeuser
-            else if (tokens.length == 5 && tokens[4].equals("removeuser")) {
+            else if (tokens.length == 6 && tokens[5].equals("removeuser")) {
                 UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteUserWorkSpace();
@@ -241,7 +244,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // /workspace/{workspaceid}/assignuserpermission
-            else if (tokens.length == 5 && tokens[4].equals("assignuserpermission")) {
+            else if (tokens.length == 6 && tokens[5].equals("assignuserpermission")) {
                 UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.AssignUserPermission();
@@ -250,7 +253,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // /workspace/{workspaceid}/boards
-            else if (tokens.length == 5 && tokens[4].equals("boards")) {
+            else if (tokens.length == 6 && tokens[5].equals("boards")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetBoardsByWorkspaceId();
@@ -297,7 +300,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              **/
 
             // activity/{activityid}/comment/get
-            if (tokens.length == 6 && tokens[5].equals("get")) {
+            if (tokens.length == 7 && tokens[6].equals("get")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetComments();
@@ -305,7 +308,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // activity/{activityid}/comment/add
-            else if (tokens.length == 6 && tokens[5].equals("add")) {
+            else if (tokens.length == 7 && tokens[6].equals("add")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.AddComments();
@@ -313,7 +316,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // activity/comment/delete/{commentid}
-            else if (tokens.length == 6 && tokens[4].equals("delete")) {
+            else if (tokens.length == 7 && tokens[5].equals("delete")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteComment();
@@ -321,7 +324,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // activity/comment/update/{commentid}
-            else if (tokens.length == 6 && tokens[3].equals("update")) {
+            else if (tokens.length == 7 && tokens[5].equals("update")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.UpdateComment();
@@ -430,7 +433,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              **/
 
             // Board/{boardid}
-            if (tokens.length == 4 && Integer.parseInt(tokens[3])%1==0) {
+            if (tokens.length == 5 && Integer.parseInt(tokens[4])%1==0) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetBoardById();
@@ -438,7 +441,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // board/create
-            else if (tokens.length == 4 && tokens[3].equals("create")) {
+            else if (tokens.length == 5 && tokens[4].equals("create")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateBoard();
@@ -446,7 +449,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // board/delete/{boardid}
-            else if (tokens.length == 5 && tokens[3].equals("delete")) {
+            else if (tokens.length == 6 && tokens[4].equals("delete")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteBoard();
@@ -454,7 +457,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // board/update/{boardid}
-            else if (tokens.length == 5 && tokens[3].equals("update")) {
+            else if (tokens.length == 6 && tokens[4].equals("update")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.UpdateBoard();
@@ -463,7 +466,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             }
 
             // board/{boardid}/subboards
-            else if (tokens.length == 5 && tokens[4].equals("subboards")) {
+            else if (tokens.length == 6 && tokens[5].equals("subboards")) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetSubboardsByBoardId();
@@ -510,7 +513,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              **/
 
             // subboard/{subboardid}
-            if (tokens.length == 4 && Integer.parseInt(tokens[3])%1==0) {
+            if (tokens.length == 5 && Integer.parseInt(tokens[4])%1==0) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetSubboardById();
@@ -518,7 +521,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // subboard/create
-            else if (tokens.length == 4 && tokens[3].equals("create")) {
+            else if (tokens.length == 5 && tokens[4].equals("create")) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateSubboard();
@@ -526,7 +529,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // subboard/delete/{subboardid}
-            else if (tokens.length == 5 && tokens[3].equals("delete")) {
+            else if (tokens.length == 6 && tokens[4].equals("delete")) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteSubboard();
@@ -534,7 +537,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // subboard/update/{subboardid}
-            else if (tokens.length == 5 && tokens[3].equals("update")) {
+            else if (tokens.length == 6 && tokens[4].equals("update")) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.UpdateSubboards();
@@ -542,7 +545,7 @@ public class RestDispatcherServlet extends AbstractServlet{
                 }
             }
             // subboard/{subboardid}/activities
-            else if (tokens.length == 5 && tokens[4].equals("activities")) {
+            else if (tokens.length == 6 && tokens[5].equals("activities")) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetActivitiesBySubboardId();
