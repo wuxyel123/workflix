@@ -15,7 +15,7 @@ public class InsertUserDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.users(username, password, email, first_name, last_name, profile_picture, description) VALUES (?, md5(?), ?, ?, ?, ?, ?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.users(username, password, email, first_name, last_name, profile_picture, description) VALUES (?, sha512(?), ?, ?, ?, ?, ?) RETURNING *;";
     /**
      * The connection to the database
      */
