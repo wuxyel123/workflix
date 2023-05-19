@@ -55,8 +55,13 @@ public class UserRestResource extends RestResource{
                 response = newUser.toJSON().toString();
             }
         } catch (SQLException e){
-            initError(ErrorCode.INTERNAL_ERROR);
-            logger.error("stacktrace:", e);
+            if (e.getSQLState().equals("23505")) {
+                initError(ErrorCode.USER_ALREADY_EXISTS);
+                logger.warn("User already exists");
+            } else {
+                initError(ErrorCode.INTERNAL_ERROR);
+                logger.error("stacktrace:", e);
+            }
         } finally { respond(); }
     }
 
