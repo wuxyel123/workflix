@@ -31,7 +31,10 @@ public enum ErrorCode {
     INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error."),
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
     WRONG_REST_FORMAT(-1002, HttpServletResponse.SC_BAD_REQUEST, "Wrong REST format."),
-    OPERATION_UNKNOWN(-1003, HttpServletResponse.SC_BAD_REQUEST, "Operation unknown.");
+    OPERATION_UNKNOWN(-1003, HttpServletResponse.SC_BAD_REQUEST, "Operation unknown."),
+
+    FAILED_DURING_PROCESSING(-9999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed during processing."),;
+
 
     // Error code
     private final int errorCode;

@@ -15,7 +15,7 @@ public class UpdateUserPasswordDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.users SET password=sha512(?) WHERE user_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.users SET password=512(?) WHERE user_id=? RETURNING *;";
     /**
      * The connection to the database
      */

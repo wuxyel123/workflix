@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -156,17 +157,15 @@ public class User {
      */
     public static User fromJSON(JSONObject jobj) throws JSONException {
 
-        Integer userId = jobj.getInt(USER_ID);
-        String username = jobj.getString(USERNAME);
-        String password = jobj.getString(PASSWORD);
-        String email = jobj.getString(EMAIL);
-        String firstName = jobj.getString(FIRST_NAME);
-        String lastName = jobj.getString(LAST_NAME);
-        String profilePicture = jobj.getString(PROFILE_PICTURE);
-        String description = jobj.getString(DESCRIPTION);
-        Date createDate = java.util.Date
-                .from(LocalDateTime.parse(jobj.getString(CREATE_DATE)).atZone(ZoneId.systemDefault())
-                        .toInstant());
+        Integer userId = ResourceValueChecker.getValidInteger(jobj.get(USER_ID));
+        String username = ResourceValueChecker.getValidString(jobj.get(USERNAME));
+        String password = ResourceValueChecker.getValidString(jobj.get(PASSWORD));
+        String email = ResourceValueChecker.getValidString(jobj.get(EMAIL));
+        String firstName = ResourceValueChecker.getValidString(jobj.get(FIRST_NAME));
+        String lastName = ResourceValueChecker.getValidString(jobj.get(LAST_NAME));
+        String profilePicture = ResourceValueChecker.getValidString(jobj.get(PROFILE_PICTURE));
+        String description = ResourceValueChecker.getValidString(jobj.get(DESCRIPTION));
+        Date createDate = ResourceValueChecker.getValidDate(jobj.get(CREATE_DATE));
 
         // Create User object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         User user = new User();
@@ -199,7 +198,7 @@ public class User {
         userJSON.put(LAST_NAME, lastName);
         userJSON.put(PROFILE_PICTURE, profilePicture);
         userJSON.put(DESCRIPTION, description);
-        userJSON.put(CREATE_DATE, createDate.toString());
+        userJSON.put(CREATE_DATE, createDate);
 
         return userJSON;
     }

@@ -15,7 +15,7 @@ public class InsertUserDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.users(username, password, email, first_name, last_name, profile_picture, description) VALUES (?, sha512(?), ?, ?, ?, ?, ?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.users(username, password, email, first_name, last_name, profile_picture, description) VALUES (?, workflix.sha512(?), ?, ?, ?, ?, ?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -63,8 +63,8 @@ public class InsertUserDatabase {
 
             if (rs.next()) {
                 newUser = new User();
+                newUser.setUserId(rs.getInt(User.USER_ID));
                 newUser.setUsername(rs.getString(User.USERNAME));
-                newUser.setPassword(rs.getString(User.PASSWORD));
                 newUser.setEmail(rs.getString(User.EMAIL));
                 newUser.setFirstName(rs.getString(User.FIRST_NAME));
                 newUser.setLastName(rs.getString(User.LAST_NAME));

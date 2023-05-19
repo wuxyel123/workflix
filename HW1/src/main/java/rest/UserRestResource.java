@@ -10,6 +10,7 @@ import resource.User;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 /**
  * This class represents the REST resource "/user"
@@ -19,9 +20,9 @@ public class UserRestResource extends RestResource{
     // The operation requested by the client
     protected final String op;
     // The error code
-    protected ErrorCode ec = null;
+    protected ErrorCode ec;
     // The response
-    protected String response = null;
+    protected String response;
     // The tokens of the request
     protected final String[] tokens;
 
@@ -47,6 +48,7 @@ public class UserRestResource extends RestResource{
             User newUser = new InsertUserDatabase(con, user).insertUser();
             if (newUser == null) {
                 initError(ErrorCode.USER_ALREADY_EXISTS);
+                logger.warn("User already exists");
             } else {
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");
@@ -179,7 +181,7 @@ public class UserRestResource extends RestResource{
      */
     private void initError(ErrorCode ec){
         this.ec = ec;
-        response = ec.toJSON().toString();
+        response = "ERROR CODE"+ec.toJSON().toString();
     }
 
     /**

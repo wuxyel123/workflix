@@ -14,7 +14,7 @@ public class GetUserByMailPasswordDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT * FROM workflix.users WHERE email=? AND password=sha512(?);";
+    private static final String STATEMENT = "SELECT * FROM workflix.users WHERE email=? AND password=workflix.sha512(?);";
     /**
      * The connection to the database
      */
