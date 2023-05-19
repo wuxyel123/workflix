@@ -44,7 +44,7 @@ public class SubboardRestResource extends RestResource {
     public void GetSubboardsByBoardId() throws IOException {
         try {
             Subboard subboard = new Subboard();
-            subboard.setBoardId(Integer.parseInt(tokens[3]));
+            subboard.setBoardId(Integer.parseInt(tokens[4]));
             if (new GetSubboardByBoardIdDatabase(con, subboard).getSubboardByBoardId() == null) {
                 initError(ErrorCode.SUBBOARD_NOT_FOUND);
             } else {
@@ -65,7 +65,7 @@ public class SubboardRestResource extends RestResource {
     public void GetSubboardById() throws IOException {
         try {
             Subboard subboard = new Subboard();
-            subboard.setSubboardId(Integer.parseInt(tokens[3]));
+            subboard.setSubboardId(Integer.parseInt(tokens[4]));
             if (new GetSubboardDatabase(con,subboard).getSubboard() == null) {
                 initError(ErrorCode.SUBBOARD_NOT_FOUND);
             } else {
@@ -110,7 +110,7 @@ public class SubboardRestResource extends RestResource {
     public void UpdateSubboards() throws IOException {
         try {
             Subboard subboard = Subboard.fromJSON(req.getInputStream());
-            subboard.setSubboardId(Integer.parseInt(tokens[4]));
+            subboard.setSubboardId(Integer.parseInt(tokens[5]));
             Subboard newsubboard = new UpdateSubboardDatabase(con,subboard).UpdateSubboards();
 
             if (newsubboard == null) {
@@ -135,7 +135,7 @@ public class SubboardRestResource extends RestResource {
     public void DeleteSubboard() throws IOException {
         try {
             Subboard subboard = new Subboard();
-            subboard.setSubboardId(Integer.parseInt(tokens[4]));
+            subboard.setSubboardId(Integer.parseInt(tokens[5]));
             if (new DeleteSubboardsDatabase(con, subboard).DeleteSubboard() == null) {
                 initError(ErrorCode.SUBBOARD_NOT_FOUND);
             } else {
@@ -156,7 +156,7 @@ public class SubboardRestResource extends RestResource {
     public void GetActivitiesBySubboardId() throws IOException {
         try {
             Subboard subboard = new Subboard();
-            subboard.setSubboardId(Integer.parseInt(tokens[3]));
+            subboard.setSubboardId(Integer.parseInt(tokens[4]));
             if (new GetActivitiesBySubboardIdDatabase(con, subboard).getActivitiesBySubboardId() == null) {
                 initError(ErrorCode.SUBBOARD_NOT_FOUND);
             } else {

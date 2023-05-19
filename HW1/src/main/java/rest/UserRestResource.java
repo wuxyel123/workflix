@@ -151,7 +151,7 @@ public class UserRestResource extends RestResource{
     public void DeleteUser() throws IOException{
         try {
             User user = new User();
-            user.setUserId(Integer.parseInt(tokens[4]));
+            user.setUserId(Integer.parseInt(tokens[5]));
             if (new DeleteUserDatabase(con, user).deleteUser()==null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {

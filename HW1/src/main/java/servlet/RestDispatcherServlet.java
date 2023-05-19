@@ -185,7 +185,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              * /workspace/update/{workspaceid}
              * /workspace/{workspaceid}/adduser
              * /workspace/{workspaceid}/removeuser
-             * workspace/[workspaceid}/assignuserpermission
+             * /workspace/[workspaceid}/assignuserpermission
              * /workspace/{workspaceid}/boards
              **/
 
@@ -358,35 +358,35 @@ public class RestDispatcherServlet extends AbstractServlet{
         // the first token will always be the empty;
         // the second will be the context;
         // the third should be "activity";
-        if (tokens.length < 5 || !tokens[4].equals("assignee")) {
+        if (tokens.length < 7 || !tokens[5].equals("assignee")) {
             return false;
         }
         try {
             /**
              * Activity APIs are:
-             * activity/assignee/get
-             * activity/assignee/add
-             * activity/assignee/remove
+             * activity/{activityid}/assignee/get
+             * activity/{activityid}/assignee/add
+             * activity/{activityid}/assignee/remove
              **/
 
-            // assignee/get
-            if (tokens.length == 5 && tokens[4].equals("get")) {
+            // activity/{activityid}/assignee/get
+            if (tokens.length == 7 && tokens[6].equals("get")) {
                 AssigneeRestResource urr = new AssigneeRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.getAssignee();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // assignee/add
-            else if (tokens.length == 5 && tokens[4].equals("add")) {
+            // activity/{activityid}/assignee/add
+            else if (tokens.length == 7 && tokens[6].equals("add")) {
                 AssigneeRestResource urr = new AssigneeRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.addAssignee();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // assignee/remove
-            else if (tokens.length == 5 && tokens[4].equals("remove")) {
+            // activity/{activityid}/assignee/remove
+            else if (tokens.length == 7 && tokens[6].equals("remove")) {
                 AssigneeRestResource urr = new AssigneeRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.deleteAssignee();

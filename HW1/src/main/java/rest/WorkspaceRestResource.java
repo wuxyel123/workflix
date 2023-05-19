@@ -46,7 +46,7 @@ public class WorkspaceRestResource extends RestResource {
         try {
             WorkSpace workSpace = new WorkSpace();
 
-            workSpace.setWorkspaceId(Integer.parseInt(tokens[4]));
+            workSpace.setWorkspaceId(Integer.parseInt(tokens[5]));
             if (new DeleteWorkspaceByIdDatabase(con, workSpace).workspaceDelete() == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
@@ -95,7 +95,7 @@ public class WorkspaceRestResource extends RestResource {
         try {
             WorkSpace workSpace = new WorkSpace();
 
-            workSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
+            workSpace.setWorkspaceId(Integer.parseInt(tokens[4]));
 
             if (new GetWorkspaceByIdDatabase(con, workSpace).getWorkspaceById() == null) {
                 initError(ErrorCode.WORKSPACE_NOT_FOUND);
@@ -118,7 +118,7 @@ public class WorkspaceRestResource extends RestResource {
     public void GetWorkSpacesByUserId() throws IOException {
         try {
             User user = User.fromJSON(req.getInputStream());
-            user.setUserId(Integer.parseInt(tokens[3]));
+            user.setUserId(Integer.parseInt(tokens[4]));
 
             if (new GetWorkspaceByUserIdDatabase(con, user).getWorkspaceByUserId() == null) {
                 initError(ErrorCode.WORKSPACE_NOT_FOUND);
@@ -140,7 +140,7 @@ public class WorkspaceRestResource extends RestResource {
     public void UpdateWorkSpace() throws IOException {
         try {
             WorkSpace workSpace = WorkSpace.fromJSON(req.getInputStream());
-            workSpace.setWorkspaceId(Integer.parseInt(tokens[4]));
+            workSpace.setWorkspaceId(Integer.parseInt(tokens[5]));
             WorkSpace newWorkSpace = new UpdateWorkspaceDatabase(con, workSpace).updateWorkspace();
 
             if (newWorkSpace == null) {

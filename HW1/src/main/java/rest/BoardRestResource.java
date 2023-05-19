@@ -44,7 +44,7 @@ public class BoardRestResource extends RestResource{
     public void GetBoardById() throws IOException {
         try {
             Board board = new Board();
-            board.setBoardId(Integer.parseInt(tokens[3]));
+            board.setBoardId(Integer.parseInt(tokens[4]));
             if (new GetBoardByIdDatabase(con, board).getBoardById() == null) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
@@ -65,7 +65,7 @@ public class BoardRestResource extends RestResource{
     public void GetBoardsByWorkspaceId() throws IOException {
         try {
             Board board = new Board();
-            board.setWorkspaceId(Integer.parseInt(tokens[3]));
+            board.setWorkspaceId(Integer.parseInt(tokens[4]));
             if (new GetBoardByWorkspaceIdDatabase(con, board).getBoardByWorkspaceId() == null) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
@@ -110,7 +110,7 @@ public class BoardRestResource extends RestResource{
     public void UpdateBoard() throws IOException {
         try {
             Board board = Board.fromJSON(req.getInputStream());
-            board.setBoardId(Integer.parseInt(tokens[4]));
+            board.setBoardId(Integer.parseInt(tokens[5]));
             Board newboard = new UpdateBoardDatabase(con, board).updateBoard();
 
             if (newboard == null) {
@@ -136,7 +136,7 @@ public class BoardRestResource extends RestResource{
     public void DeleteBoard() throws IOException {
         try {
             Board board = new Board();
-            board.setBoardId(Integer.parseInt(tokens[4]));
+            board.setBoardId(Integer.parseInt(tokens[5]));
             if (new DeleteBoardDatabase(con, board).deleteBoard() == null) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
