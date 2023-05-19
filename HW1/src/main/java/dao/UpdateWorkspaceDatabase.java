@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class is responsible for updating a workspace in the database
+ */
 public class UpdateWorkspaceDatabase {
 
     /**
@@ -20,15 +23,27 @@ public class UpdateWorkspaceDatabase {
     private final Connection con;
 
     /**
-     * The user to be inserted
+     * The workspace to be updated
      */
     WorkSpace workspace;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be updated
+     *
+     * @param con the connection to the database
+     * @param workspace   the workspace to be updated
+     */
     public UpdateWorkspaceDatabase(final Connection con, final WorkSpace workspace) {
         this.con = con;
         this.workspace = workspace;
     }
 
+    /**
+     * Update the workspace in the database
+     *
+     * @return the updated workspace
+     * @throws SQLException if an error occurred while trying to update the workspace
+     */
     public WorkSpace updateWorkspace() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;

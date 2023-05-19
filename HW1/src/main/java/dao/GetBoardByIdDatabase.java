@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for getting a board from the database
+ */
 public class GetBoardByIdDatabase {
 
     /**
@@ -23,11 +26,23 @@ public class GetBoardByIdDatabase {
      */
     Board board;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param b   the board to be searched
+     */
     public GetBoardByIdDatabase(final Connection con, final Board b) {
         this.con = con;
         this.board = b;
     }
 
+    /**
+     * Get the board from the database
+     *
+     * @return the board
+     * @throws SQLException if an error occurred while trying to get the board
+     */
     public Board getBoardById() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

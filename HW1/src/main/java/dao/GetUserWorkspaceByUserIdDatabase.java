@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for getting a user_workspace from the database
+ */
 public class GetUserWorkspaceByUserIdDatabase {
 
     /**
@@ -23,11 +26,23 @@ public class GetUserWorkspaceByUserIdDatabase {
      */
     UserWorkspace userWorkspace;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param userWorkspace   the user_workspace to be searched
+     */
     public GetUserWorkspaceByUserIdDatabase(final Connection con, final UserWorkspace userWorkspace) {
         this.con = con;
         this.userWorkspace = userWorkspace;
     }
 
+    /**
+     * Get the user_workspace from the database
+     *
+     * @return the user_workspace
+     * @throws SQLException if an error occurred while trying to get the user_workspace
+     */
     public UserWorkspace getUserWorkspaceByUserId() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class is responsible for getting the workspace by id from the database
+ */
 public class GetWorkspaceByIdDatabase {
 
     /**
@@ -23,6 +26,12 @@ public class GetWorkspaceByIdDatabase {
      */
     WorkSpace workSpace;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be searched
+     *
+     * @param con the connection to the database
+     * @param workSpace   the workSpace to be searched
+     */
     public GetWorkspaceByIdDatabase(final Connection con, final WorkSpace workSpace) {
         this.con = con;
         this.workSpace = workSpace;

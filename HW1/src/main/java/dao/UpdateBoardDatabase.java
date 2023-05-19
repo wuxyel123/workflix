@@ -22,10 +22,24 @@ public class UpdateBoardDatabase {
      * The board to be inserted
      */
     Board board;
+
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be updated
+     *
+     * @param con the connection to the database
+     * @param b   the board to be updated
+     */
     public UpdateBoardDatabase(final Connection con, final Board b) {
         this.con = con;
         this.board = b;
     }
+
+    /**
+     * Update the board in the database
+     *
+     * @return the updated board
+     * @throws SQLException if an error occurred while trying to update the board
+     */
     public Board updateBoard() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

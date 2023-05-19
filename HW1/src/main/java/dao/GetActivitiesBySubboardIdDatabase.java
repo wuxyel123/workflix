@@ -1,61 +1,63 @@
 package dao;
 
 import resource.Activities;
+import resource.Subboard;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
- * DAO class responsible for getting an activity from the database
+ * DAO class responsible for getting activities of a subboard from the database
  */
-public class GetActivityByIdDatabase {
+public class GetActivitiesBySubboardIdDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT * FROM workflix.activities WHERE activity_id=?;";
+    private static final String STATEMENT = "SELECT * FROM workflix.activities WHERE subboard_id=?;";
     /**
      * The connection to the database
      */
     private final Connection con;
 
     /**
-     * The activity to be searched
+     * The activities to be searched
      */
-    Activities activity;
+    Subboard subboard;
 
     /**
      * Initialize the DAO object with a connection to the database and the object to be searched
      *
      * @param con the connection to the database
-     * @param a   the activity to be searched
+     * @param s   the subboard to be searched
      */
-    public GetActivityByIdDatabase(final Connection con, final Activities a) {
+    public GetActivitiesBySubboardIdDatabase(final Connection con, final Subboard s) {
         this.con = con;
-        this.activity = a;
+        this.subboard = s;
     }
 
     /**
-     * Get the activity from the database
+     * Get the activities from the database
      *
-     * @return the activity
+     * @return the activities
      * @throws SQLException if an error occurred while trying to get the activity
      */
-    public Activities getActivityById() throws SQLException {
+    public List<Activities> getActivitiesBySubboardId() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Activities activity =null;
+        List<Activities> activities =null;
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, activity.getActivityId());
+            ps.setInt(1, subboard.getSubboardId());
 
             rs = ps.executeQuery();
 
-            if (rs.next()) {
-                activity = new Activities();
+            while (rs.next()) {
+                Activities activity = new Activities();
                 activity.setActivityId(rs.getInt(Activities.ACTIVITY_ID));
                 activity.setSubboardId(rs.getInt(Activities.SUBBOARD_ID));
                 activity.setName(rs.getString(Activities.NAME));
@@ -64,6 +66,8 @@ public class GetActivityByIdDatabase {
                 activity.setEndDate(rs.getDate(Activities.END_DATE));
                 activity.setWorkedTime(rs.getInt(Activities.WORKED_TIME));
                 activity.setIndex(rs.getInt(Activities.INDEX));
+
+                activities.add(activity);
 
             }
         } finally {
@@ -75,7 +79,7 @@ public class GetActivityByIdDatabase {
             }
             con.close();
         }
-        return activity;
+        return activities;
     }
 
 }

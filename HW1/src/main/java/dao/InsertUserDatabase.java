@@ -7,12 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class responsible for inserting a user to the database
+ */
 public class InsertUserDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.users(username, password, email, first_name, last_name, profile_picture, description) VALUES (?, md5(?), ?, ?, ?, ?, ?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.users(username, password, email, first_name, last_name, profile_picture, description) VALUES (?, workflix.sha512(?), ?, ?, ?, ?, ?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -23,11 +26,23 @@ public class InsertUserDatabase {
      */
     User user;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be inserted
+     *
+     * @param con the connection to the database
+     * @param u   the user to be inserted
+     */
     public InsertUserDatabase(final Connection con, final User u) {
         this.con = con;
         this.user = u;
     }
 
+    /**
+     * Inserts the user to the database
+     *
+     * @return the created user
+     * @throws SQLException if an error occurred during the database operation
+     */
     public User insertUser() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -48,8 +63,8 @@ public class InsertUserDatabase {
 
             if (rs.next()) {
                 newUser = new User();
+                newUser.setUserId(rs.getInt(User.USER_ID));
                 newUser.setUsername(rs.getString(User.USERNAME));
-                newUser.setPassword(rs.getString(User.PASSWORD));
                 newUser.setEmail(rs.getString(User.EMAIL));
                 newUser.setFirstName(rs.getString(User.FIRST_NAME));
                 newUser.setLastName(rs.getString(User.LAST_NAME));

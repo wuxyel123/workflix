@@ -8,14 +8,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.ErrorCode;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 
+/**
+ * Abstract servlet class
+ * */
 public class AbstractServlet extends HttpServlet {
 
+    // logger
     Logger logger;
+    // data source
     private static DataSource ds = null;
 
 
@@ -60,11 +66,9 @@ public class AbstractServlet extends HttpServlet {
         // we don't want to initialize a new datasoruce everytime, so, we check first that ds is null
         if (ds == null) {
 
-            //we get the context
-            InitialContext ctx = new InitialContext();
-
-            //and use the proper resource to initialize the datasource
-            ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/workflix");
+            Context initialContext = new InitialContext();
+            Context envContext = (Context) initialContext.lookup("java:comp/env");
+            ds = (DataSource) envContext.lookup("jdbc/workflix");
         }
         return ds;
     }

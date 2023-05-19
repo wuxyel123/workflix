@@ -4,6 +4,9 @@ import resource.Comments;
 
 import java.sql.*;
 
+/**
+ * DAO class to delete a comment from the database
+ */
 public class DeleteCommentDatabase {
 
     /**
@@ -20,11 +23,23 @@ public class DeleteCommentDatabase {
      */
     Comments comments;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be deleted
+     *
+     * @param con the connection to the database
+     * @param c   the comment to be deleted
+     */
     public DeleteCommentDatabase(final Connection con, final Comments c) {
         this.con = con;
         this.comments = c;
     }
 
+    /**
+     * Deletes the comment from the database
+     *
+     * @return the deleted comment
+     * @throws SQLException if an error occurred during the deletion
+     */
     public Comments deleteComments() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

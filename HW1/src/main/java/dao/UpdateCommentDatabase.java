@@ -7,12 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class is responsible for updating a comment in the database
+ */
 public class UpdateCommentDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.comments SET user_id=?, comment_text=? WHERE comment_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.comments SET comment_text=? WHERE comment_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -23,11 +26,23 @@ public class UpdateCommentDatabase {
      */
     Comments comment;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be updated
+     *
+     * @param con the connection to the database
+     * @param c   the comment to be updated
+     */
     public UpdateCommentDatabase(final Connection con, final Comments c) {
         this.con = con;
         this.comment = c;
     }
 
+    /**
+     * Update the comment in the database
+     *
+     * @return the updated comment
+     * @throws SQLException if an error occurred while trying to update the comment
+     */
     public Comments UpdateComment() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -37,10 +52,8 @@ public class UpdateCommentDatabase {
 
         try {
             ps = con.prepareStatement(STATEMENT);
-//            ps.setInt(1, comment.getActivityId());
-            ps.setInt(1, comment.getUserId());
-            ps.setString(2, comment.getCommentText());
-            ps.setInt(3,comment.getCommentId());
+            ps.setString(1, comment.getCommentText());
+            ps.setInt(2,comment.getCommentId());
 
             rs = ps.executeQuery();
 

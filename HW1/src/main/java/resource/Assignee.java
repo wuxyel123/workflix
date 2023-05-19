@@ -11,14 +11,26 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class representing a Assignee object
+ */
 public class Assignee {
 
-    public static final String ACTIVITY_ID = "ACTIVITY_ID";
-    public static final String USER_ID = "USER_ID";
+    /**
+     * Set of constants with the same value as the DB field, useful in DAOs
+     */
+    public static final String ACTIVITY_ID = "activity_id";
+    public static final String USER_ID = "user_id";
 
+    /**
+     * Set of private fields, each one is a DB field
+     */
     private Integer activityId;
     private Integer userId;
 
+    /**
+     * Getters and setters for each private field
+     */
     public int getActivityId() {
         return activityId;
     }
@@ -68,7 +80,6 @@ public class Assignee {
      * @throws IOException   if an I/O error occurs
      * @throws JSONException if the input is not valid JSON
      */
-
     public static Assignee fromJSON(InputStream inputStream) throws IOException, JSONException {
 
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
@@ -104,7 +115,6 @@ public class Assignee {
      * @return JSONObject containing the Assignee data
      * @throws JSONException if the input is not valid JSON
      */
-
     public JSONObject toJSON() throws JSONException {
 
         JSONObject assigneesJSON = new JSONObject();

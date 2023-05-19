@@ -4,6 +4,9 @@ import resource.User;
 
 import java.sql.*;
 
+/**
+ * DAO class responsible for deleting a user from the database
+ */
 public class DeleteUserDatabase {
 
     /**
@@ -20,11 +23,23 @@ public class DeleteUserDatabase {
      */
     User user;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be deleted
+     *
+     * @param con the connection to the database
+     * @param u   the user to be deleted
+     */
     public DeleteUserDatabase(final Connection con, final User u) {
         this.con = con;
         this.user = u;
     }
 
+    /**
+     * Delete the user from the database
+     *
+     * @return the deleted user
+     * @throws SQLException if an error occurred while trying to delete the user
+     */
     public User deleteUser() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

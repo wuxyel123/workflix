@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class to delete a subboard from the database
+ */
 public class DeleteSubboardsDatabase {
 
     /**
@@ -19,15 +22,27 @@ public class DeleteSubboardsDatabase {
     private final Connection con;
 
     /**
-     * The user to be inserted
+     * The Subboard to be deleted
      */
-    Subboard subboards;
+    Subboard subboard;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be deleted
+     *
+     * @param con the connection to the database
+     * @param s the object to be inserted
+     */
     public DeleteSubboardsDatabase(final Connection con, final Subboard s) {
         this.con = con;
-        this.subboards = s;
+        this.subboard = s;
     }
 
+    /**
+     * Delete the subboard from the database
+     *
+     * @return the created subboard
+     * @throws SQLException if the user could not be deleted
+     */
     public Subboard DeleteSubboard() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -38,7 +53,7 @@ public class DeleteSubboardsDatabase {
         try {
             pstmt = con.prepareStatement(STATEMENT);
 
-            pstmt.setInt(1, subboards.getSubboardId());
+            pstmt.setInt(1, subboard.getSubboardId());
 
             rs = pstmt.executeQuery();
 

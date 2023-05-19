@@ -12,23 +12,41 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This class represents the REST resource "/activity
+ */
 public class CommentRestResource extends RestResource {
 
+    // The operation requested by the client
     protected final String op;
+    // The error code
     protected ErrorCode ec = null;
+    // The response
     protected String response = null;
+    // The tokens of the request
     protected final String[] tokens;
 
+
+    /**
+     * Constructor
+     * @param req The request
+     * @param res The response
+     * @param con The connection to the database
+     */
     public CommentRestResource(HttpServletRequest req, HttpServletResponse res, Connection con) {
         super(req, res, con);
         op = req.getRequestURI();
         tokens = op.split("/");
     }
 
+    /**
+     * Get a comment
+     * @throws IOException Error in IO operations
+     */
     public void GetComments() throws IOException {
         try {
             Comments comments = new Comments();
-            comments.setActivityId(Integer.parseInt(tokens[6]));
+            comments.setActivityId(Integer.parseInt(tokens[4]));
             if (new GetCommentDatabase(con, comments).getComments() == null) {
                 initError(ErrorCode.COMMENT_NOT_FOUND);
             } else {
@@ -42,12 +60,17 @@ public class CommentRestResource extends RestResource {
         }
     }
 
+    /**
+     * Add a comment
+     * @throws IOException Error in IO operations
+     */
     public void AddComments() throws IOException {
         try {
             Comments comments = Comments.fromJSON(req.getInputStream());
+            comments.setActivityId(Integer.parseInt(tokens[4]));
             Comments newComments = new InsertCommentDatabase(con, comments).addComments();
             if (newComments == null) {
-                initError(ErrorCode.USER_ALREADY_EXISTS);
+                initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");
@@ -107,11 +130,20 @@ public class CommentRestResource extends RestResource {
         }
 
     }
+
+    /**
+     * Respond to the client
+     * @throws IOException Error in IO operations
+     */
     private void respond() throws IOException {
         res.setStatus(ec.getHTTPCode());
         res.getWriter().write(response);
     }
 
+    /**
+     * Initialize the error
+     * @param ec The error code
+     */
     private void initError(ErrorCode ec) {
         this.ec = ec;
         response = ec.toJSON().toString();

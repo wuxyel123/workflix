@@ -11,7 +11,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents an Analytics object
+ * */
 public class Analytics{
+
+    /**
+     * Set of constants with the same value as the DB field, useful in DAOs
+     * */
     public static final String USER_ID = "user_id";
     public static final String USERNAME = "username";
     public static final String WORKSPACE_ID = "workspace_id";
@@ -21,6 +28,9 @@ public class Analytics{
     public static final String TOTAL_WORKED_TIME = "total_worked_time";
     public static final String NUM_COMMENTS = "num_comments";
 
+    /**
+     * Set of private fields, each one is a DB field
+     * */
     private Integer userId;
     private String username;
     private String workspaceId;
@@ -30,6 +40,9 @@ public class Analytics{
     private String TotalWorkedTime;
     private String NumComments;
 
+    /**
+     * Getters and setters for each private field
+     * */
     public Integer getUserId() {
         return userId;
     }
@@ -126,13 +139,13 @@ public class Analytics{
 
         return fromJSON(new JSONObject(dataString));
     }
+
     /** Get a Analytics object from a JSONObject
     *
     * @param jobj JSONObject containing the analytics data
     * @return Analytics object
     * @throws JSONException if the input is not valid JSON
     */
-
     public static Analytics fromJSON(JSONObject jobj) throws JSONException {
         
         Integer userId = jobj.getInt(USER_ID);

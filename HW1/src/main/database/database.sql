@@ -103,3 +103,17 @@ JOIN subboards sb ON b.board_id = sb.board_id
 LEFT JOIN activities a ON sb.subboard_id = a.subboard_id
 LEFT JOIN comments c ON a.activity_id = c.activity_id
 GROUP BY uw.user_id, u.username, w.workspace_id, w.workspace_name;
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE OR REPLACE FUNCTION workflix.sha512(input_text character varying)
+  RETURNS character varying AS
+$$
+DECLARE
+hashed_text character varying;
+BEGIN
+  hashed_text := workflix.digest(input_text, 'sha512')::text;
+RETURN hashed_text;
+END;
+$$
+LANGUAGE plpgsql;

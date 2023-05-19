@@ -17,6 +17,7 @@ import java.time.ZoneId;
 
 public class Subboard {
 
+    /** Set of constants with the same value as the DB field, useful in DAOs */
     public static final String SUBBOARD_ID = "subboard_id";
     public static final String BOARD_ID = "board_id";
     public static final String NAME = "name";
@@ -25,6 +26,7 @@ public class Subboard {
     public static final String CREATION_TIME = "creation_time";
 
 
+    /** Set of private fields, each one is a DB field */
     private Integer subboardId;
     private Integer boardId;
     private String name;
@@ -33,6 +35,7 @@ public class Subboard {
     private Date creationTime;
 
 
+    /** Getters for each private field */
     public Integer getSubboardId() {
         return subboardId;
     }

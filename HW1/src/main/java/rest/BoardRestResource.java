@@ -11,12 +11,26 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This class represents the REST resource "/board"
+ */
 public class BoardRestResource extends RestResource{
+
+    // The operation requested by the client
     protected final String op;
+    // The error code
     protected ErrorCode ec = null;
+    // The response
     protected String response = null;
+    // The tokens of the request
     protected final String[] tokens;
 
+    /**
+     * Constructor
+     * @param req The request
+     * @param res The response
+     * @param con The connection to the database
+     */
     public BoardRestResource(HttpServletRequest req, HttpServletResponse res, Connection con) {
         super(req, res, con);
         op = req.getRequestURI();
@@ -30,7 +44,7 @@ public class BoardRestResource extends RestResource{
     public void GetBoardById() throws IOException {
         try {
             Board board = new Board();
-            board.setBoardId(Integer.parseInt(tokens[3]));
+            board.setBoardId(Integer.parseInt(tokens[4]));
             if (new GetBoardByIdDatabase(con, board).getBoardById() == null) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
@@ -51,7 +65,7 @@ public class BoardRestResource extends RestResource{
     public void GetBoardsByWorkspaceId() throws IOException {
         try {
             Board board = new Board();
-            board.setWorkspaceId(Integer.parseInt(tokens[3]));
+            board.setWorkspaceId(Integer.parseInt(tokens[4]));
             if (new GetBoardByWorkspaceIdDatabase(con, board).getBoardByWorkspaceId() == null) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
@@ -88,10 +102,15 @@ public class BoardRestResource extends RestResource{
             respond();
         }
     }
+
+    /**
+     * Update a board
+     * @throws IOException Error in IO operations
+     */
     public void UpdateBoard() throws IOException {
         try {
             Board board = Board.fromJSON(req.getInputStream());
-            board.setBoardId(Integer.parseInt(tokens[4]));
+            board.setBoardId(Integer.parseInt(tokens[5]));
             Board newboard = new UpdateBoardDatabase(con, board).updateBoard();
 
             if (newboard == null) {
@@ -109,12 +128,17 @@ public class BoardRestResource extends RestResource{
         }
 
     }
+
+    /**
+     * Delete a board
+     * @throws IOException Error in IO operations
+     */
     public void DeleteBoard() throws IOException {
         try {
             Board board = new Board();
-            board.setBoardId(Integer.parseInt(tokens[4]));
+            board.setBoardId(Integer.parseInt(tokens[5]));
             if (new DeleteBoardDatabase(con, board).deleteBoard() == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+                initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
             }
@@ -126,11 +150,20 @@ public class BoardRestResource extends RestResource{
         }
 
     }
+
+    /**
+     * Respond to the client
+     * @throws IOException Error in IO operations
+     */
     private void respond() throws IOException {
         res.setStatus(ec.getHTTPCode());
         res.getWriter().write(response);
     }
 
+    /**
+     * Initialize the error
+     * @param ec The error code
+     */
     private void initError(ErrorCode ec) {
         this.ec = ec;
         response = ec.toJSON().toString();

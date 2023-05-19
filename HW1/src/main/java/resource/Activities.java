@@ -14,18 +14,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Class representing a Activity object
+ * */
 public class Activities {
 
-    public static final String ACTIVITY_ID = "ACTIVITY_ID";
-    public static final String SUBBOARD_ID = "SUBBOARD_ID";
-    public static final String NAME = "NAME";
+    /**
+     * Set of constants with the same value as the DB field, useful in DAOs
+     * */
+    public static final String ACTIVITY_ID = "activity_id";
+    public static final String SUBBOARD_ID = "subboard_id";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
+    public static final String START_DATE = "start_date";
+    public static final String END_DATE = "end_date";
+    public static final String WORKED_TIME = "worked_time";
+    public static final String INDEX = "index";
 
-    public static final String DESCRIPTION = "DESCRIPTION";
-    public static final String START_DATE = "START_DATE";
-    public static final String END_DATE = "END_DATE";
-    public static final String WORKED_TIME = "WORKED_TIME";
-    public static final String INDEX = "INDEX";
-
+    /**
+     * Set of private fields, each one is a DB field
+     * */
     private Integer activityId;
     private Integer subboardId;
     private String name;
@@ -35,6 +43,9 @@ public class Activities {
     private Integer workedTime;
     private Integer index;
 
+    /**
+     * Getters and setters for each private field
+     * */
     public Integer getActivityId() {
         return activityId;
     }
@@ -103,6 +114,15 @@ public class Activities {
 
     // ----------------------------------------------------------------
 
+
+    /**
+     * Static method that returns a list of Activities from a JSON list file
+     *
+     * @param inputStream InputStream of the JSON file
+     * @return List<Activities> activities
+     * @throws IOException  if the file is not found
+     * @throws JSONException if the JSON file is not well formatted
+     * */
     public static List<Activities> fromJSONlist(InputStream inputStream) throws IOException, JSONException {
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         JSONObject jobj = new JSONObject(dataString);
@@ -115,12 +135,28 @@ public class Activities {
         return activities;
     }
 
+    /**
+     * Static method that returns a single Activity from a JSON file
+     *
+     * @param inputStream InputStream of the JSON file
+     * @return Activities activities
+     * @throws IOException  if the file is not found
+     * @throws JSONException if the JSON file is not well formatted
+     * */
     public static Activities fromJSON(InputStream inputStream) throws IOException, JSONException {
 
         String dataString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         return fromJSON(new JSONObject(dataString));
     }
 
+    /**
+     * Static method that returns a single Activities from a JSON object
+     *
+     * @param jObj JSONObject of the JSON file
+     *             (it must be a single object, not a list)
+     * @return Activities activities
+     * @throws JSONException if the JSON file is not well formatted
+     * */
     public static Activities fromJSON(JSONObject jObj) throws JSONException {
 
         Integer activityId = jObj.getInt(ACTIVITY_ID);
@@ -150,6 +186,13 @@ public class Activities {
 
     }
 
+
+    /**
+     * Method that returns a JSON object from a single Activities
+     *
+     * @return JSONObject activitiesJSON
+     * @throws JSONException if the JSON file is not well formatted
+     * */
     public JSONObject toJSON() throws JSONException {
 
         JSONObject activitiesJSON = new JSONObject();

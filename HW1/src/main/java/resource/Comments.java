@@ -15,20 +15,32 @@ import java.util.List;
 import java.util.Date;
 import java.time.ZoneId;
 
+/**
+ * Class representing a Comments object
+ */
 public class Comments {
-    
-    public static final String COMMENT_ID = "COMMENT_ID";
-    public static final String ACTIVITY_ID = "ACTIVITY_ID";
-    public static final String USER_ID = "USER_ID";
-    public static final String COMMENT_TEXT = "COMMENT_TEXT";
-    public static final String CREATION_TIME = "CREATION_TIME";
 
+    /**
+     * Set of constants with the same value as the DB field, useful in DAOs
+     */
+    public static final String COMMENT_ID = "comment_id";
+    public static final String ACTIVITY_ID = "activity_id";
+    public static final String USER_ID = "user_id";
+    public static final String COMMENT_TEXT = "comment_text";
+    public static final String CREATION_TIME = "creation_time";
+
+    /**
+     * Set of private fields, each one is a DB field
+     */
     private Integer commentId;
     private Integer activityId;
     private Integer userId;
     private String commentText;
     private Date creationTime;
 
+    /**
+     * Getters and setters for each private field
+     */
     public Integer getCommentId() {
         return commentId;
     }

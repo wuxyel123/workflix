@@ -9,11 +9,19 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/**
+ * This class is the login filter. It checks if the user is logged in.
+ */
 public class LoginFilter extends AbstractFilter {
 
+    /**
+     * The logger for this class
+     */
     final static Logger logger = LogManager.getLogger(LoginFilter.class);
 
+    /**
+     * This method is called to apply the filter. It checks if the user is logged in.
+     */
     @Override
     public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 

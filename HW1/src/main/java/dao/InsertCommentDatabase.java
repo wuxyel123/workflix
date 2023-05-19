@@ -4,6 +4,9 @@ import resource.Comments;
 
 import java.sql.*;
 
+/**
+ * DAO class responsible for inserting a comment to the database
+ */
 public class InsertCommentDatabase {
 
     /**
@@ -16,15 +19,27 @@ public class InsertCommentDatabase {
     private final Connection con;
 
     /**
-     * The user to be searched
+     * The comment to be inserted
      */
     Comments comments;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be inserted
+     *
+     * @param con the connection to the database
+     * @param comments   the assignee to be inserted
+     */
     public InsertCommentDatabase(final Connection con, final Comments comments) {
         this.con = con;
         this.comments = comments;
     }
 
+    /**
+     * Insert the assignee from the database
+     *
+     * @return the assignee
+     * @throws SQLException if an error occurred while trying to insert the assignee
+     */
     public Comments addComments() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;

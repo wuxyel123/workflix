@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO class responsible for getting a subboard from board ID from the database
+ */
 public class GetSubboardByBoardIdDatabase {
 
     /**
@@ -21,15 +24,27 @@ public class GetSubboardByBoardIdDatabase {
     private final Connection con;
 
     /**
-     * The subboards to be inserted
+     * The subboards to get
      */
     Subboard subboard;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to get
+     *
+     * @param con the connection to the database
+     * @param s   the subboard to be inserted
+     */
     public GetSubboardByBoardIdDatabase(final Connection con, final Subboard s) {
         this.con = con;
         this.subboard = s;
     }
 
+    /**
+     * Get the subboard from the database
+     *
+     * @return the subboard
+     * @throws SQLException if an error occurred while trying to get the subboard
+     */
     public List<Subboard> getSubboardByBoardId() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;

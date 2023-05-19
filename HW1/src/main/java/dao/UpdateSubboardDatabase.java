@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class is responsible for updating a subboard in the database
+ */
 public class UpdateSubboardDatabase {
 
     /**
@@ -23,11 +26,23 @@ public class UpdateSubboardDatabase {
      */
     Subboard subboards;
 
+    /**
+     * Initialize the DAO object with a connection to the database and the object to be updated
+     *
+     * @param con the connection to the database
+     * @param s   the subboard to be updated
+     */
     public UpdateSubboardDatabase(final Connection con, final Subboard s) {
         this.con = con;
         this.subboards = s;
     }
 
+    /**
+     * Update the subboard in the database
+     *
+     * @return the updated subboard
+     * @throws SQLException if an error occurred while trying to update the subboard
+     */
     public Subboard UpdateSubboards() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
