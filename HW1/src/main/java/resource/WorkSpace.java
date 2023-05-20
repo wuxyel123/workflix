@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -104,20 +105,12 @@ public class WorkSpace {
      * @throws JSONException if the input is not valid JSON
      */
     public static WorkSpace fromJSON(JSONObject jobj) throws JSONException {
-        
-        Integer workspaceId = jobj.getInt(WORKSPACE_ID);
-        String workspaceName = jobj.getString(WORKSPACE_NAME);
-        Integer templateId = jobj.getInt(TEMPLATE_ID);
-//        Date creationTime = LocalDateTime.parse(jobj.getString(CREATION_TIME));
-        Date creationTime = java.util.Date
-                .from(LocalDateTime.parse(jobj.getString(CREATION_TIME)).atZone(ZoneId.systemDefault())
-                        .toInstant());
 
         WorkSpace workSpace = new WorkSpace();
-        workSpace.setWorkspaceId(workspaceId);
-        workSpace.setWorkspaceName(workspaceName);
-        workSpace.setTemplateId(templateId);
-        workSpace.setCreationTime(creationTime);
+        workSpace.setWorkspaceId(ResourceValueChecker.getValidInteger(jobj.get(WORKSPACE_ID)));
+        workSpace.setWorkspaceName(ResourceValueChecker.getValidString(jobj.get(WORKSPACE_NAME)));
+        workSpace.setTemplateId(ResourceValueChecker.getValidInteger(jobj.get(TEMPLATE_ID)));
+        workSpace.setCreationTime(ResourceValueChecker.getValidDate(jobj.get(CREATION_TIME)));
 
         return workSpace;
 

@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -134,24 +135,15 @@ public class Board {
      */
     public static Board fromJSON(JSONObject jobj) throws JSONException {
 
-        Integer boardId = jobj.getInt(BOARD_ID);
-        Integer workspaceId = jobj.getInt(WORKSPACE_ID);
-        String name = jobj.getString(NAME);
-        String description = jobj.getString(DESCRIPTION);
-        String visibility = jobj.getString(VISIBILITY);
-        Date createTime = java.util.Date
-                .from(LocalDateTime.parse(jobj.getString(CREATE_TIME)).atZone(ZoneId.systemDefault())
-                        .toInstant());
-
         // Create Board object, set values and return. Constructor is not used cause
         // it's not clean with so many parameters.
         Board board = new Board();
-        board.setBoardId(boardId);
-        board.setWorkspaceId(workspaceId);
-        board.setName(name);
-        board.setDescription(description);
-        board.setVisibility(visibility);
-        board.setCreateTime(createTime);
+        board.setBoardId(ResourceValueChecker.getValidInteger(jobj.get(BOARD_ID)));
+        board.setWorkspaceId(ResourceValueChecker.getValidInteger(jobj.get(WORKSPACE_ID)));
+        board.setName(ResourceValueChecker.getValidString(jobj.get(NAME)));
+        board.setDescription(ResourceValueChecker.getValidString(jobj.get(DESCRIPTION)));
+        board.setVisibility(ResourceValueChecker.getValidString(jobj.get(VISIBILITY)));
+        board.setCreateTime(ResourceValueChecker.getValidDate(jobj.get(CREATE_TIME)));
 
         return board;
 

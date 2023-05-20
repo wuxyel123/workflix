@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -96,14 +97,11 @@ public class Assignee {
 
     public static Assignee fromJSON(JSONObject jObj) throws JSONException {
 
-        Integer activityId = jObj.getInt(ACTIVITY_ID);
-        Integer userId = jObj.getInt(USER_ID);
-
         // Create Assignee object, set values and return. Constructor is not used cause
         // it's not clean with so many parameters.
         Assignee assignee = new Assignee();
-        assignee.setActivityId(activityId);
-        assignee.setUserId(userId);
+        assignee.setActivityId(ResourceValueChecker.getValidInteger(jObj.get(ACTIVITY_ID)));
+        assignee.setUserId(ResourceValueChecker.getValidInteger(jObj.get(USER_ID)));
 
         return assignee;
 
