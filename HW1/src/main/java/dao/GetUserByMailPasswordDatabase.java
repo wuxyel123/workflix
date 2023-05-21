@@ -45,7 +45,7 @@ public class GetUserByMailPasswordDatabase {
     public User getUserByMailAndPassword() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        User user=null;
+        User response=null;
 
         try {
             ps = con.prepareStatement(STATEMENT);
@@ -55,13 +55,15 @@ public class GetUserByMailPasswordDatabase {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                user = new User();
-                user.setUsername(rs.getString(User.USERNAME));
-                user.setEmail(rs.getString(User.EMAIL));
-                user.setFirstName(rs.getString(User.FIRST_NAME));
-                user.setLastName(rs.getString(User.LAST_NAME));
-                user.setProfilePicture(rs.getString(User.PROFILE_PICTURE));
-                user.setDescription(rs.getString(User.DESCRIPTION));
+                response = new User();
+                response.setUserId(rs.getInt(User.USER_ID));
+                response.setUsername(rs.getString(User.USERNAME));
+                response.setEmail(rs.getString(User.EMAIL));
+                response.setFirstName(rs.getString(User.FIRST_NAME));
+                response.setLastName(rs.getString(User.LAST_NAME));
+                response.setProfilePicture(rs.getString(User.PROFILE_PICTURE));
+                response.setDescription(rs.getString(User.DESCRIPTION));
+                response.setCreateDate(rs.getDate(User.CREATE_DATE));
             }
         } finally {
             if (rs != null) {
@@ -73,6 +75,6 @@ public class GetUserByMailPasswordDatabase {
             con.close();
         }
 
-        return user;
+        return response;
     }
 }

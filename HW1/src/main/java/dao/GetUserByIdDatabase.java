@@ -46,7 +46,7 @@ public class GetUserByIdDatabase {
     public User getUserById() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        User user=null;
+        User result = null;
 
         try {
             ps = con.prepareStatement(STATEMENT);
@@ -55,13 +55,15 @@ public class GetUserByIdDatabase {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                user = new User();
-                user.setUsername(rs.getString(User.USERNAME));
-                user.setEmail(rs.getString(User.EMAIL));
-                user.setFirstName(rs.getString(User.FIRST_NAME));
-                user.setLastName(rs.getString(User.LAST_NAME));
-                user.setProfilePicture(rs.getString(User.PROFILE_PICTURE));
-                user.setDescription(rs.getString(User.DESCRIPTION));
+                result = new User();
+                result.setUserId(rs.getInt(User.USER_ID));
+                result.setUsername(rs.getString(User.USERNAME));
+                result.setEmail(rs.getString(User.EMAIL));
+                result.setFirstName(rs.getString(User.FIRST_NAME));
+                result.setLastName(rs.getString(User.LAST_NAME));
+                result.setProfilePicture(rs.getString(User.PROFILE_PICTURE));
+                result.setDescription(rs.getString(User.DESCRIPTION));
+                result.setCreateDate(rs.getTimestamp(User.CREATE_DATE));
 
             }
         } finally {
@@ -73,7 +75,7 @@ public class GetUserByIdDatabase {
             }
             con.close();
         }
-        return user;
+        return result;
     }
 
 }
