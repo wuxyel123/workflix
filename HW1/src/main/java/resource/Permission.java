@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -101,13 +102,12 @@ public class Permission {
      * @throws JSONException if an error occurs during the JSON creation
      */
     public static Permission fromJSON(JSONObject jobj) throws JSONException {
-        Integer permissionId = jobj.getInt(PERMISSION_ID);
-        String permissionName = jobj.getString(PERMISSION_NAME);
-        String description = jobj.getString(DESCRIPTION);
+
+        // Get each field from the JSON object and create a Permission object
         Permission permission=new Permission();
-        permission.setPermissionId(permissionId);
-        permission.setPermissionName(permissionName);
-        permission.setDescription(description);
+        permission.setPermissionId(ResourceValueChecker.getValidInteger(jobj.get(PERMISSION_ID)));
+        permission.setPermissionName(ResourceValueChecker.getValidString(jobj.get(PERMISSION_NAME)));
+        permission.setDescription(ResourceValueChecker.getValidString(jobj.get(DESCRIPTION)));
         return permission;
     }
 

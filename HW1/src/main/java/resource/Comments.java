@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -126,22 +127,14 @@ public class Comments {
      */
 
     public static Comments fromJSON(JSONObject jObj) throws JSONException {
-        
-        Integer commentId = jObj.getInt(COMMENT_ID);
-        Integer activityId = jObj.getInt(ACTIVITY_ID);
-        Integer userId = jObj.getInt(USER_ID);
-        String commentText = jObj.getString(COMMENT_TEXT);
-        Date creationTime = java.util.Date
-                .from(LocalDateTime.parse(jObj.getString(CREATION_TIME)).atZone(ZoneId.systemDefault())
-                        .toInstant());
 
         // Create Comments object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         Comments comment = new Comments();
-        comment.setCommentId(commentId);
-        comment.setActivityId(activityId);
-        comment.setUserId(userId);
-        comment.setCommentText(commentText);
-        comment.setCreationTime(creationTime);
+        comment.setCommentId(ResourceValueChecker.getValidInteger(jObj.get(COMMENT_ID)));
+        comment.setActivityId(ResourceValueChecker.getValidInteger(jObj.get(ACTIVITY_ID)));
+        comment.setUserId(ResourceValueChecker.getValidInteger(jObj.get(USER_ID)));
+        comment.setCommentText(ResourceValueChecker.getValidString(jObj.get(COMMENT_TEXT)));
+        comment.setCreationTime(ResourceValueChecker.getValidDate(jObj.get(CREATION_TIME)));
 
         return comment;
 

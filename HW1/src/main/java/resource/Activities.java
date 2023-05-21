@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -159,28 +160,15 @@ public class Activities {
      * */
     public static Activities fromJSON(JSONObject jObj) throws JSONException {
 
-        Integer activityId = jObj.getInt(ACTIVITY_ID);
-        Integer subboardId = jObj.getInt(SUBBOARD_ID);
-        String name = jObj.getString(NAME);
-        String description = jObj.getString(DESCRIPTION);
-        Date startDate = java.util.Date
-                .from(LocalDateTime.parse(jObj.getString(START_DATE)).atZone(ZoneId.systemDefault())
-                        .toInstant());
-        Date endDate = java.util.Date
-                .from(LocalDateTime.parse(jObj.getString(END_DATE)).atZone(ZoneId.systemDefault())
-                        .toInstant());
-        Integer workedTime = jObj.getInt(WORKED_TIME);
-        Integer index = jObj.getInt(INDEX);
-
         Activities activities = new Activities();
-        activities.setActivityId(activityId);
-        activities.setSubboardId(subboardId);
-        activities.setName(name);
-        activities.setDescription(description);
-        activities.setStartDate(startDate);
-        activities.setEndDate(endDate);
-        activities.setWorkedTime(workedTime);
-        activities.setIndex(index);
+        activities.setActivityId(ResourceValueChecker.getValidInteger(jObj.get(ACTIVITY_ID)));
+        activities.setSubboardId(ResourceValueChecker.getValidInteger(jObj.get(SUBBOARD_ID)));
+        activities.setName(ResourceValueChecker.getValidString(jObj.get(NAME)));
+        activities.setDescription(ResourceValueChecker.getValidString(jObj.get(DESCRIPTION)));
+        activities.setStartDate(ResourceValueChecker.getValidDate(jObj.get(START_DATE)));
+        activities.setEndDate(ResourceValueChecker.getValidDate(jObj.get(END_DATE)));
+        activities.setWorkedTime(ResourceValueChecker.getValidInteger(jObj.get(WORKED_TIME)));
+        activities.setIndex(ResourceValueChecker.getValidInteger(jObj.get(INDEX)));
 
         return activities;
 

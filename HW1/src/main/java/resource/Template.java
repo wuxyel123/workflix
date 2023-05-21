@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -86,13 +87,12 @@ public class Template {
      * @throws JSONException if there is an error in the conversion
      */
     public static Template fromJSON(JSONObject jobj) throws JSONException {
-        Integer templateId = jobj.getInt(TEMPLATE_ID);
-        String imageUrl = jobj.getString(IMAGE_URL);
-        String templateName = jobj.getString(TEMPLATE_NAME);
+
+        // Get each field from the JSON object and create a Template object
         Template template=new Template();
-        template.setTemplateId(templateId);
-        template.setImageUrl(imageUrl);
-        template.setTemplateName(templateName);
+        template.setTemplateId(ResourceValueChecker.getValidInteger(jobj.get(TEMPLATE_ID)));
+        template.setImageUrl(ResourceValueChecker.getValidString(jobj.get(IMAGE_URL)));
+        template.setTemplateName(ResourceValueChecker.getValidString(jobj.get(TEMPLATE_NAME)));
         return template;
     }
 

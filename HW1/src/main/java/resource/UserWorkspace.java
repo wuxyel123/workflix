@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,15 +93,12 @@ public class UserWorkspace {
      *
      * */
     public static UserWorkspace fromJSON(JSONObject jobj) throws JSONException {
-        
-        Integer userId = jobj.getInt(USER_ID);
-        Integer workspaceId = jobj.getInt(WORKSPACE_ID);
-        Integer permissionId = jobj.getInt(PERMISSION_ID);
 
+        // Create the UserWorkspace object
         UserWorkspace userWorkspace = new UserWorkspace();
-        userWorkspace.setUserId(userId);
-        userWorkspace.setWorkspaceId(workspaceId);
-        userWorkspace.setPermissionId(permissionId);
+        userWorkspace.setUserId(ResourceValueChecker.getValidInteger(jobj.get(USER_ID)));
+        userWorkspace.setWorkspaceId(ResourceValueChecker.getValidInteger(jobj.get(WORKSPACE_ID)));
+        userWorkspace.setPermissionId(ResourceValueChecker.getValidInteger(jobj.get(PERMISSION_ID)));
 
         return userWorkspace;
 

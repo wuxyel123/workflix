@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -147,26 +148,17 @@ public class Analytics{
     * @throws JSONException if the input is not valid JSON
     */
     public static Analytics fromJSON(JSONObject jobj) throws JSONException {
-        
-        Integer userId = jobj.getInt(USER_ID);
-        String username = jobj.getString(USERNAME);
-        String workspaceId = jobj.getString(WORKSPACE_ID);
-        String workspaaceName = jobj.getString(WORKSPACE_NAME);
-        String NumCompletedActivities = jobj.getString(NUM_COMPLETED_ACTIVITIES);
-        String NumTotalActivities = jobj.getString(NUM_TOTAL_ACTIVITIES);
-        String TotalWorkedTime = jobj.getString(TOTAL_WORKED_TIME);
-        String NumComments = jobj.getString(NUM_COMMENTS);
 
         // Create Analytics object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         Analytics analytics = new Analytics();
-        analytics.setUserId(userId);
-        analytics.setUsername(username);
-        analytics.setWorkspaceId(workspaceId);
-        analytics.setWorkspaceName(workspaaceName);
-        analytics.setNumCompletedActivities(NumCompletedActivities);
-        analytics.setNumTotalActivities(NumTotalActivities);
-        analytics.setTotalWorkedTime(TotalWorkedTime);
-        analytics.setNumComments(NumComments);
+        analytics.setUserId(ResourceValueChecker.getValidInteger(jobj.get(USER_ID)));
+        analytics.setUsername(ResourceValueChecker.getValidString(jobj.get(USERNAME)));
+        analytics.setWorkspaceId(ResourceValueChecker.getValidString(jobj.get(WORKSPACE_ID)));
+        analytics.setWorkspaceName(ResourceValueChecker.getValidString(jobj.get(WORKSPACE_NAME)));
+        analytics.setNumCompletedActivities(ResourceValueChecker.getValidString(jobj.get(NUM_COMPLETED_ACTIVITIES)));
+        analytics.setNumTotalActivities(ResourceValueChecker.getValidString(jobj.get(NUM_TOTAL_ACTIVITIES)));
+        analytics.setTotalWorkedTime(ResourceValueChecker.getValidString(jobj.get(TOTAL_WORKED_TIME)));
+        analytics.setNumComments(ResourceValueChecker.getValidString(jobj.get(NUM_COMMENTS)));
 
         return analytics;
 

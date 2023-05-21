@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import utils.ResourceValueChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -125,24 +126,15 @@ public class Subboard {
      * @throws JSONException if the input is not valid JSON
      */
     public static Subboard fromJSON(JSONObject jobj) throws JSONException {
-        
-        Integer subboardId = jobj.getInt(SUBBOARD_ID);
-        Integer boardId = jobj.getInt(BOARD_ID);
-        String name = jobj.getString(NAME);
-        Integer index = jobj.getInt(INDEX);
-        Boolean defaultCompletedActivitySubboard = jobj.getBoolean(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD);
-        Date creationTime = java.util.Date
-                .from(LocalDateTime.parse(jobj.getString(CREATION_TIME)).atZone(ZoneId.systemDefault())
-                        .toInstant());
 
         // Create Subboards object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         Subboard subboard = new Subboard();
-        subboard.setSubboardId(subboardId);
-        subboard.setBoardId(boardId);
-        subboard.setName(name);
-        subboard.setIndex(index);
-        subboard.setDefaultCompletedActivitySubboard(defaultCompletedActivitySubboard);
-        subboard.setCreationTime(creationTime);
+        subboard.setSubboardId(ResourceValueChecker.getValidInteger(jobj.get(SUBBOARD_ID)));
+        subboard.setBoardId(ResourceValueChecker.getValidInteger(jobj.get(BOARD_ID)));
+        subboard.setName(ResourceValueChecker.getValidString(jobj.get(NAME)));
+        subboard.setIndex(ResourceValueChecker.getValidInteger(jobj.get(INDEX)));
+        subboard.setDefaultCompletedActivitySubboard(ResourceValueChecker.getValidBoolean(jobj.get(DEFAULT_COMPLETED_ACTIVITY_SUBBOARD)));
+        subboard.setCreationTime(ResourceValueChecker.getValidDate(jobj.get(CREATION_TIME)));
 
         return subboard;
 

@@ -157,27 +157,17 @@ public class User {
      */
     public static User fromJSON(JSONObject jobj) throws JSONException {
 
-        Integer userId = ResourceValueChecker.getValidInteger(jobj.get(USER_ID));
-        String username = ResourceValueChecker.getValidString(jobj.get(USERNAME));
-        String password = ResourceValueChecker.getValidString(jobj.get(PASSWORD));
-        String email = ResourceValueChecker.getValidString(jobj.get(EMAIL));
-        String firstName = ResourceValueChecker.getValidString(jobj.get(FIRST_NAME));
-        String lastName = ResourceValueChecker.getValidString(jobj.get(LAST_NAME));
-        String profilePicture = ResourceValueChecker.getValidString(jobj.get(PROFILE_PICTURE));
-        String description = ResourceValueChecker.getValidString(jobj.get(DESCRIPTION));
-        Date createDate = ResourceValueChecker.getValidDate(jobj.get(CREATE_DATE));
-
         // Create User object, set values and return. Constructor is not used cause it's not clean with so many parameters.
         User user = new User();
-        user.setUserId(userId);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setProfilePicture(profilePicture);
-        user.setDescription(description);
-        user.setCreateDate(createDate);
+        user.setUserId(ResourceValueChecker.getValidInteger(jobj.get(USER_ID)));
+        user.setUsername(ResourceValueChecker.getValidString(jobj.get(USERNAME)));
+        user.setPassword(ResourceValueChecker.getValidString(jobj.get(PASSWORD)));
+        user.setEmail(ResourceValueChecker.getValidString(jobj.get(EMAIL)));
+        user.setFirstName(ResourceValueChecker.getValidString(jobj.get(FIRST_NAME)));
+        user.setLastName(ResourceValueChecker.getValidString(jobj.get(LAST_NAME)));
+        user.setProfilePicture(ResourceValueChecker.getValidString(jobj.get(PROFILE_PICTURE)));
+        user.setDescription(ResourceValueChecker.getValidString(jobj.get(DESCRIPTION)));
+        user.setCreateDate(ResourceValueChecker.getValidDate(jobj.get(CREATE_DATE)));
 
         return user;
 

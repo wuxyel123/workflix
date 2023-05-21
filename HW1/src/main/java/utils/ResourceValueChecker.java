@@ -7,7 +7,7 @@ import java.util.Date;
 public class ResourceValueChecker {
 
     /**
-     * Check if the value is null or empty
+     * Check if the value is null or empty Integer
      * @param value The value to check
      * @return The value if it is not null or empty, null otherwise
      */
@@ -20,7 +20,7 @@ public class ResourceValueChecker {
     }
 
     /**
-     * Check if the value is null or empty
+     * Check if the value is null or empty string
      * @param value The value to check
      * @return The value if it is not null or empty, null otherwise
      */
@@ -33,7 +33,7 @@ public class ResourceValueChecker {
     }
 
     /**
-     * Check if the value is null or empty
+     * Check if the value is null or empty date
      * @param value The value to check
      * @return The value if it is not null or empty, null otherwise
      */
@@ -50,6 +50,19 @@ public class ResourceValueChecker {
         }
 
         return date;
+    }
+
+    /**
+     * Check if the value is null or empty
+     * @param value The value to check
+     * @return The value if it is not null or empty, null otherwise
+     */
+    public static Boolean getValidBoolean(Object value) {
+
+        if (value == null || value.toString().isEmpty()) {
+            return false;
+        }
+        return Boolean.parseBoolean(value.toString());
     }
 
 }
