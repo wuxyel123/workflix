@@ -20,7 +20,7 @@ public class UserRestResource extends RestResource{
     // The operation requested by the client
     protected final String op;
     // The error code
-    protected ErrorCode ec;
+    protected ErrorCode ec = ErrorCode.OK;
     // The response
     protected String response="";
     // The tokens of the request
@@ -115,7 +115,9 @@ public class UserRestResource extends RestResource{
      */
     public void UpdateUserNoPassword() throws IOException{
         try {
+
             User user = User.fromJSON(req.getInputStream());
+            user.setUserId(Integer.parseInt(tokens[5]));
             User newUser = new UpdateUserDatabase(con, user).updateUser();
             if (newUser == null) {
                 initError(ErrorCode.USER_NOT_FOUND);
@@ -137,6 +139,7 @@ public class UserRestResource extends RestResource{
     public void UpdateUserPassword() throws IOException{
         try {
             User user = User.fromJSON(req.getInputStream());
+            user.setUserId(Integer.parseInt(tokens[5]));
             User newUser = new UpdateUserPasswordDatabase(con, user).updateUserPassword();
             if (newUser == null) {
                 initError(ErrorCode.USER_NOT_FOUND);
@@ -157,7 +160,7 @@ public class UserRestResource extends RestResource{
      */
     public void DeleteUser() throws IOException{
         try {
-            User user = new User();
+            User user = User.fromJSON(req.getInputStream());
             user.setUserId(Integer.parseInt(tokens[5]));
             if (new DeleteUserDatabase(con, user).deleteUser()==null) {
                 initError(ErrorCode.USER_NOT_FOUND);

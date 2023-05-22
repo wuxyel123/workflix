@@ -12,7 +12,7 @@ public class DeleteUserDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "DELETE FROM workflix.users WHERE email=? RETURNING *;";
+    private static final String STATEMENT = "DELETE FROM workflix.users WHERE email=? AND user_id=? AND password=workflix.sha512(?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -50,18 +50,21 @@ public class DeleteUserDatabase {
         try {
             ps = con.prepareStatement(STATEMENT);
             ps.setString(1, user.getEmail());
+            ps.setInt(2, user.getUserId());
+            ps.setString(3, user.getPassword());
 
             rs = ps.executeQuery();
 
             if (rs.next()) {
                 deletedUser = new User();
+                deletedUser.setUserId(rs.getInt(User.USER_ID));
                 deletedUser.setUsername(rs.getString(User.USERNAME));
-                deletedUser.setPassword(rs.getString(User.PASSWORD));
                 deletedUser.setEmail(rs.getString(User.EMAIL));
                 deletedUser.setFirstName(rs.getString(User.FIRST_NAME));
                 deletedUser.setLastName(rs.getString(User.LAST_NAME));
                 deletedUser.setProfilePicture(rs.getString(User.PROFILE_PICTURE));
                 deletedUser.setDescription(rs.getString(User.DESCRIPTION));
+                deletedUser.setCreateDate(rs.getTimestamp(User.CREATE_DATE));
 
             }
         } finally {

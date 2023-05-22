@@ -31,6 +31,9 @@ INSERT INTO user_workspace (user_id, workspace_id, permission_id)
 VALUES (1, 1, 1);
 
 INSERT INTO user_workspace (user_id, workspace_id, permission_id)
+VALUES (1, 2, 1);
+
+INSERT INTO user_workspace (user_id, workspace_id, permission_id)
 VALUES (2, 1, 2);
 
 -- Inserting sample boards

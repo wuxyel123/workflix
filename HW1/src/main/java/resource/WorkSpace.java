@@ -131,6 +131,22 @@ public class WorkSpace {
         return workSpaceJSON;
     }
 
+    /** Get a json array from a list of workSpace objects
+     *
+     * @param workSpaces list of workSpace objects
+     * @return JSONArray containing the workSpace data
+     * @throws JSONException if the input is not valid JSON
+     */
+    public static JSONArray toJSONlist(List<WorkSpace> workSpaces) throws JSONException {
+
+        JSONArray workSpacesJSONList = new JSONArray();
+        for(WorkSpace workSpace : workSpaces){
+            workSpacesJSONList.put(workSpace.toJSON());
+        }
+
+        return workSpacesJSONList;
+    }
+
 
 
 }

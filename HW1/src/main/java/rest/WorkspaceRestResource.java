@@ -11,6 +11,7 @@ import resource.WorkSpace;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * This class represents the REST resource "/workspace"
@@ -20,7 +21,7 @@ public class WorkspaceRestResource extends RestResource {
     // The following strings represent the different operations that the REST
     protected final String op;
     // The error code
-    protected ErrorCode ec = null;
+    protected ErrorCode ec = ErrorCode.OK;
     // The response
     protected String response = null;
     // The tokens of the request
@@ -119,11 +120,14 @@ public class WorkspaceRestResource extends RestResource {
         try {
             User user = User.fromJSON(req.getInputStream());
             user.setUserId(Integer.parseInt(tokens[4]));
+            List<WorkSpace> workSpaces = new GetWorkspaceByUserIdDatabase(con, user).getWorkspaceByUserId();
 
-            if (new GetWorkspaceByUserIdDatabase(con, user).getWorkspaceByUserId() == null) {
+            if (workSpaces == null || workSpaces.isEmpty()) {
                 initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                response = WorkSpace.toJSONlist(workSpaces).toString();
+
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);

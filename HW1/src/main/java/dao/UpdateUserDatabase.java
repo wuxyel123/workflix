@@ -15,7 +15,7 @@ public class UpdateUserDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.users SET username=?, email=?, first_name=?, last_name=?, profile_picture=?, description=? WHERE user_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.users SET username=?, email=?, first_name=?, last_name=?, profile_picture=?, description=? WHERE user_id=? AND password=workflix.sha512(?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -59,16 +59,19 @@ public class UpdateUserDatabase {
             ps.setString(5, user.getProfilePicture());
             ps.setString(6, user.getDescription());
             ps.setInt(7, user.getUserId());
+            ps.setString(8, user.getPassword());
             rs = ps.executeQuery();
 
             if (rs.next()) {
                 newUser = new User();
+                newUser.setUserId(rs.getInt(User.USER_ID));
                 newUser.setUsername(rs.getString(User.USERNAME));
                 newUser.setEmail(rs.getString(User.EMAIL));
                 newUser.setFirstName(rs.getString(User.FIRST_NAME));
                 newUser.setLastName(rs.getString(User.LAST_NAME));
                 newUser.setProfilePicture(rs.getString(User.PROFILE_PICTURE));
                 newUser.setDescription(rs.getString(User.DESCRIPTION));
+                newUser.setCreateDate(rs.getTimestamp(User.CREATE_DATE));
             }
         } finally {
             if (rs != null) {
