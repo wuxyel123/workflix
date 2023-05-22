@@ -83,6 +83,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              *  user/update/{userid}/password
              *  user/{userid}
              *  user/{userid}/workspaces
+             *  user/getbyemail
              * */
             // user/login
             if (tokens.length==5 && tokens[4].equals("login")){
@@ -130,6 +131,15 @@ public class RestDispatcherServlet extends AbstractServlet{
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "GET" -> urr.GetWorkSpacesByUserId();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+
+            // user/getbyemail
+            else if (tokens.length==5 && tokens[4].equals("getbyemail")){
+                UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetUserFromMail();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }

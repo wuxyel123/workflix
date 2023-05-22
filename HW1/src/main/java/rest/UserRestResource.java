@@ -183,7 +183,28 @@ public class UserRestResource extends RestResource{
 
     }
 
-    //TODO: get user from email
+    /** Get user by email
+     * @throws IOException Error in IO operations
+     */
+    public void GetUserFromMail() throws IOException {
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            user = new GetUserByMailDatabase(con, user).getUserByMail();
+            if (user == null) {
+                initError(ErrorCode.USER_NOT_FOUND);
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = user.toJSON().toString();
+            }
+        } catch (SQLException e) {
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        }
+        finally {
+            respond();
+        }
+    }
 
     /**
      * Respond to the client
