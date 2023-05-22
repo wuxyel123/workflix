@@ -168,5 +168,19 @@ public class Board {
         return boardJSON;
     }
 
+    /** Get a json array from a list of board objects
+     *
+     * @param boards list of workSpace objects
+     * @return JSONArray containing the boards data
+     * @throws JSONException if the input is not valid JSON
+     */
+    public static JSONArray toJSONList(List<Board> boards) throws JSONException {
+        JSONArray boardsJSON = new JSONArray();
+        for (Board board : boards) {
+            boardsJSON.put(board.toJSON());
+        }
+        return boardsJSON;
+    }
+
 }
 

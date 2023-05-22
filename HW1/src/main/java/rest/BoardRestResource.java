@@ -4,12 +4,14 @@ import dao.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import resource.Board;
+import resource.WorkSpace;
 import utils.ErrorCode;
 
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * This class represents the REST resource "/board"
@@ -19,9 +21,9 @@ public class BoardRestResource extends RestResource{
     // The operation requested by the client
     protected final String op;
     // The error code
-    protected ErrorCode ec = null;
+    protected ErrorCode ec = ErrorCode.OK;
     // The response
-    protected String response = null;
+    protected String response = "";
     // The tokens of the request
     protected final String[] tokens;
 
@@ -64,12 +66,15 @@ public class BoardRestResource extends RestResource{
      */
     public void GetBoardsByWorkspaceId() throws IOException {
         try {
-            Board board = new Board();
-            board.setWorkspaceId(Integer.parseInt(tokens[4]));
-            if (new GetBoardByWorkspaceIdDatabase(con, board).getBoardByWorkspaceId() == null) {
+            WorkSpace workspace = resource.WorkSpace.fromJSON(req.getInputStream());
+            workspace.setWorkspaceId(Integer.parseInt(tokens[4]));
+            List<Board> boards = new GetBoardByWorkspaceIdDatabase(con, workspace).getBoardByWorkspaceId();
+            if (boards == null || boards.isEmpty()) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = Board.toJSONList(boards).toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);

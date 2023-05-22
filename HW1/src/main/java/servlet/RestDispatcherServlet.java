@@ -55,8 +55,6 @@ public class RestDispatcherServlet extends AbstractServlet{
 
     }
 
-    //TODO: correct token length in all rest resources
-
     /**
      * Process user rest dispatcher
      * @param req Request
@@ -126,14 +124,6 @@ public class RestDispatcherServlet extends AbstractServlet{
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // user/{userid}
-            else if (tokens.length==5 && Integer.parseInt(tokens[4])%1==0){
-                UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
-                switch (req.getMethod()) {
-                    case "GET" -> urr.GetUserFromId();
-                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
-                }
-            }
 
             // user/{userid}/workspaces
             else if (tokens.length==6 && tokens[5].equals("workspaces")){
@@ -143,13 +133,24 @@ public class RestDispatcherServlet extends AbstractServlet{
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
+
+            // user/{userid}
+            else if (tokens.length==5 && Integer.parseInt(tokens[4])%1==0){
+                UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetUserFromId();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
             else{
                 return false;
             }
 
+
         }
         catch (NumberFormatException e){
             writeError(res, ErrorCode.WRONG_REST_FORMAT);
+            logger.error("stacktrace:", e);
         }
         catch (NamingException | SQLException e){
             writeError(res, ErrorCode.INTERNAL_ERROR);
@@ -173,7 +174,7 @@ public class RestDispatcherServlet extends AbstractServlet{
         // the first token will always be the empty;
         // the second will be the context;
         // the third should be "activity";
-        if (tokens.length < 5 || !tokens[4].equals("workspace")) {
+        if (tokens.length < 5 || !tokens[3].equals("workspace")) {
             return false;
         }
         try {
@@ -189,17 +190,8 @@ public class RestDispatcherServlet extends AbstractServlet{
              * /workspace/{workspaceid}/boards
              **/
 
-            // workspace/{workspaceid}
-             if (tokens.length == 5 && Integer.parseInt(tokens[4]) % 1 == 0) {
-                WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
-                switch (req.getMethod()) {
-                    case "GET" -> urr.GetWorkSpace();
-                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
-                }
-            }
-
             // workspace/create
-            else if (tokens.length == 5 && tokens[4].equals("create")) {
+            if (tokens.length == 5 && tokens[4].equals("create")) {
                 WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateWorkSpace();
@@ -229,7 +221,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             else if (tokens.length == 6 && tokens[5].equals("adduser")) {
                 UserWorkspaceRestResource urr = new UserWorkspaceRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
-                    case "POST" -> urr.AddUser();
+                    case "PUT" -> urr.AddUser();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
@@ -259,13 +251,25 @@ public class RestDispatcherServlet extends AbstractServlet{
                     case "GET" -> urr.GetBoardsByWorkspaceId();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
-            } else {
+            }
+
+            // /workspace/{workspaceid}
+            else if (tokens.length == 5 && Integer.parseInt(tokens[4]) % 1 == 0) {
+                WorkspaceRestResource urr = new WorkspaceRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetWorkSpace();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }else {
                 return false;
             }
 
 
+
+
         } catch (NumberFormatException e) {
             writeError(res, ErrorCode.WRONG_REST_FORMAT);
+            logger.error("stacktrace:", e);
         } catch (NamingException | SQLException e) {
             writeError(res, ErrorCode.INTERNAL_ERROR);
             logger.error("stacktrace:", e);

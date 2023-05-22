@@ -45,14 +45,20 @@ public class UserRestResource extends RestResource{
     public void CreateUser() throws IOException {
         try {
             User user = User.fromJSON(req.getInputStream());
-            User newUser = new InsertUserDatabase(con, user).insertUser();
-            if (newUser == null) {
-                initError(ErrorCode.USER_ALREADY_EXISTS);
-                logger.warn("User already exists");
-            } else {
-                ec = ErrorCode.OK;
-                res.setContentType("application/json");
-                response = newUser.toJSON().toString();
+            if(user.getEmail()==null || user.getPassword()==null || user.getUsername()==null){
+                initError(ErrorCode.INVALID_INPUT);
+                logger.warn("Missing data");
+            }
+            else{
+                User newUser = new InsertUserDatabase(con, user).insertUser();
+                if (newUser == null) {
+                    initError(ErrorCode.USER_ALREADY_EXISTS);
+                    logger.warn("User already exists");
+                } else {
+                    ec = ErrorCode.OK;
+                    res.setContentType("application/json");
+                    response = newUser.toJSON().toString();
+                }
             }
         } catch (SQLException e){
             if (e.getSQLState().equals("23505")) {
@@ -162,10 +168,13 @@ public class UserRestResource extends RestResource{
         try {
             User user = User.fromJSON(req.getInputStream());
             user.setUserId(Integer.parseInt(tokens[5]));
-            if (new DeleteUserDatabase(con, user).deleteUser()==null) {
+            user = new DeleteUserDatabase(con, user).deleteUser();
+            if (user==null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = user.toJSON().toString();
             }
         } catch (SQLException e){
             initError(ErrorCode.INTERNAL_ERROR);
@@ -173,6 +182,8 @@ public class UserRestResource extends RestResource{
         } finally { respond(); }
 
     }
+
+    //TODO: get user from email
 
     /**
      * Respond to the client

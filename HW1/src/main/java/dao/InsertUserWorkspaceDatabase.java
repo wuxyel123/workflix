@@ -61,7 +61,7 @@ public class InsertUserWorkspaceDatabase {
 
             if (rs.next()) {
                 insertUserWorkspace = new UserWorkspace();
-                insertUserWorkspace.setWorkspaceId(rs.getInt(UserWorkspace.USER_ID));
+                insertUserWorkspace.setUserId(rs.getInt(UserWorkspace.USER_ID));
                 insertUserWorkspace.setWorkspaceId(rs.getInt(UserWorkspace.WORKSPACE_ID));
                 insertUserWorkspace.setPermissionId(rs.getInt(UserWorkspace.PERMISSION_ID));
             }

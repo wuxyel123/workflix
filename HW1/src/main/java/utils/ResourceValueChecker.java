@@ -13,7 +13,7 @@ public class ResourceValueChecker {
      */
     public static Integer getValidInteger(Object value) {
 
-        if(value==null || value.toString().isEmpty()){
+        if(value==null | value.toString().isEmpty()){
             return null;
         }
         return Integer.parseInt(value.toString());
@@ -26,7 +26,7 @@ public class ResourceValueChecker {
      */
     public static String getValidString(Object value) {
 
-        if(value==null || value.toString().isEmpty()){
+        if(value==null | value.toString().isEmpty()){
             return null;
         }
         return value.toString();
@@ -41,7 +41,7 @@ public class ResourceValueChecker {
 
         Date date = null;
         String dateStr;
-        if(value==null || value.toString().isEmpty()){
+        if(value==null | value.toString().isEmpty()){
             return date;
         } else {
             try {
@@ -59,7 +59,7 @@ public class ResourceValueChecker {
      */
     public static Boolean getValidBoolean(Object value) {
 
-        if (value == null || value.toString().isEmpty()) {
+        if (value == null | value.toString().isEmpty()) {
             return false;
         }
         return Boolean.parseBoolean(value.toString());

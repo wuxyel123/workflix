@@ -137,7 +137,7 @@ public class WorkSpace {
      * @return JSONArray containing the workSpace data
      * @throws JSONException if the input is not valid JSON
      */
-    public static JSONArray toJSONlist(List<WorkSpace> workSpaces) throws JSONException {
+    public static JSONArray toJSONList(List<WorkSpace> workSpaces) throws JSONException {
 
         JSONArray workSpacesJSONList = new JSONArray();
         for(WorkSpace workSpace : workSpaces){
