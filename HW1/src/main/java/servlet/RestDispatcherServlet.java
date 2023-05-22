@@ -301,7 +301,7 @@ public class RestDispatcherServlet extends AbstractServlet{
         // the first token will always be the empty;
         // the second will be the context;
         // the third should be "activity";
-        if (tokens.length < 5 || !tokens[4].equals("comment")) {
+        if (tokens.length < 7 || !tokens[3].equals("activity") || !tokens[5].equals("comment")) {
             return false;
         }
         try {
@@ -309,9 +309,10 @@ public class RestDispatcherServlet extends AbstractServlet{
              * Activity APIs are:
              * activity/{activityid}/comment/get
              * activity/{activityid}/comment/add
-             * activity/comment/delete/{commentid}
-             * activity/comment/update/{commentid}
+             * activity/{activityid}/comment/delete/{commentid}
+             * activity/{activityid}/comment/update/{commentid}
              **/
+
 
             // activity/{activityid}/comment/get
             if (tokens.length == 7 && tokens[6].equals("get")) {
@@ -329,16 +330,16 @@ public class RestDispatcherServlet extends AbstractServlet{
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // activity/comment/delete/{commentid}
-            else if (tokens.length == 7 && tokens[5].equals("delete")) {
+            // activity/{activityid}/comment/delete/{commentid}
+            else if (tokens.length == 8 && tokens[6].equals("delete")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteComment();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // activity/comment/update/{commentid}
-            else if (tokens.length == 7 && tokens[5].equals("update")) {
+            // activity/{activityid}/comment/update/{commentid}
+            else if (tokens.length == 8 && tokens[6].equals("update")) {
                 CommentRestResource urr = new CommentRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "PUT" -> urr.UpdateComment();

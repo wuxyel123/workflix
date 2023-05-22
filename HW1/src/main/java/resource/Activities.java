@@ -195,4 +195,21 @@ public class Activities {
 
         return activitiesJSON;
     }
+
+    /** Get a json array from a list of activities objects
+     *
+     * @param activities list of workSpace objects
+     * @return JSONArray containing the activity data
+     * @throws JSONException if the input is not valid JSON
+     */
+    public static JSONArray toJSONList(List<Activities> activities) throws JSONException {
+
+        JSONArray activitiesJSONList = new JSONArray();
+        for(Activities activity : activities){
+            activitiesJSONList.put(activity.toJSON());
+        }
+
+        return activitiesJSONList;
+    }
+
 }

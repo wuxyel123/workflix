@@ -156,4 +156,22 @@ public class Comments {
 
         return commentsJSON;
     }
+
+    /** Get a json array from a list of workSpace objects
+     *
+     * @param comments list of workSpace objects
+     * @return JSONArray containing the comment data
+     * @throws JSONException if the input is not valid JSON
+     */
+    public static JSONArray toJSONList(List<Comments> comments) throws JSONException {
+
+        JSONArray commentJSONList = new JSONArray();
+        for(Comments comment : comments){
+            commentJSONList.put(comment.toJSON());
+        }
+
+        return commentJSONList;
+    }
+
+
 }
