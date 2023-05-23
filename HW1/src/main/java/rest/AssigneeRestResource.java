@@ -23,9 +23,9 @@ public class AssigneeRestResource extends RestResource {
     // The operation requested by the client
     protected final String op;
     // The error code
-    protected ErrorCode ec = null;
+    protected ErrorCode ec = ErrorCode.OK;
     // The response
-    protected String response = null;
+    protected String response = "";
     // The tokens of the request
     protected final String[] tokens;
 
