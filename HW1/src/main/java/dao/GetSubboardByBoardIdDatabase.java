@@ -1,5 +1,6 @@
 package dao;
 
+import resource.Board;
 import resource.Subboard;
 
 import java.sql.Connection;
@@ -26,7 +27,7 @@ public class GetSubboardByBoardIdDatabase {
     /**
      * The subboards to get
      */
-    Subboard subboard;
+    Board board;
 
     /**
      * Initialize the DAO object with a connection to the database and the object to get
@@ -34,9 +35,9 @@ public class GetSubboardByBoardIdDatabase {
      * @param con the connection to the database
      * @param s   the subboard to be inserted
      */
-    public GetSubboardByBoardIdDatabase(final Connection con, final Subboard s) {
+    public GetSubboardByBoardIdDatabase(final Connection con, final Board b) {
         this.con = con;
-        this.subboard = s;
+        this.board = b;
     }
 
     /**
@@ -53,7 +54,7 @@ public class GetSubboardByBoardIdDatabase {
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, subboard.getBoardId());
+            pstmt.setInt(1, board.getBoardId());
 
 
             rs = pstmt.executeQuery();

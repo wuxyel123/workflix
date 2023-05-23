@@ -46,7 +46,7 @@ public class GetBoardByIdDatabase {
     public Board getBoardById() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Board board=null;
+        Board res=null;
 
         try {
             ps = con.prepareStatement(STATEMENT);
@@ -55,12 +55,13 @@ public class GetBoardByIdDatabase {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                board = new Board();
-                board.setWorkspaceId(rs.getInt(Board.WORKSPACE_ID));
-                board.setName(rs.getString(Board.NAME));
-                board.setDescription(rs.getString(Board.DESCRIPTION));
-                board.setVisibility(rs.getString(Board.VISIBILITY));
-                board.setCreateTime(rs.getDate(Board.CREATE_TIME));
+                res = new Board();
+                res.setBoardId(rs.getInt(Board.BOARD_ID));
+                res.setWorkspaceId(rs.getInt(Board.WORKSPACE_ID));
+                res.setName(rs.getString(Board.NAME));
+                res.setDescription(rs.getString(Board.DESCRIPTION));
+                res.setVisibility(rs.getString(Board.VISIBILITY));
+                res.setCreateTime(rs.getDate(Board.CREATE_TIME));
             }
         } finally {
             if (rs != null) {
@@ -71,7 +72,7 @@ public class GetBoardByIdDatabase {
             }
             con.close();
         }
-        return board;
+        return res;
     }
 
 }

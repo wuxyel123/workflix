@@ -194,7 +194,7 @@ public class User {
     }
 
     /**
-     * Get a JSONArray from a list of Assignee objects
+     * Get a JSONArray from a list of user objects
      *
      * @param users List of Users objects
      * @return JSONArray containing the Assignee data

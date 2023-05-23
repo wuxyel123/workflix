@@ -434,48 +434,40 @@ public class RestDispatcherServlet extends AbstractServlet{
         // the first token will always be the empty;
         // the second will be the context;
         // the third should be "activity";
-        if (tokens.length < 5 || !tokens[4].equals("board")) {
+        if (tokens.length < 5 || !tokens[3].equals("board")) {
             return false;
         }
         try {
             /**
-             * Board APIs are:
-             * Board/{boardid}
+             * board APIs are:
+             * board/{boardid}
              * board/create
              * board/update/{boardid}
              * board/delete/{boardid}
              * board/{boardid}/subboards
              **/
 
-            // Board/{boardid}
-            if (tokens.length == 5 && Integer.parseInt(tokens[4])%1==0) {
-                BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
-                switch (req.getMethod()) {
-                    case "GET" -> urr.GetBoardById();
-                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
-                }
-            }
             // board/create
-            else if (tokens.length == 5 && tokens[4].equals("create")) {
+            if (tokens.length == 5 && tokens[4].equals("create")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateBoard();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // board/delete/{boardid}
-            else if (tokens.length == 6 && tokens[4].equals("delete")) {
+            // board/{boardid}/delete
+            else if (tokens.length == 6 && tokens[5].equals("delete")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteBoard();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // board/update/{boardid}
-            else if (tokens.length == 6 && tokens[4].equals("update")) {
+            // board/{boardid}/update
+            else if (tokens.length == 6 && tokens[5].equals("update")) {
                 BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
-                    case "POST" -> urr.UpdateBoard();
+                    case "PUT" -> urr.UpdateBoard();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
@@ -487,7 +479,17 @@ public class RestDispatcherServlet extends AbstractServlet{
                     case "GET" -> urr.GetSubboardsByBoardId();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
-            } else {
+            }
+
+            // board/{boardid}
+            else if (tokens.length == 5 && Integer.parseInt(tokens[4])%1==0) {
+                BoardRestResource urr = new BoardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetBoardById();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            else {
                 return false;
             }
 

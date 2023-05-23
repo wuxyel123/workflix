@@ -47,10 +47,13 @@ public class BoardRestResource extends RestResource{
         try {
             Board board = new Board();
             board.setBoardId(Integer.parseInt(tokens[4]));
-            if (new GetBoardByIdDatabase(con, board).getBoardById() == null) {
+            board = new GetBoardByIdDatabase(con, board).getBoardById();
+            if (board == null) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = board.toJSON().toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);
@@ -91,14 +94,14 @@ public class BoardRestResource extends RestResource{
     public void CreateBoard() throws IOException {
         try {
             Board board = Board.fromJSON(req.getInputStream());
-            Board newboard = new InsertBoardDatabase(con, board).addBoard();
+            board = new InsertBoardDatabase(con, board).addBoard();
 
-            if (newboard == null) {
+            if (board == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");
-                response = newboard.toJSON().toString();
+                response = board.toJSON().toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);
@@ -115,19 +118,20 @@ public class BoardRestResource extends RestResource{
     public void UpdateBoard() throws IOException {
         try {
             Board board = Board.fromJSON(req.getInputStream());
-            board.setBoardId(Integer.parseInt(tokens[5]));
-            Board newboard = new UpdateBoardDatabase(con, board).updateBoard();
+            board.setBoardId(Integer.parseInt(tokens[4]));
+            board = new UpdateBoardDatabase(con, board).updateBoard();
 
-            if (newboard == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+            if (board == null) {
+                initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
-                response = newboard.toJSON().toString();
+                res.setContentType("application/json");
+                response = board.toJSON().toString();
 
             }
         } catch (SQLException e) {
-            ec = ErrorCode.OK;
-            res.setContentType("application/json");
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
         } finally {
             respond();
         }
@@ -141,11 +145,14 @@ public class BoardRestResource extends RestResource{
     public void DeleteBoard() throws IOException {
         try {
             Board board = new Board();
-            board.setBoardId(Integer.parseInt(tokens[5]));
-            if (new DeleteBoardDatabase(con, board).deleteBoard() == null) {
+            board.setBoardId(Integer.parseInt(tokens[4]));
+            board = new DeleteBoardDatabase(con, board).deleteBoard();
+            if (board == null) {
                 initError(ErrorCode.BOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = board.toJSON().toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);

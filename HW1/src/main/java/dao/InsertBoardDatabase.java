@@ -55,10 +55,12 @@ public class InsertBoardDatabase {
 
             if (rs.next()) {
                 addBoard = new Board();
+                addBoard.setBoardId(rs.getInt(Board.BOARD_ID));
                 addBoard.setCreateTime(rs.getDate(Board.CREATE_TIME));
                 addBoard.setVisibility(rs.getString(Board.VISIBILITY));
                 addBoard.setDescription(rs.getString(Board.DESCRIPTION));
                 addBoard.setName(rs.getString(Board.NAME));
+                addBoard.setWorkspaceId(rs.getInt(Board.WORKSPACE_ID));
             }
 
         } finally {

@@ -3,6 +3,7 @@ package rest;
 import dao.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import resource.Board;
 import resource.Subboard;
 import utils.ErrorCode;
 
@@ -10,6 +11,7 @@ import utils.ErrorCode;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * This class represents the REST resource "/subboard"
@@ -43,12 +45,15 @@ public class SubboardRestResource extends RestResource {
      */
     public void GetSubboardsByBoardId() throws IOException {
         try {
-            Subboard subboard = new Subboard();
-            subboard.setBoardId(Integer.parseInt(tokens[4]));
-            if (new GetSubboardByBoardIdDatabase(con, subboard).getSubboardByBoardId() == null) {
+            Board board = new Board();
+            board.setBoardId(Integer.parseInt(tokens[4]));
+            List<Subboard> subboards = new GetSubboardByBoardIdDatabase(con, board).getSubboardByBoardId();
+            if (subboards == null || subboards.isEmpty()) {
                 initError(ErrorCode.SUBBOARD_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = Subboard.toJSONList(subboards).toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);

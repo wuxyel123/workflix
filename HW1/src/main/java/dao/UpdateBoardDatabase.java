@@ -57,10 +57,12 @@ public class UpdateBoardDatabase {
 
             if (rs.next()) {
                 newBoard = new Board();
+                newBoard.setBoardId(rs.getInt(Board.BOARD_ID));
                 newBoard.setCreateTime(rs.getDate(Board.CREATE_TIME));
                 newBoard.setVisibility(rs.getString(Board.VISIBILITY));
                 newBoard.setDescription(rs.getString(Board.DESCRIPTION));
                 newBoard.setName(rs.getString(Board.NAME));
+                newBoard.setWorkspaceId(rs.getInt(Board.WORKSPACE_ID));
             }
         } finally {
             if (rs != null) {
