@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class GetActivitiesBySubboardIdDatabase {
     public List<Activities> getActivitiesBySubboardId() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<Activities> activities =null;
+        List<Activities> activities = new ArrayList<>();
 
         try {
             ps = con.prepareStatement(STATEMENT);

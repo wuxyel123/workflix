@@ -48,7 +48,7 @@ public class DeleteSubboardsDatabase {
         ResultSet rs = null;
 
         // the created user
-        Subboard subboard = null;
+        Subboard deletedSubboard = null;
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
@@ -58,13 +58,13 @@ public class DeleteSubboardsDatabase {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                subboard = new Subboard();
-                subboard.setSubboardId(rs.getInt(Subboard.SUBBOARD_ID));
-                subboard.setBoardId(rs.getInt(Subboard.BOARD_ID));
-                subboard.setName(rs.getString(Subboard.NAME));
-                subboard.setIndex(rs.getInt(Subboard.INDEX));
-                subboard.setDefaultCompletedActivitySubboard(rs.getBoolean(Subboard.DEFAULT_COMPLETED_ACTIVITY_SUBBOARD));
-                subboard.setCreationTime(rs.getDate(Subboard.CREATION_TIME));
+                deletedSubboard = new Subboard();
+                deletedSubboard.setSubboardId(rs.getInt(Subboard.SUBBOARD_ID));
+                deletedSubboard.setBoardId(rs.getInt(Subboard.BOARD_ID));
+                deletedSubboard.setName(rs.getString(Subboard.NAME));
+                deletedSubboard.setIndex(rs.getInt(Subboard.INDEX));
+                deletedSubboard.setDefaultCompletedActivitySubboard(rs.getBoolean(Subboard.DEFAULT_COMPLETED_ACTIVITY_SUBBOARD));
+                deletedSubboard.setCreationTime(rs.getDate(Subboard.CREATION_TIME));
             }
         } finally {
             if (rs != null) {

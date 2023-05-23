@@ -516,7 +516,7 @@ public class RestDispatcherServlet extends AbstractServlet{
         // the first token will always be the empty;
         // the second will be the context;
         // the third should be "subboard";
-        if (tokens.length < 5 || !tokens[4].equals("subboard")) {
+        if (tokens.length < 5 || !tokens[3].equals("subboard")) {
             return false;
         }
         try {
@@ -524,40 +524,32 @@ public class RestDispatcherServlet extends AbstractServlet{
              * Subboard APIs are:
              * subboard/{subboardid}
              * subboard/create
-             * subboard/delete/{subboardid}
-             * subboard/update/{subboardid}
+             * subboard/{subboardid}/delete
+             * subboard/{subboardid}/update
              * subboard/{subboardid}/activities
              **/
 
-            // subboard/{subboardid}
-            if (tokens.length == 5 && Integer.parseInt(tokens[4])%1==0) {
-                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
-                switch (req.getMethod()) {
-                    case "GET" -> urr.GetSubboardById();
-                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
-                }
-            }
             // subboard/create
-            else if (tokens.length == 5 && tokens[4].equals("create")) {
+            if (tokens.length == 5 && tokens[4].equals("create")) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "POST" -> urr.CreateSubboard();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // subboard/delete/{subboardid}
-            else if (tokens.length == 6 && tokens[4].equals("delete")) {
+            // subboard/{subboardid}/delete
+            else if (tokens.length == 6 && tokens[5].equals("delete")) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
                     case "DELETE" -> urr.DeleteSubboard();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
-            // subboard/update/{subboardid}
-            else if (tokens.length == 6 && tokens[4].equals("update")) {
+            // subboard/{subboardid}/update
+            else if (tokens.length == 6 && tokens[5].equals("update")) {
                 SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
-                    case "POST" -> urr.UpdateSubboards();
+                    case "PUT" -> urr.UpdateSubboards();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
@@ -568,12 +560,22 @@ public class RestDispatcherServlet extends AbstractServlet{
                     case "GET" -> urr.GetActivitiesBySubboardId();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
-            } else {
+            }
+            // subboard/{subboardid}
+            else if (tokens.length == 5 && Integer.parseInt(tokens[4])%1==0) {
+                SubboardRestResource urr = new SubboardRestResource(req, res, getDataSource().getConnection());
+                switch (req.getMethod()) {
+                    case "GET" -> urr.GetSubboardById();
+                    default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
+                }
+            }
+            else {
                 return false;
             }
 
         } catch (NumberFormatException e) {
             writeError(res, ErrorCode.WRONG_REST_FORMAT);
+            logger.error("stacktrace:", e);
         } catch (NamingException | SQLException e) {
             writeError(res, ErrorCode.INTERNAL_ERROR);
             logger.error("stacktrace:", e);

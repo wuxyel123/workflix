@@ -47,8 +47,8 @@ public class UpdateSubboardDatabase {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        // the created device
-        Subboard subboard = null;
+        // the updated subboard
+        Subboard updSubboard = null;
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
@@ -61,13 +61,13 @@ public class UpdateSubboardDatabase {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                subboard = new Subboard();
-                subboard.setSubboardId(rs.getInt(subboard.SUBBOARD_ID));
-                subboard.setBoardId(rs.getInt(subboard.BOARD_ID));
-                subboard.setName(rs.getString(subboard.NAME));
-                subboard.setIndex(rs.getInt(subboard.INDEX));
-                subboard.setDefaultCompletedActivitySubboard(rs.getBoolean(subboard.DEFAULT_COMPLETED_ACTIVITY_SUBBOARD));
-                subboard.setCreationTime(rs.getDate(subboard.CREATION_TIME));
+                updSubboard = new Subboard();
+                updSubboard.setSubboardId(rs.getInt(Subboard.SUBBOARD_ID));
+                updSubboard.setBoardId(rs.getInt(Subboard.BOARD_ID));
+                updSubboard.setName(rs.getString(Subboard.NAME));
+                updSubboard.setIndex(rs.getInt(Subboard.INDEX));
+                updSubboard.setDefaultCompletedActivitySubboard(rs.getBoolean(Subboard.DEFAULT_COMPLETED_ACTIVITY_SUBBOARD));
+                updSubboard.setCreationTime(rs.getDate(Subboard.CREATION_TIME));
                 }
         } finally {
             if (rs != null) {
@@ -81,7 +81,7 @@ public class UpdateSubboardDatabase {
             con.close();
         }
 
-        return subboard;
+        return updSubboard;
     }
 
 }
