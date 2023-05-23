@@ -2,6 +2,8 @@ package rest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import resource.Activities;
+import resource.User;
 import utils.ErrorCode;
 import dao.InsertAssigneeDatabase;
 import dao.DeleteAssigneeDatabase;
@@ -11,6 +13,7 @@ import resource.Assignee;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * This class is used to handle the requests for the assignee resource
@@ -45,10 +48,14 @@ public class AssigneeRestResource extends RestResource {
     public void deleteAssignee() throws IOException {
         try {
             Assignee assignee = Assignee.fromJSON(req.getInputStream());
-            if (new DeleteAssigneeDatabase(con, assignee).deleteAssignee() == null) {
+            assignee.setActivityId(Integer.parseInt(tokens[4]));
+            assignee= new DeleteAssigneeDatabase(con, assignee).deleteAssignee();
+            if (assignee == null) {
                 initError(ErrorCode.ASSIGNEE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = assignee.toJSON().toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);
@@ -66,14 +73,22 @@ public class AssigneeRestResource extends RestResource {
     public void addAssignee() throws IOException {
         try {
             Assignee assignee = Assignee.fromJSON(req.getInputStream());
-            if (new InsertAssigneeDatabase(con, assignee).addAssignee() == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+            assignee.setActivityId(Integer.parseInt(tokens[4]));
+            assignee = new InsertAssigneeDatabase(con, assignee).addAssignee();
+            if (assignee == null) {
+                initError(ErrorCode.ASSIGNEE_ALREADY_PRESENT);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = assignee.toJSON().toString();
             }
         } catch (SQLException e) {
-            initError(ErrorCode.INTERNAL_ERROR);
-            logger.error("stacktrace:", e);
+            if (e.getSQLState().equals("23505")) {
+                initError(ErrorCode.ASSIGNEE_ALREADY_PRESENT);
+            } else {
+                initError(ErrorCode.INTERNAL_ERROR);
+                logger.error("stacktrace:", e);
+            }
         } finally {
             respond();
         }
@@ -85,11 +100,15 @@ public class AssigneeRestResource extends RestResource {
      */
     public void getAssignee() throws IOException {
         try {
-            Assignee assignee = Assignee.fromJSON(req.getInputStream());
-            if (new GetAssigneeDatabase(con, assignee).getAssignee() == null) {
+            Activities activity = Activities.fromJSON(req.getInputStream());
+            activity.setActivityId(Integer.parseInt(tokens[4]));
+            List<User> users= new GetAssigneeDatabase(con, activity).getAssignee();
+            if (users == null || users.isEmpty()) {
                 initError(ErrorCode.ASSIGNEE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = User.toJSONList(users).toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);

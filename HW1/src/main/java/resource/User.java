@@ -193,6 +193,22 @@ public class User {
         return userJSON;
     }
 
+    /**
+     * Get a JSONArray from a list of Assignee objects
+     *
+     * @param users List of Users objects
+     * @return JSONArray containing the Assignee data
+     * @throws JSONException if the input is not valid JSON
+     */
+    public static JSONArray toJSONList(List<User> users) throws JSONException {
 
+        JSONArray usersJSON = new JSONArray();
+
+        for(User user : users){
+            usersJSON.put(user.toJSON());
+        }
+
+        return usersJSON;
+    }
 
 }

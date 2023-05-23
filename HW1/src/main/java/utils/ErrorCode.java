@@ -29,6 +29,7 @@ public enum ErrorCode {
     SUBBOARD_NOT_FOUND(-112, HttpServletResponse.SC_NOT_FOUND, "Subboard not found."),
     USER_WORKSPACE_NOT_FOUND(-113, HttpServletResponse.SC_NOT_FOUND, "The given user and workspace are not related to each other."),
     USER_ALREADY_IN_WORKSPACE(-114, HttpServletResponse.SC_CONFLICT, "User already in workspace."),
+    ASSIGNEE_ALREADY_PRESENT(-115, HttpServletResponse.SC_CONFLICT, "Assignee already exists."),
     INTERNAL_ERROR(-999, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal error."),
     METHOD_NOT_ALLOWED(-1000, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed."),
     WRONG_REST_FORMAT(-1002, HttpServletResponse.SC_BAD_REQUEST, "Wrong REST format."),

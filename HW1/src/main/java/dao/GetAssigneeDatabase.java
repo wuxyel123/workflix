@@ -1,5 +1,6 @@
 package dao;
 
+import resource.Activities;
 import resource.Assignee;
 import resource.User;
 
@@ -26,19 +27,19 @@ public class GetAssigneeDatabase {
     private final Connection con;
 
     /**
-     * The assignee to be searched
+     * The Activity to be searched
      */
-    Assignee assignee;
+    Activities activity;
 
     /**
      * Initialize the DAO object with a connection to the database and the object to be searched
      *
      * @param con the connection to the database
-     * @param assignee   the assignee to be searched
+     * @param activity   the assignee to be searched
      */
-    public GetAssigneeDatabase(final Connection con, final Assignee assignee) {
+    public GetAssigneeDatabase(final Connection con, final Activities activity) {
         this.con = con;
-        this.assignee = assignee;
+        this.activity = activity;
     }
 
     /**
@@ -54,7 +55,7 @@ public class GetAssigneeDatabase {
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, assignee.getActivityId());
+            ps.setInt(1, activity.getActivityId());
 
             rs = ps.executeQuery();
 

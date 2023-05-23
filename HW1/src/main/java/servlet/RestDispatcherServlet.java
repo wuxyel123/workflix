@@ -381,7 +381,7 @@ public class RestDispatcherServlet extends AbstractServlet{
              * Activity APIs are:
              * activity/{activityid}/assignee/get
              * activity/{activityid}/assignee/add
-             * activity/{activityid}/assignee/remove
+             * activity/{activityid}/assignee/{assigneeid}/remove
              **/
 
             // activity/{activityid}/assignee/get
