@@ -21,35 +21,37 @@ public class DeleteActivityDatabase {
     /**
      * The user to be inserted
      */
-    Activities activities;
+    Activities activity;
 
     public DeleteActivityDatabase(final Connection con, final Activities a) {
         this.con = con;
-        this.activities = a;
+        this.activity = a;
     }
 
     public Activities DeleteActivity() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        // the created user
-        Activities activities = null;
+        // the deleted activity
+        Activities deletedActivity = null;
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
 
-            pstmt.setInt(1, activities.getActivityId());
+            pstmt.setInt(1, activity.getActivityId());
 
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                activities = new Activities();
-                activities.setName(rs.getString(Activities.NAME));
-                activities.setDescription(rs.getString(Activities.DESCRIPTION));
-                activities.setStartDate(rs.getDate(Activities.START_DATE));
-                activities.setEndDate(rs.getDate(Activities.END_DATE));
-                activities.setWorkedTime(rs.getInt(Activities.WORKED_TIME));
-                activities.setIndex(rs.getInt(Activities.INDEX));
+                deletedActivity = new Activities();
+                deletedActivity.setActivityId(rs.getInt(Activities.ACTIVITY_ID));
+                deletedActivity.setSubboardId(rs.getInt(Activities.SUBBOARD_ID));
+                deletedActivity.setName(rs.getString(Activities.NAME));
+                deletedActivity.setDescription(rs.getString(Activities.DESCRIPTION));
+                deletedActivity.setStartDate(rs.getDate(Activities.START_DATE));
+                deletedActivity.setEndDate(rs.getDate(Activities.END_DATE));
+                deletedActivity.setWorkedTime(rs.getInt(Activities.WORKED_TIME));
+                deletedActivity.setIndex(rs.getInt(Activities.INDEX));
             }
         } finally {
             if (rs != null) {
@@ -63,7 +65,7 @@ public class DeleteActivityDatabase {
             con.close();
         }
 
-        return activities;
+        return deletedActivity;
     }
 
 }

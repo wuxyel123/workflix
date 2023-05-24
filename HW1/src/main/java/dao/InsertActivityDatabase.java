@@ -9,7 +9,7 @@ public class InsertActivityDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "INSERT INTO workflix.activity(subboard_id, name, start_date, end_date, worked_time,index, description) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *;";
+    private static final String STATEMENT = "INSERT INTO workflix.activities(subboard_id, name, start_date, end_date, worked_time,index, description) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -46,6 +46,7 @@ public class InsertActivityDatabase {
 
             if (rs.next()) {
                 newActivities = new Activities();
+                newActivities.setActivityId(rs.getInt(Activities.ACTIVITY_ID));
                 newActivities.setSubboardId(rs.getInt(Activities.SUBBOARD_ID));
                 newActivities.setName(rs.getString(Activities.NAME));
                 newActivities.setStartDate(rs.getDate(Activities.START_DATE));

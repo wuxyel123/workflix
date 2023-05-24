@@ -46,7 +46,7 @@ public class SubboardRestResource extends RestResource {
      */
     public void GetSubboardsByBoardId() throws IOException {
         try {
-            Board board = new Board();
+            Board board = Board.fromJSON(req.getInputStream());
             board.setBoardId(Integer.parseInt(tokens[4]));
             List<Subboard> subboards = new GetSubboardByBoardIdDatabase(con, board).getSubboardByBoardId();
             if (subboards == null || subboards.isEmpty()) {
