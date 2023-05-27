@@ -46,10 +46,13 @@ public class DeleteBoardDatabase {
             rs = ps.executeQuery();
             if (rs.next()) {
                 deletedBoard = new Board();
+                deletedBoard.setBoardId(rs.getInt(Board.BOARD_ID));
+                deletedBoard.setWorkspaceId(rs.getInt(Board.WORKSPACE_ID));
                 deletedBoard.setName(rs.getString(Board.NAME));
                 deletedBoard.setDescription(rs.getString(Board.DESCRIPTION));
                 deletedBoard.setVisibility(rs.getString(Board.VISIBILITY));
                 deletedBoard.setCreateTime(rs.getDate(Board.CREATE_TIME));
+
             }
         } finally {
             if (rs != null) {

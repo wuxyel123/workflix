@@ -16,7 +16,7 @@ public class UpdateWorkspaceDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.workspace SET name=?, template_id=?, creation_time=? WHERE workspace_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.workspace SET workspace_name=?, template_id=? WHERE workspace_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -56,8 +56,7 @@ public class UpdateWorkspaceDatabase {
 
             pstmt.setString(1, workspace.getWorkspaceName());
             pstmt.setInt(2, workspace.getTemplateId());
-            pstmt.setDate(3, (Date) workspace.getCreationTime());
-            pstmt.setInt(4, workspace.getWorkspaceId());
+            pstmt.setInt(3, workspace.getWorkspaceId());
 
 
 

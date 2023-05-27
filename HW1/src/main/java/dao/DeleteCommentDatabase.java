@@ -12,7 +12,7 @@ public class DeleteCommentDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "DELETE FROM workflix.comments WHERE comment_id=? RETURNING *;";
+    private static final String STATEMENT = "DELETE FROM workflix.comments WHERE comment_id=? AND activity_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -45,21 +45,22 @@ public class DeleteCommentDatabase {
         ResultSet rs = null;
 
         // the delete comment
-        Comments comments = null;
+        Comments deletedComment = new Comments();
 
         try {
             ps = con.prepareStatement(STATEMENT);
             ps.setInt(1, comments.getCommentId());
+            ps.setInt(2, comments.getActivityId());
 
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                comments = new Comments();
-                comments.setCommentId(rs.getInt(Comments.COMMENT_ID));
-                comments.setActivityId(rs.getInt(Comments.ACTIVITY_ID));
-                comments.setUserId(rs.getInt(Comments.USER_ID));
-                comments.setCommentText(rs.getString(Comments.COMMENT_TEXT));
-                comments.setCreationTime(rs.getDate(Comments.CREATION_TIME));
+                deletedComment = new Comments();
+                deletedComment.setCommentId(rs.getInt(Comments.COMMENT_ID));
+                deletedComment.setActivityId(rs.getInt(Comments.ACTIVITY_ID));
+                deletedComment.setUserId(rs.getInt(Comments.USER_ID));
+                deletedComment.setCommentText(rs.getString(Comments.COMMENT_TEXT));
+                deletedComment.setCreationTime(rs.getDate(Comments.CREATION_TIME));
 
             }
         } finally {
@@ -71,7 +72,7 @@ public class DeleteCommentDatabase {
             }
             con.close();
         }
-        return comments;
+        return deletedComment;
     }
 
 }

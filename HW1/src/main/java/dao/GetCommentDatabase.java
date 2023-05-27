@@ -1,11 +1,13 @@
 package dao;
 
+import resource.Activities;
 import resource.Comments;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,17 +27,17 @@ public class GetCommentDatabase {
     /**
      * The user to be searched
      */
-    Comments comments;
+    Activities activity;
 
     /**
      * Initialize the DAO object with a connection to the database and the object to be searched
      *
      * @param con the connection to the database
-     * @param comments   the comment to be searched
+     * @param activity   the comment to be searched
      */
-    public GetCommentDatabase(final Connection con, final Comments comments) {
+    public GetCommentDatabase(final Connection con, final Activities activity) {
         this.con = con;
-        this.comments = comments;
+        this.activity = activity;
     }
 
     /**
@@ -48,15 +50,14 @@ public class GetCommentDatabase {
         PreparedStatement ps = null;
         ResultSet rs = null;
         //List of comments
-        List<Comments> commentsList = null;
+        List<Comments> commentsList = new ArrayList<>();
 
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, comments.getActivityId());
+            ps.setInt(1, activity.getActivityId());
 
             rs = ps.executeQuery();
-
 
             while (rs.next()) {
                 Comments comment = new Comments();

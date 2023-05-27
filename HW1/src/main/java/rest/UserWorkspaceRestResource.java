@@ -22,9 +22,9 @@ public class UserWorkspaceRestResource extends RestResource{
     // The operation requested by the client
     protected final String op;
     // The error code
-    protected ErrorCode ec = null;
+    protected ErrorCode ec = ErrorCode.OK;
     // The response
-    protected String response = null;
+    protected String response = "";
     // The tokens of the request
     protected final String[] tokens;
 
@@ -46,13 +46,15 @@ public class UserWorkspaceRestResource extends RestResource{
      */
     public void DeleteUserWorkSpace() throws IOException{
         try {
-        	UserWorkspace userWorkSpace = new UserWorkspace();
-
-            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
-            if (new DeleteUserWorkspaceDatabase(con, userWorkSpace).userWorkspaceDelete()==null) {
+        	UserWorkspace userWorkSpace = UserWorkspace.fromJSON(req.getInputStream());
+            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[4]));
+            userWorkSpace = new DeleteUserWorkspaceDatabase(con, userWorkSpace).userWorkspaceDelete();
+            if (userWorkSpace==null) {
                 initError(ErrorCode.USER_WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = userWorkSpace.toJSON().toString();
             }
         } catch (SQLException e){
             initError(ErrorCode.INTERNAL_ERROR);
@@ -89,12 +91,15 @@ public class UserWorkspaceRestResource extends RestResource{
     public void AssignUserPermission() throws IOException{
         try {
             UserWorkspace userWorkSpace = UserWorkspace.fromJSON(req.getInputStream());
-            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
+            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[4]));
 
-            if (new UpdateUserPermissionDatabase(con, userWorkSpace).workspaceAssignuserpermission()==null) {
+            userWorkSpace = new UpdateUserPermissionDatabase(con, userWorkSpace).workspaceAssignuserpermission();
+            if (userWorkSpace==null) {
                 initError(ErrorCode.USER_WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = userWorkSpace.toJSON().toString();
             }
         } catch (SQLException e){
             initError(ErrorCode.INTERNAL_ERROR);
@@ -110,16 +115,27 @@ public class UserWorkspaceRestResource extends RestResource{
     public void AddUser() throws IOException{
         try {
             UserWorkspace userWorkSpace = UserWorkspace.fromJSON(req.getInputStream());
-            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[3]));
+            userWorkSpace.setWorkspaceId(Integer.parseInt(tokens[4]));
 
-            if (new InsertUserWorkspaceDatabase(con, userWorkSpace).insertUserWorkspace()==null) {
+            userWorkSpace = new InsertUserWorkspaceDatabase(con, userWorkSpace).insertUserWorkspace();
+            if (userWorkSpace==null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = userWorkSpace.toJSON().toString();
             }
         } catch (SQLException e){
-            initError(ErrorCode.INTERNAL_ERROR);
-            logger.error("stacktrace:", e);
+            if (e.getSQLState().equals("23505")) {
+                initError(ErrorCode.USER_ALREADY_IN_WORKSPACE);
+                logger.warn("User already in workspace");
+            }else {
+                initError(ErrorCode.INTERNAL_ERROR);
+                logger.error("stacktrace:", e);
+            }
+        }
+        catch(Exception e){
+            response = e.toString();
         } finally { respond(); }
 
     }

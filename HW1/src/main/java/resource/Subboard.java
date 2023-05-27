@@ -157,6 +157,22 @@ public class Subboard {
         return subboardJSON;
     }
 
-
+    /**
+     * Get a JSONArray from a list of Subboards objects
+     * @param subboards List of Subboards objects
+     * @return JSONArray containing the Subboards data
+     *
+     */
+    public static JSONArray toJSONList(List<Subboard> subboards) {
+        JSONArray subboardsJSONArray = new JSONArray();
+        for (Subboard subboard : subboards) {
+            try {
+                subboardsJSONArray.put(subboard.toJSON());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return subboardsJSONArray;
+    }
 
 }

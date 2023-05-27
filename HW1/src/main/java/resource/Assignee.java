@@ -121,4 +121,20 @@ public class Assignee {
 
         return assigneesJSON;
     }
+
+    /**
+     * Get a JSONArray from a list of Assignee objects
+     *
+     * @param assignees List of Assignee objects
+     * @return JSONArray containing the Assignee data
+     * @throws JSONException if the input is not valid JSON
+     */
+    public static JSONArray toJSONList(List<Assignee> assignees) throws JSONException {
+
+        JSONArray assigneesJSONList = new JSONArray();
+        for (Assignee assignee : assignees) {
+            assigneesJSONList.put(assignee.toJSON());
+        }
+        return assigneesJSONList;
+    }
 }

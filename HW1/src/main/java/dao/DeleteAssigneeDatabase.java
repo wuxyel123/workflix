@@ -15,7 +15,7 @@ public class DeleteAssigneeDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "DELETE FROM workflix.assignee WHERE activity_id=? AND user_id=?;";
+    private static final String STATEMENT = "DELETE FROM workflix.assignee WHERE activity_id=? AND user_id=? RETURNING *;";
     /**
      * The connection to the database
      */

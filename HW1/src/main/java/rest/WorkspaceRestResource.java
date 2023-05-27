@@ -11,6 +11,7 @@ import resource.WorkSpace;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * This class represents the REST resource "/workspace"
@@ -20,9 +21,9 @@ public class WorkspaceRestResource extends RestResource {
     // The following strings represent the different operations that the REST
     protected final String op;
     // The error code
-    protected ErrorCode ec = null;
+    protected ErrorCode ec = ErrorCode.OK;
     // The response
-    protected String response = null;
+    protected String response = "";
     // The tokens of the request
     protected final String[] tokens;
 
@@ -44,13 +45,15 @@ public class WorkspaceRestResource extends RestResource {
      * */
     public void DeleteWorkSpace() throws IOException {
         try {
-            WorkSpace workSpace = new WorkSpace();
-
+            WorkSpace workSpace = WorkSpace.fromJSON(req.getInputStream());
             workSpace.setWorkspaceId(Integer.parseInt(tokens[5]));
-            if (new DeleteWorkspaceByIdDatabase(con, workSpace).workspaceDelete() == null) {
-                initError(ErrorCode.INTERNAL_ERROR);
+            workSpace = new DeleteWorkspaceByIdDatabase(con, workSpace).workspaceDelete();
+            if (workSpace == null) {
+                initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = workSpace.toJSON().toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);
@@ -67,12 +70,12 @@ public class WorkspaceRestResource extends RestResource {
      * */
     public void CreateWorkSpace() throws IOException {
         try {
-            WorkSpace workSpace = WorkSpace.fromJSON(req.getInputStream());
-            WorkSpace newWorkSpace = new InsertWorkspaceDatabase(con, workSpace).insertWorkspace();
 
-            if (newWorkSpace == null) {
-                initError(ErrorCode.WORKSPACE_NOT_FOUND);
-            } else {
+            WorkSpace workSpace = WorkSpace.fromJSON(req.getInputStream());
+            if (workSpace == null || workSpace.getWorkspaceName() == null || workSpace.getTemplateId() == null) {
+                initError(ErrorCode.INVALID_INPUT);
+            }else{
+                WorkSpace newWorkSpace = newWorkSpace = new InsertWorkspaceDatabase(con, workSpace).insertWorkspace();
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");
                 response = newWorkSpace.toJSON().toString();
@@ -96,11 +99,14 @@ public class WorkspaceRestResource extends RestResource {
             WorkSpace workSpace = new WorkSpace();
 
             workSpace.setWorkspaceId(Integer.parseInt(tokens[4]));
+            workSpace = new GetWorkspaceByIdDatabase(con, workSpace).getWorkspaceById();
 
-            if (new GetWorkspaceByIdDatabase(con, workSpace).getWorkspaceById() == null) {
+            if (workSpace == null) {
                 initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = workSpace.toJSON().toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);
@@ -119,11 +125,14 @@ public class WorkspaceRestResource extends RestResource {
         try {
             User user = User.fromJSON(req.getInputStream());
             user.setUserId(Integer.parseInt(tokens[4]));
+            List<WorkSpace> workSpaces = new GetWorkspaceByUserIdDatabase(con, user).getWorkspaceByUserId();
 
-            if (new GetWorkspaceByUserIdDatabase(con, user).getWorkspaceByUserId() == null) {
+            if (workSpaces == null || workSpaces.isEmpty()) {
                 initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                response = WorkSpace.toJSONList(workSpaces).toString();
+
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);
@@ -147,12 +156,13 @@ public class WorkspaceRestResource extends RestResource {
                 initError(ErrorCode.WORKSPACE_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
                 response = newWorkSpace.toJSON().toString();
 
             }
         } catch (SQLException e) {
-            ec = ErrorCode.OK;
-            res.setContentType("application/json");
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
         } finally {
             respond();
         }

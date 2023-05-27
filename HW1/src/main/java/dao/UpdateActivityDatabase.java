@@ -12,7 +12,7 @@ public class UpdateActivityDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.activities SET subboard_id=?, name=?, description=?,end_date=?,worked_time=?,index=? WHERE activiity_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.activities SET subboard_id=?, name=?, description=?,end_date=?,worked_time=?,index=? WHERE activity_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -62,6 +62,7 @@ public class UpdateActivityDatabase {
 
             if (rs.next()) {
                 newActivity = new Activities();
+                newActivity.setActivityId(rs.getInt(Activities.ACTIVITY_ID));
                 newActivity.setSubboardId(rs.getInt(Activities.SUBBOARD_ID));
                 newActivity.setName(rs.getString(Activities.NAME));
                 newActivity.setDescription(rs.getString(Activities.DESCRIPTION));

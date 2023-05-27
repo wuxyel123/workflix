@@ -32,7 +32,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ActivitiesServlet</servlet-name>
-        <url-pattern>/activities/*</url-pattern>
+        <url-pattern>/activity/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

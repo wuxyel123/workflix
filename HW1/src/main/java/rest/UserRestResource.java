@@ -20,9 +20,9 @@ public class UserRestResource extends RestResource{
     // The operation requested by the client
     protected final String op;
     // The error code
-    protected ErrorCode ec;
+    protected ErrorCode ec = ErrorCode.OK;
     // The response
-    protected String response;
+    protected String response="";
     // The tokens of the request
     protected final String[] tokens;
 
@@ -45,14 +45,20 @@ public class UserRestResource extends RestResource{
     public void CreateUser() throws IOException {
         try {
             User user = User.fromJSON(req.getInputStream());
-            User newUser = new InsertUserDatabase(con, user).insertUser();
-            if (newUser == null) {
-                initError(ErrorCode.USER_ALREADY_EXISTS);
-                logger.warn("User already exists");
-            } else {
-                ec = ErrorCode.OK;
-                res.setContentType("application/json");
-                response = newUser.toJSON().toString();
+            if(user.getEmail()==null || user.getPassword()==null || user.getUsername()==null){
+                initError(ErrorCode.INVALID_INPUT);
+                logger.warn("Missing data");
+            }
+            else{
+                User newUser = new InsertUserDatabase(con, user).insertUser();
+                if (newUser == null) {
+                    initError(ErrorCode.USER_ALREADY_EXISTS);
+                    logger.warn("User already exists");
+                } else {
+                    ec = ErrorCode.OK;
+                    res.setContentType("application/json");
+                    response = newUser.toJSON().toString();
+                }
             }
         } catch (SQLException e){
             if (e.getSQLState().equals("23505")) {
@@ -71,16 +77,20 @@ public class UserRestResource extends RestResource{
      */
     public void GetUserFromId() throws IOException{
         try {
-            User user = getUserFromId(Integer.parseInt(tokens[4]));
-            if (new GetUserByIdDatabase(con, user).getUserById()==null) {
+            User user = User.fromJSON(req.getInputStream());
+            user.setUserId(Integer.parseInt(tokens[4]));
+            user = new GetUserByIdDatabase(con, user).getUserById();
+            if (user == null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = user.toJSON().toString();
             }
         } catch (SQLException e){
             initError(ErrorCode.INTERNAL_ERROR);
             logger.error("stacktrace:", e);
-        } finally { respond(); }
+        }finally { respond(); }
     }
 
     /**
@@ -90,21 +100,17 @@ public class UserRestResource extends RestResource{
     public void GetUserFromMailAndPassword() throws IOException{
         try {
             User user = User.fromJSON(req.getInputStream());
-            User newUser = new GetUserByMailPasswordDatabase(con, user).getUserByMailAndPassword();
-            if (newUser == null) {
-                User checkUser = new GetUserByMailDatabase(con, user).getUserByMail();
-                if (checkUser == null) {
-                    initError(ErrorCode.USER_NOT_FOUND);
-                } else {
-                    initError(ErrorCode.USER_NOT_AUTHORIZED);
-                }
+            user = new GetUserByMailPasswordDatabase(con, user).getUserByMailAndPassword();
+            if (user == null) {
+                initError(ErrorCode.USER_NOT_AUTHORIZED);
             } else {
                 ec = ErrorCode.OK;
                 res.setContentType("application/json");
-                response = newUser.toJSON().toString();
+                response = user.toJSON().toString();
             }
         } catch (SQLException e){
             initError(ErrorCode.INTERNAL_ERROR);
+            response=e.toString();
             logger.error("stacktrace:", e);
         } finally { respond(); }
     }
@@ -115,7 +121,9 @@ public class UserRestResource extends RestResource{
      */
     public void UpdateUserNoPassword() throws IOException{
         try {
+
             User user = User.fromJSON(req.getInputStream());
+            user.setUserId(Integer.parseInt(tokens[5]));
             User newUser = new UpdateUserDatabase(con, user).updateUser();
             if (newUser == null) {
                 initError(ErrorCode.USER_NOT_FOUND);
@@ -137,6 +145,7 @@ public class UserRestResource extends RestResource{
     public void UpdateUserPassword() throws IOException{
         try {
             User user = User.fromJSON(req.getInputStream());
+            user.setUserId(Integer.parseInt(tokens[5]));
             User newUser = new UpdateUserPasswordDatabase(con, user).updateUserPassword();
             if (newUser == null) {
                 initError(ErrorCode.USER_NOT_FOUND);
@@ -157,18 +166,44 @@ public class UserRestResource extends RestResource{
      */
     public void DeleteUser() throws IOException{
         try {
-            User user = new User();
+            User user = User.fromJSON(req.getInputStream());
             user.setUserId(Integer.parseInt(tokens[5]));
-            if (new DeleteUserDatabase(con, user).deleteUser()==null) {
+            user = new DeleteUserDatabase(con, user).deleteUser();
+            if (user==null) {
                 initError(ErrorCode.USER_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = user.toJSON().toString();
             }
         } catch (SQLException e){
             initError(ErrorCode.INTERNAL_ERROR);
             logger.error("stacktrace:", e);
         } finally { respond(); }
 
+    }
+
+    /** Get user by email
+     * @throws IOException Error in IO operations
+     */
+    public void GetUserFromMail() throws IOException {
+        try {
+            User user = User.fromJSON(req.getInputStream());
+            user = new GetUserByMailDatabase(con, user).getUserByMail();
+            if (user == null) {
+                initError(ErrorCode.USER_NOT_FOUND);
+            } else {
+                ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = user.toJSON().toString();
+            }
+        } catch (SQLException e) {
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
+        }
+        finally {
+            respond();
+        }
     }
 
     /**

@@ -15,7 +15,7 @@ public class UpdateCommentDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "UPDATE workflix.comments SET comment_text=? WHERE comment_id=? RETURNING *;";
+    private static final String STATEMENT = "UPDATE workflix.comments SET comment_text=? WHERE comment_id=? AND activity_id=? RETURNING *;";
     /**
      * The connection to the database
      */
@@ -54,14 +54,17 @@ public class UpdateCommentDatabase {
             ps = con.prepareStatement(STATEMENT);
             ps.setString(1, comment.getCommentText());
             ps.setInt(2,comment.getCommentId());
+            ps.setInt(3,comment.getActivityId());
 
             rs = ps.executeQuery();
 
             if (rs.next()) {
                 newComment = new Comments();
+                newComment.setCommentId(rs.getInt(Comments.COMMENT_ID));
                 newComment.setActivityId(rs.getInt(Comments.ACTIVITY_ID));
                 newComment.setUserId(rs.getInt(Comments.USER_ID));
                 newComment.setCommentText(rs.getString(Comments.COMMENT_TEXT));
+                newComment.setCreationTime(rs.getDate(Comments.CREATION_TIME));
             }
         } finally {
             if (rs != null) {

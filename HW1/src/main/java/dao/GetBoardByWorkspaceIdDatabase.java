@@ -1,6 +1,7 @@
 package dao;
 
 import resource.Board;
+import resource.WorkSpace;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,9 +23,9 @@ public class GetBoardByWorkspaceIdDatabase {
     private final Connection con;
 
     /**
-     * The board to be searched
+     * The workspace in which to search the board
      */
-    Board board;
+    WorkSpace workspace;
 
     /**
      * Initialize the DAO object with a connection to the database and the object to be searched
@@ -32,9 +33,9 @@ public class GetBoardByWorkspaceIdDatabase {
      * @param con the connection to the database
      * @param b   the board to be searched
      */
-    public GetBoardByWorkspaceIdDatabase(final Connection con, final Board b) {
+    public GetBoardByWorkspaceIdDatabase(final Connection con, final WorkSpace w) {
         this.con = con;
-        this.board = b;
+        this.workspace = w;
     }
 
     /**
@@ -50,12 +51,13 @@ public class GetBoardByWorkspaceIdDatabase {
 
         try {
             ps = con.prepareStatement(STATEMENT);
-            ps.setInt(1, board.getWorkspaceId());
+            ps.setInt(1, workspace.getWorkspaceId());
 
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 Board board = new Board();
+                board.setBoardId(rs.getInt(Board.BOARD_ID));
                 board.setWorkspaceId(rs.getInt(Board.WORKSPACE_ID));
                 board.setName(rs.getString(Board.NAME));
                 board.setDescription(rs.getString(Board.DESCRIPTION));

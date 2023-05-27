@@ -15,7 +15,7 @@ public class DeleteUserWorkspaceDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "DELETE FROM workflix.user_workspace WHERE user_id=?, workspace_id=? RETURNING *;";
+    private static final String STATEMENT = "DELETE FROM workflix.user_workspace WHERE user_id=? AND workspace_id=? RETURNING *;";
     /**
      * The connection to the database
      */

@@ -46,7 +46,7 @@ public class GetActivityByIdDatabase {
     public Activities getActivityById() throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Activities activity =null;
+        Activities res =null;
 
         try {
             ps = con.prepareStatement(STATEMENT);
@@ -55,15 +55,15 @@ public class GetActivityByIdDatabase {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                activity = new Activities();
-                activity.setActivityId(rs.getInt(Activities.ACTIVITY_ID));
-                activity.setSubboardId(rs.getInt(Activities.SUBBOARD_ID));
-                activity.setName(rs.getString(Activities.NAME));
-                activity.setDescription(rs.getString(Activities.DESCRIPTION));
-                activity.setStartDate(rs.getDate(Activities.START_DATE));
-                activity.setEndDate(rs.getDate(Activities.END_DATE));
-                activity.setWorkedTime(rs.getInt(Activities.WORKED_TIME));
-                activity.setIndex(rs.getInt(Activities.INDEX));
+                res = new Activities();
+                res.setActivityId(rs.getInt(Activities.ACTIVITY_ID));
+                res.setSubboardId(rs.getInt(Activities.SUBBOARD_ID));
+                res.setName(rs.getString(Activities.NAME));
+                res.setDescription(rs.getString(Activities.DESCRIPTION));
+                res.setStartDate(rs.getDate(Activities.START_DATE));
+                res.setEndDate(rs.getDate(Activities.END_DATE));
+                res.setWorkedTime(rs.getInt(Activities.WORKED_TIME));
+                res.setIndex(rs.getInt(Activities.INDEX));
 
             }
         } finally {
@@ -75,7 +75,7 @@ public class GetActivityByIdDatabase {
             }
             con.close();
         }
-        return activity;
+        return res;
     }
 
 }

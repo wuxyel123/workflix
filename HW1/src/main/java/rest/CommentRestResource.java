@@ -3,6 +3,7 @@ package rest;
 import dao.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import resource.Activities;
 import resource.Board;
 import utils.ErrorCode;
 
@@ -11,6 +12,7 @@ import resource.Comments;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * This class represents the REST resource "/activity
@@ -20,9 +22,9 @@ public class CommentRestResource extends RestResource {
     // The operation requested by the client
     protected final String op;
     // The error code
-    protected ErrorCode ec = null;
+    protected ErrorCode ec = ErrorCode.OK;
     // The response
-    protected String response = null;
+    protected String response = "";
     // The tokens of the request
     protected final String[] tokens;
 
@@ -45,17 +47,21 @@ public class CommentRestResource extends RestResource {
      */
     public void GetComments() throws IOException {
         try {
-            Comments comments = new Comments();
-            comments.setActivityId(Integer.parseInt(tokens[4]));
-            if (new GetCommentDatabase(con, comments).getComments() == null) {
+            Activities activity = Activities.fromJSON(req.getInputStream());
+            activity.setActivityId(Integer.parseInt(tokens[4]));
+            List<Comments> comments = new GetCommentDatabase(con, activity).getComments();
+            if (comments == null || comments.isEmpty()) {
                 initError(ErrorCode.COMMENT_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = Comments.toJSONList(comments).toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);
             logger.error("stacktrace:", e);
-        } finally {
+        }
+        finally {
             respond();
         }
     }
@@ -90,19 +96,21 @@ public class CommentRestResource extends RestResource {
     public void UpdateComment() throws IOException {
         try {
             Comments comments = Comments.fromJSON((req.getInputStream()));
-            comments.setActivityId(Integer.parseInt(tokens[6]));
+            comments.setActivityId(Integer.parseInt(tokens[4]));
+            comments.setCommentId(Integer.parseInt(tokens[7]));
             Comments newcomments = new UpdateCommentDatabase(con,comments).UpdateComment();
 
             if (newcomments == null) {
                 initError(ErrorCode.INTERNAL_ERROR);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
                 response = newcomments.toJSON().toString();
 
             }
         } catch (SQLException e) {
-            ec = ErrorCode.OK;
-            res.setContentType("application/json");
+            initError(ErrorCode.INTERNAL_ERROR);
+            logger.error("stacktrace:", e);
         } finally {
             respond();
         }
@@ -115,12 +123,16 @@ public class CommentRestResource extends RestResource {
      */
     public void DeleteComment() throws IOException {
         try {
-            Comments comments = new Comments();
-            comments.setActivityId(Integer.parseInt(tokens[6]));
-            if (new DeleteCommentDatabase(con, comments).deleteComments() == null) {
+            Comments comment = Comments.fromJSON(req.getInputStream());
+            comment.setActivityId(Integer.parseInt(tokens[4]));
+            comment.setCommentId(Integer.parseInt(tokens[7]));
+            Comments deletedComment =new DeleteCommentDatabase(con, comment).deleteComments();
+            if (deletedComment == null) {
                 initError(ErrorCode.COMMENT_NOT_FOUND);
             } else {
                 ec = ErrorCode.OK;
+                res.setContentType("application/json");
+                response = deletedComment.toJSON().toString();
             }
         } catch (SQLException e) {
             initError(ErrorCode.INTERNAL_ERROR);
