@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="workflix" version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
+    <display-name>workflix</display-name>
+    <description>workflix - backend </description>
+    <welcome-file-list>
+        <welcome-file>/jsp/homepage.jsp</welcome-file>
+    </welcome-file-list>
+
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/html/protected/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>RestDispatcherServlet</servlet-name>
+        <servlet-class>servlet.RestDispatcherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RestDispatcherServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ActivitiesServlet</servlet-name>
+        <servlet-class>servlet.ActivitiesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ActivitiesServlet</servlet-name>
+        <url-pattern>/activity/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AnalyticsServlet</servlet-name>
+        <servlet-class>servlet.AnalyticsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AnalyticsServlet</servlet-name>
+        <url-pattern>/analytics/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TemplateServlet</servlet-name>
+        <servlet-class>servlet.TemplateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TemplateServlet</servlet-name>
+        <url-pattern>/template/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
