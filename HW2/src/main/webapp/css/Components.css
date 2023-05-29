@@ -31,18 +31,18 @@ body {
 
 
 /* side bar */
-.sidebar {
-  position: fixed;
+.sidebar-area {
+  position:  relative;
   top: 0;
   bottom: 0;
-  left: 0;
+  /* left: -120px; */
+  left: 0px;
   padding: 58px 0 0; /* Height of navbar */
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-  width: 240px;
   z-index: 600;
 }
-
-.button-test{
-  position: absolute;
-  left:300px;
+.sidebar-toggle-button{
+  position:sticky;
+  left: 0px;
+  top:0px;
 }

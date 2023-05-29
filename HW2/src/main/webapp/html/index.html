@@ -19,25 +19,15 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="../js/utils.js"></script>
-    <script src="../js/Analyticspage.js"></script>
-    <title>Template Page</title>
+    <title>Index Page</title>
 </head>
 
 <body>
-    <div id='sidebar' class="sidebar"></div>
-    <button id='sidebar-toggle-button' class="button-test">Toggle ba!</button>
-    <div class="footer"></div>
+    <div id="header-area"></div>
+    <div id="sidebar-area"></div>
+    <div id="footer-area"></div>
 
-    <script>
-        $('.footer').load('./Components/footer.html')
-        $('.sidebar').load('./Components/sidebar.html')
-        var toggleButton = document.getElementById('sidebar-toggle-button')
-        toggleButton.addEventListener('click', function () {
-            var sidebar = document.getElementById('sidebar');
-            var hiddenValue = sidebar.hidden;
-            sidebar.hidden = !hiddenValue;
-        }); 
-    </script>
+
 
 </body>
 
