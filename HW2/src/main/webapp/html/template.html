@@ -18,24 +18,23 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="../js/template.js"></script>
-    <script src="../js/components.js"></script>
+    <script src="../js/TemplatePage.js"></script>
     <title>Template Page</title>
 </head>
 
 <body>
-    <div id="header-area"></div>
-    <div id="sidebar-area"></div>
+    <div id="header-area">header</div>
+    <div id="sidebar-area">sidebar</div>
     <div class="template-wrapper">
-
         <div id="json-list" class="list-container">
         </div>
     </div>
     <div class="footer-area"></div>
-    <!-- <script>
-        $('.footer-area').load('./Components/footer.html')
-        $('.sidebar-area').load('./Components/sidebar.html')
-    </script> -->
+    <script>
+        $('.header-area').load('./Components/header.html');
+        $('.footer-area').load('./Components/footer.html');
+        $('.sidebar-area').load('./Components/sidebar.html');
+    </script>
 
 </body>
 

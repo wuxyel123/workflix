@@ -1,5 +1,6 @@
 .template-wrapper {
   justify-content: center;
+  display: grid;
 }
 .list-container {
   display: grid;
