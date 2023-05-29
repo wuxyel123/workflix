@@ -3,6 +3,6 @@ background-color: bisque;
 }
 
 .analytics-chart{
-    height: 100px;
-
+    width: 100;
+    align-items: center;
 }
