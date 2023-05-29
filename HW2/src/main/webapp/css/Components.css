@@ -1,0 +1,56 @@
+.footer {
+  background-color: white;
+  padding: 0px;
+  text-align: center;
+  height: 120px;
+  width: 100%;
+  border-top: solid whitesmoke 1px;
+}
+.footer-img {
+  height: 100px;
+}
+
+.footer-text {
+  color: #333;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: start;
+}
+
+
+/* side bar */
+.sidebar {
+    width: 200px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    position: fixed;
+    left: -200px; /* 初始状态隐藏在页面左侧 */
+    top: 0;
+    height: 100%;
+    transition: left 0.3s; /* 添加过渡效果 */
+    color: blac;
+  }
+  
+  .sidebar.open {
+    left: 0; /* 显示在页面左侧 */
+  }
+  
+  .sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-item {
+    margin-bottom: 10px;
+  }
+  
+  .menu-item a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .content {
+    padding: 20px;
+  }

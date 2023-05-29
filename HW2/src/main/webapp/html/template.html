@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/template.css">
     <link rel="stylesheet" href="../css/templatePage.css">
+    <link rel="stylesheet" href="../css/Components.css">
     <link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -19,6 +19,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="../js/template.js"></script>
+    <script src="../js/components.js"></script>
     <title>Template Page</title>
 </head>
 
@@ -26,7 +27,12 @@
     <div class="template-wrapper">
         <div id="json-list" class="list-container">
         </div>
+      
     </div>
+    <div class="footer"></div>
+    <script>
+        $('.footer').load('./Components/footer.html')
+    </script>
 
 </body>
 
