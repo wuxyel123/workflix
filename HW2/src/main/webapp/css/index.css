@@ -1,0 +1,25 @@
+.container-area{
+
+ display: flex;
+  min-height: 100vh;
+}
+.header-area{
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+.sidebar-area{
+    width: 25%;
+    background-color: #f1f1f1;
+}
+.body-area{
+    flex: 1;
+    padding: 20px;
+}
+
+.footer-area{
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
