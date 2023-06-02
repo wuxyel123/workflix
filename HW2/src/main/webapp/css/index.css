@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 .container-area{
 
  display: flex;
@@ -22,4 +24,184 @@
     background-color: #333;
     color: #fff;
     padding: 10px;
+}
+.landing-body{
+    overflow: hidden;
+}
+span.logo-temp {
+    background: #9f9edc;
+    padding: 3%;
+    border-radius: 5px;
+    color: white;
+}
+.landing-action {
+    padding-left: 20%;
+}
+.landing-navbar-container{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 201;
+}
+.landing-navbar-workflix{
+    background-color:#310D72;
+    border-radius: 0 !important;
+    margin-top: 0 !important;
+    padding: 2%;
+}
+.landing-logo{
+    padding-left: 3%;
+}
+.row.landing-nav-container {
+    width: 100%;
+    padding: 1%;
+}
+.container-sign-elements {
+    display: flex;
+}
+.sign-element-1{
+    display: flex;
+    justify-content: end;
+}
+.sign-element-2 {
+    display: flex;
+    justify-content: center;
+}
+.call-action{
+    color: #CAC9CB;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    font-feature-settings: 'ss12' on, 'ss08' on, 'ss14' on, 'ss15' on, 'ss18' on, 'ss19' on, 'ss04' on, 'ss03' on;
+    cursor: pointer;
+}
+.landing-page-container{
+    margin-top: 4%;
+}
+.container-text-action {
+    width: 100%;
+    padding-top: 20%;
+    padding-left: 17%;
+}
+span.call-text {
+    color: black;
+    font-size: 50px;
+    font-weight: 700;
+    margin-bottom: 2%;
+    font-family: monospace;
+}
+
+.call-text-mini{
+    font-weight: 200;
+    font-size: 16px;
+    margin-bottom: 2%;
+    color: black;
+    font-family: monospace;
+}
+.cover-img {
+    background-image: url(../resources/image.png);
+    background-color: #cccccc;
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+button.sign-up-btn {
+    background: #310d72;
+    padding: 3%;
+    width: 35%;
+    color: #fff;
+    text-align: center;
+    font-family: 'Plus Jakarta Sans';
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5%;
+}
+/* Mobile View */
+@media screen and (min-width:250px) and (max-width:480px) {
+    .row.landing-nav-container{
+        margin-left: 0;
+    }
+    .col-6.col-lg-6.col-xl-6.landing-logo {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+    .col-6.col-lg-6.col-xl-6.landing-action {
+        flex: 0 0 70%;
+        max-width: 70%;
+        padding: 0;
+        padding-left: 0;
+    }
+    .col-6.col-xl-6.col-lg-6.sign-element-1 {
+        justify-content: flex-start;
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+    .col-6.col-xl-6.col-lg-6.sign-element-2 {
+        flex: 0 0 70%;
+        max-width: 70%;
+    }
+    .call-action {
+        font-size: 12px;
+    }
+    .cover-img{
+        display: none;
+    }
+    button.sign-up-btn {
+        width: 85%;
+    }
+    .landing-page-container {
+        margin-top: 15%;
+    }
+    .landing-page-container .col-6.col-xl-6.col-lg-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .container-text-action {
+        padding-left: 10%;
+    }
+    button.sign-up-btn {
+        padding: 5%;
+    }
+}
+/* Tablet View */
+   @media screen and (min-width:481px) and (max-width:768px) {
+    .row.landing-nav-container{
+        margin-left: 0;
+    }
+    .col-6.col-lg-6.col-xl-6.landing-logo {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+    .col-6.col-lg-6.col-xl-6.landing-action {
+        flex: 0 0 70%;
+        max-width: 70%;
+        padding: 0;
+        padding-left: 0;
+    }
+    .col-6.col-xl-6.col-lg-6.sign-element-1 {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+    .col-6.col-xl-6.col-lg-6.sign-element-2 {
+        flex: 0 0 70%;
+        max-width: 70%;
+    }
+    .call-action {
+        font-size: 12px;
+    }
+    button.sign-up-btn {
+        width: 50%;
+    }
+    button.sign-up-btn {
+        padding: 5%;
+    }
+}
+/* Laptop View */
+   @media screen and (min-width:769px) and (max-width:1024px) {
+    
 }
