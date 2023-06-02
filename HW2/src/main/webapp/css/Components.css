@@ -1,0 +1,48 @@
+/* header */
+/* footer */
+body {
+  background-color: #fbfbfb;
+}
+@media (min-width: 991.98px) {
+  main {
+    padding-left: 240px;
+  }
+}
+
+
+.footer {
+  background-color: white;
+  padding: 0px;
+  text-align: center;
+  height: 120px;
+  width: 100%;
+  border-top: solid whitesmoke 1px;
+}
+.footer-img {
+  height: 100px;
+}
+
+.footer-text {
+  color: #333;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: start;
+}
+
+
+/* side bar */
+.sidebar-area {
+  position:  relative;
+  top: 0;
+  bottom: 0;
+  /* left: -120px; */
+  left: 0px;
+  padding: 58px 0 0; /* Height of navbar */
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  z-index: 600;
+}
+.sidebar-toggle-button{
+  position:sticky;
+  left: 0px;
+  top:0px;
+}
