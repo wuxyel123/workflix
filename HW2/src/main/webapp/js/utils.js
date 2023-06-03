@@ -1,4 +1,4 @@
-var contextPath = 'http://127.0.0.1:5500';
+var contextPath = 'http://127.0.0.1:8080/workflix-1.0';
 
 function sanitize(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
 
 function loadTemplate() {
-    var headerUrl = new URL(contextPath + '/src/main/webapp/html/Components/header.html');
-    var sidebarUrl = new URL(contextPath + '/src/main/webapp/html/Components/sidebar.html');
-    var footerUrl = new URL(contextPath + '/src/main/webapp/html/Components/footer.html');
+    var headerUrl = new URL(contextPath + '/src/main/webapp/html/Reusable-snippets/header.html');
+    var sidebarUrl = new URL(contextPath + '/src/main/webapp/html/Reusable-snippets/sidebar.html');
+    var footerUrl = new URL(contextPath + '/src/main/webapp/html/Reusable-snippets/footer.html');
     sendGenericGetRequest(headerUrl, loadHeader);
     sendGenericGetRequest(sidebarUrl, loadSidebar);
     sendGenericGetRequest(footerUrl, loadFooter);

@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/templatePage.css">
-    <link rel="stylesheet" href="../css/Components.css">
-    <link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="../css/index.css" rel="stylesheet" type="text/css" media="screen, projection" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -23,12 +21,53 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="../js/TemplatePage.js"></script>
-    <script src="../js/utils.js"></script>
     <title>Template Page</title>
 </head>
+
 <body class="container-fluid">
     <div class="header-area" id="header-area">header</div>
-    <div id="sidebar-area"></div>
+    <div id="sidebar-area">
+        <div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false"
+            data-bs-backdrop="false">
+            <div class="offcanvas-header">
+                <h2 class="offcanvas-title d-none d-sm-block" id="offcanvas">Menu</h2>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body px-0">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+                    <li class="nav-item">
+                        <a href="/src/main/webapp/html/LandingPage.html" class="nav-link text-truncate">
+                            <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/src/main/webapp/html/template.html" data-bs-toggle="collapse"
+                            class="nav-link text-truncate">
+                            <i class="fs-5 bi-easel-fill"></i><span class="ms-1 d-none d-sm-inline">Template</span> </a>
+                    </li>
+                    <li>
+                        <a href="/src/main/webapp/html/analytics.html" class="nav-link text-truncate">
+                            <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">Analytics</span></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fs-5 bi-person"></i><span class="ms-1 d-none d-sm-inline">User</span>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col min-vh-80 p-4">
@@ -37,11 +76,12 @@
                     <i class="bi bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvas"></i>
                 </button>
-                <div class="template-wrapper">
-                    <div id="json-list" class="list-container">
-                    </div>
-                </div>
+                
             </div>
+        </div>
+    </div>
+    <div class="template-wrapper">
+        <div id="json-list" class="list-container">
         </div>
     </div>
     <div class="footer-area" id="footer-area"></div>

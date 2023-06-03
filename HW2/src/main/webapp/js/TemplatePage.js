@@ -1,18 +1,27 @@
-$(document).ready(function (event) {
-  getTemplatePageContent();
-});
+// $(document).ready(function (event) {
+//   getTemplatePageContent();
+// });
 
-function getTemplatePageContent() {
-  $.ajax({
-    url: new URL('http://localhost:8080/workflix-1.0/rest/template'),
-    method: 'GET',
-    success: CreateTemplateListPage,
-    fail: function (data) {
-      console.log(data);
-      alert("problem processing the request");
-    }
+// function getTemplatePageContent() {
+//   $.ajax({
+//     url: new URL('http://127.0.0.1:8080/workflix-1.0/rest/template'),
+//     method: 'GET',
+//     success: CreateTemplateListPage,
+//     fail: function (data) {
+//       console.log(data);
+//       alert("problem processing the request");
+//     }
+//   })
+// }
+
+fetch('../html/template.json')
+  .then(response => response.json())
+  .then(data => {
+    CreateTemplateListPage(data); 
   })
-}
+  .catch(error => {
+    console.error('加载数据出错:', error);
+  });
 
 function CreateTemplateListPage(data) {
   const jsonList = document.getElementById('json-list');

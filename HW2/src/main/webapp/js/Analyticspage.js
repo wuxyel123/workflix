@@ -11,14 +11,13 @@ function genericGETRequest(url, callback){
       return false;
     }
     httpRequest.onreadystatechange = function (){ callback(httpRequest)};
-
     httpRequest.open('GET', url);
     httpRequest.send();
 }
 
 
 function getWorkspaceList() {
-    var url = new URL('http://localhost:8080/workflix-1.0/rest/user/1/workspaces');
+    var url = new URL('http:///127.0.0.1:8080/workflix-1.0/rest/user/1/workspaces');
     url.searchParams.set('operation', 'list');
     genericGETRequest(url, createListSelector);
 }

@@ -1,40 +1,40 @@
 [
   {
     "template_name": "Template 1",
-    "image_url": "../image/wallpaper1.jpg"
+    "image_url": "../resources/wallpaper/wallpaper1.jpg"
   },
   {
     "template_name": "Template 2",
-    "image_url": "../image/wallpaper2.jpg"
+    "image_url": "../resources/wallpaper/wallpaper2.jpg"
   }
   ,
   {
     "template_name": "Template 3",
-    "image_url": "../image/wallpaper3.jpg"
+    "image_url": "../resources/wallpaper/wallpaper3.jpg"
   }
   ,
   {
     "template_name": "Template 4",
-    "image_url": "../image/wallpaper4.jpg"
+    "image_url": "../resources/wallpaper/wallpaper4.jpg"
   }
   ,
   {
     "template_name": "Template 5",
-    "image_url": "../image/wallpaper5.jpg"
+    "image_url": "../resources/wallpaper/wallpaper5.jpg"
   }
   ,
   {
     "template_name": "Template 6",
-    "image_url": "../image/wallpaper6.jpg"
+    "image_url": "../resources/wallpaper/wallpaper6.jpg"
   }
   ,
   {
     "template_name": "Template 7",
-    "image_url": "../image/wallpaper7.jpg"
+    "image_url": "../resources/wallpaper/wallpaper7.jpg"
   }
   ,
   {
     "template_name": "Template 8",
-    "image_url": "../image/wallpaper8.jpg"
+    "image_url": "../resources/wallpaper/wallpaper8.jpg"
   }
 ]
