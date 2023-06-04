@@ -1,129 +1,135 @@
+// $(document).ready(function (event) {
+//   getAnalyticsPageContent();
+// });
 
-document.addEventListener('DOMContentLoaded', function(event) {
-    getWorkspaceList();
-    document.getElementById("select_workspace").addEventListener("click", showSelectedWorkspace);
+// function getAnalyticsPageContent() {
+//   $.ajax({
+//     url: new URL('http://127.0.0.1:8080/workflix-1.0/rest/analytics'),
+//     data: {},
+//     method: 'GET',
+//     success: CreateAnalyticsPage(result),
+//     fail: function (data) {
+//       console.log(data);
+//       alert("problem processing the request");
+//     }
+//   })
+// }
+
+
+
+// Sample data (replace with real data)
+var data_projects = [
+    {
+        user_id: 1,
+        username: "John",
+        workspace_id: 1,
+        workspace_name: "Workspace 1",
+        num_completed_activities: 3,
+        num_total_activities: 7,
+        total_worked_time: 360,
+        num_comments: 5
+    },
+    {
+        user_id: 1,
+        username: "John",
+        workspace_id: 1,
+        workspace_name: "Workspace 2",
+        num_completed_activities: 10,
+        num_total_activities: 20,
+        total_worked_time: 260,
+        num_comments: 5
+    },
+    {
+        user_id: 1,
+        username: "John",
+        workspace_id: 1,
+        workspace_name: "Workspace 3",
+        num_completed_activities: 10,
+        num_total_activities: 12,
+        total_worked_time: 460,
+        num_comments: 5
+    },
+];
+
+// CHART JS
+var project_select = document.getElementById('form-select');
+// var selectedProjectOption = selectedOption.options[project_select.selectedIndex];
+
+project_select.addEventListener("change", function (event) {
+    var selectedValue = event.target.value;
+
+    var project_id = data_projects.findIndex((function (project) {
+        return project.workspace_name === selectedValue;
+    })
+    );
+    console.log(selectedValue, project_id);
+
+    var xValues = ["completed_activities", "total_activities", "total_worked_time", "comments"];
+    var yValues = [data_projects[`${project_id}`].num_completed_activities,
+    data_projects[`${project_id}`].num_total_activities,
+    data_projects[`${project_id}`].total_worked_time, data_projects[`${project_id}`].num_comments];
+    var barColors = ["plum", "bisque", "lavender", "pink"];
+
+    new Chart("activitiesChart", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Project Performance"
+            }
+        }
+    });
 });
 
-function genericGETRequest(url, callback){
-    var httpRequest = new XMLHttpRequest();
-    if (!httpRequest) {
-      alert('Cannot create an XMLHTTP instance');
-      return false;
-    }
-    httpRequest.onreadystatechange = function (){ callback(httpRequest)};
-    httpRequest.open('GET', url);
-    httpRequest.send();
-}
 
+data_projects.forEach(item => {
+    var selectBox = document.getElementsByClassName('form-select');
+    var selectChoice = document.createElement('option');
+    selectChoice.innerHTML = ` <option value=" ${item.workspace_id}"> ${item.workspace_name}</option>`;
+    var divCount = selectChoice.length;
+    selectBox[0].appendChild(selectChoice);
 
-function getWorkspaceList() {
-    var url = new URL('http:///127.0.0.1:8080/workflix-1.0/rest/user/1/workspaces');
-    url.searchParams.set('operation', 'list');
-    genericGETRequest(url, createListSelector);
-}
-
-function createListSelector(req){
-    if (req.readyState === XMLHttpRequest.DONE) {
-        if (req.status == 200) {
-             var jsonData = JSON.parse(req.responseText);
-             var workspaces = jsonData['workspace-list'];
-
-             for (let i=0; i<workspaces.length; i++) {
-                Workspace_name = sanitize(workspaces[i]);
-                currHtml =  document.getElementById("workspace_selector").innerHTML;
-                document.getElementById("workspace_selector").innerHTML = currHtml+"<option value='"+Workspace_name+"'>"+Workspace_name+"</option>"
-             }
-        }
-        else {
-            alert("problem processing the request");
-        }
-    }
-}
-
-
-function showSelectedWorkspace(){
-    //need to change the url to the analytics url
-    var url = new URL('http://localhost:8080/workflix-1.0/rest/user/1/workspaces');
-    var sel = document.getElementById("workspace_selector");
-    var selected_workspace = sel.options[sel.selectedIndex].value;
-    url.searchParams.set('workspace_id', selected_workspace);
-    genericGETRequest(url, fillWrokspaceData);
-}
-
-function fillWrokspaceData(req){
-    if (req.readyState === XMLHttpRequest.DONE) {
-        if (req.status == 200) {
-             var jsonData = JSON.parse(req.responseText);
-             var data = jsonData['data'];
-             var user_id = sanitize(data['user_id']);
-             var username = sanitize(data['username']);
-             var workspace_id = sanitize(data['workspace_id']);
-             var workspace_name = sanitize(data['workspace_name']);
-             var num_completed_activities = sanitize(data['num_completed_activities']);
-             var num_total_activities = sanitize(data['num_total_activities']);
-             var total_worked_time = sanitize(data['total_worked_time']);
-             var num_comments = sanitize(data['num_comments']);
-
-
-            var workspaceTable = "<table>";
-             workspaceTable = workspaceTable + "<tr><th>User ID</th><td>"+user_id+"</td></tr>";
-             workspaceTable = workspaceTable + "<tr><th>Username</th><td>"+username+"</td></tr>";
-             workspaceTable = workspaceTable + "<tr><th>Workspace ID</th><td>"+workspace_id+"</td></tr>";
-             workspaceTable = workspaceTable + "<tr><th>Workspace Name</th><td>"+workspace_name+"</td></tr>";
-             workspaceTable = workspaceTable + "<tr><th>Num Completed Activities</th><td>"+num_completed_activities+"</td></tr>";
-             workspaceTable = workspaceTable + "<tr><th>Num Total Activities</th><td>"+num_total_activities+"</td></tr>";
-             workspaceTable = workspaceTable + "<tr><th>Total Worked Time</th><td>"+total_worked_time+"</td></tr>";
-             workspaceTable = workspaceTable + "<tr><th>Num Comments</th><td>"+num_comments+"</td></tr>";
-             workspaceTable = workspaceTable + "</table>";
-             document.getElementById("workspaceInfo").innerHTML = workspaceTable;
-
-
-             var activitiesChart = document.getElementById("activitiesChart").getContext("2d");
-             new Chart(activitiesChart, {
-                type: "bar",
-                data: {
-                    labels: data.map(item => item.workspace_name),
-                    datasets: [
-                        {
-                            label: "Completed Activities",
-                            data: data.map(item => item.num_completed_activities),
-                            backgroundColor: "rgba(75, 192, 192, 0.6)"
-                        },
-                        {
-                            label: "Total Activities",
-                            data: data.map(item => item.num_total_activities),
-                            backgroundColor: "rgba(54, 162, 235, 0.6)"
-                        }
-                        , {
-                            label: "Total Worked Time",
-                            data: data.map(item => item.total_worked_time),
-                            backgroundColor: "rgba(7, 180, 53, 0.6)"
-                        },
-                        {
-                            label: "Total Comments",
-                            data: data.map(item => item.num_comments),
-                            backgroundColor: "rgba(1, 3, 235, 0.6)"
-                        }
-                    ]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-
-
-
-        }
-        else {
-            console.log(JSON.parse(httpRequest.responseText));
-            alert("Problem processing the request");
-        }
-    }
-}
-
-
-
+    var projectlist = document.getElementsByClassName('analytics-project-sub-container');
+    var content = document.createElement('div');
+    content.innerHTML = `<div class="row " style="padding: 10px 0px;">
+        <div class="card col-sm-12" style="padding: 20px;">
+            <div class="container text-left ">
+                <div class="row ">
+                    <div class="col" style="text-emphasis">
+                        ${item.workspace_name}
+                    </div>
+                    <div class="col">
+                        Completed Activities
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Manager
+                    </div>
+                    <div class="col">
+                        <i class="bi bi-card-checklist"></i>  ${item.num_completed_activities}
+                    </div>
+                    <div class="col">
+                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25"
+                            aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: ${item.num_completed_activities / item.num_total_activities * 100}%; background-color: #6A2871;"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+    var divCount = projectlist.length;
+    projectlist[divCount - 1].appendChild(content)
+})

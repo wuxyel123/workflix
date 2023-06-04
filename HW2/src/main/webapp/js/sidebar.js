@@ -28,7 +28,7 @@ class Sidebar extends HTMLElement {
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
                         <li class="nav-item" >
                             <a href="#" class="nav-link text-truncate"  style="color: #6A2871">
-                                <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline" >Home</span>
+                                <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline" >Board</span>
                             </a>
                         </li>
                         <li>
