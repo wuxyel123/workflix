@@ -13,7 +13,7 @@ class Sidebar extends HTMLElement {
           }
         </style>
         <sidebar>
-            <div class="sidebar-button">
+            <div class="sidebar-button" >
                 <button class="btn float-end btn-lg" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
                     <i class="bi-arrow-right-square-fill " data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvas"></i></button>
@@ -24,25 +24,24 @@ class Sidebar extends HTMLElement {
                     <h2 class="offcanvas-title d-none d-sm-block" id="offcanvas">Menu</h2>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                <div class="offcanvas-body px-0">
+                <div class="offcanvas-body px-0"  >
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link text-truncate">
-                                <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
+                        <li class="nav-item" >
+                            <a href="#" class="nav-link text-truncate"  style="color: #6A2871">
+                                <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline" >Home</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-bs-toggle="collapse"
-                                class="nav-link text-truncate">
+                            <a href="#" data-bs-toggle="collapse" class="nav-link text-truncate" style="color: #6A2871">
                                 <i class="fs-5 bi-easel-fill"></i><span class="ms-1 d-none d-sm-inline">Template</span> </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-truncate">
+                            <a href="#" class="nav-link text-truncate" style="color: #6A2871">
                                 <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">Analytics</span></a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                                aria-expanded="false" style="color: #6A2871">
                                 <i class="fs-5 bi-person"></i><span class="ms-1 d-none d-sm-inline">User</span>
                             </a>
                             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
