@@ -5,17 +5,25 @@ goit<!DOCTYPE html>
     <meta name="author" content="HUAN CHEN" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Css link-->
+    <link
+      href="../css/index.css"
+      rel="stylesheet"
+      type="text/css"
+      media="screen, projection"
+    />
     <link
       rel="stylesheet"
-      href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
     <link rel="stylesheet" type="text/css" href="../css/common-style.css" />
     <link rel="stylesheet" type="text/css" href="../css/Boardpage.css" />
     <script src="../js/Boardpage.js"></script>
     <script src="../js/board-header.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="script.js"></script>
+    <script src="../js/header.js" type="text/javascript" defer></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <title>BoardPage</title>
   </head>
   <body>
@@ -25,8 +33,6 @@ goit<!DOCTYPE html>
         background-image: url('https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1280x1920/c27055897797a5e382379e7bcb63bd79/photo-1685665509769-3a907848565f.jpg');
       "
     >
-      <div id="board-header"></div>
-
       <div class="layoutBottom">
         <!-- Left side layout -->
         <div class="frameLeft">
@@ -47,6 +53,7 @@ goit<!DOCTYPE html>
           </div>
         </div>
       </div>
+
       <div
         class="modal fade"
         id="boardModal"

@@ -61,6 +61,7 @@ class Header extends HTMLElement {
             margin:2px;
             margin-right:10px;
             text-align: center;
+            text-decoration: none;
           }
           span.user-settings {
             margin-right: 2%;
