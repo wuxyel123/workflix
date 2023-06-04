@@ -131,53 +131,53 @@ button.sign-up-btn {
 
 /* template page css  */
 .template-wrapper {
-    display: grid;
-  }
-  .list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: auto;
-    justify-content: center;
-  }
-  .list-item {
-    display: grid;
-    grid-template-areas:
-      "tempalte-img  tempalte-img"
-      "image-use-button image-edit-button";
-    justify-items: center;
-    gap: 10px;
-    padding: 40px;
-  }
-  .tempalte-img {
-    grid-area: tempalte-img;
-    height: 180px;
-    width: 320px;
-  }
-  .image-use-button {
-    grid-area: image-use-button;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: all 0.2s ease-in-out;
-    height: 40px;
-    line-height: 20px;
-    border: none;
-    box-shadow: rgba(156, 111, 156, 0.24) 0px 3px 8px;
-  }
-  .image-edit-button {
-    grid-area: image-edit-button;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: all 0.2s ease-in-out;
-    height: 40px;
-    line-height: 20px;
-    border: none;
-    box-shadow: rgba(156, 111, 156, 0.24) 0px 3px 8px;
-  }
-  .image-edit-button:hover,
-  .image-use-button:hover {
-    color: blueviolet;
-    box-shadow: 0 5px 15px rgba(57, 35, 73, 0.4);
-  }
+  display: grid;
+}
+.list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: auto;
+  justify-content: center;
+}
+.list-item {
+  display: grid;
+  grid-template-areas:
+    "tempalte-img  tempalte-img"
+    "image-use-button image-edit-button";
+  justify-items: center;
+  gap: 10px;
+  padding: 40px;
+}
+.tempalte-img {
+  grid-area: tempalte-img;
+  height: 180px;
+  width: 320px;
+}
+.image-use-button {
+  grid-area: image-use-button;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+  height: 40px;
+  line-height: 20px;
+  border: none;
+  box-shadow: rgba(156, 111, 156, 0.24) 0px 3px 8px;
+}
+.image-edit-button {
+  grid-area: image-edit-button;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+  height: 40px;
+  line-height: 20px;
+  border: none;
+  box-shadow: rgba(156, 111, 156, 0.24) 0px 3px 8px;
+}
+.image-edit-button:hover,
+.image-use-button:hover {
+  color: blueviolet;
+  box-shadow: 0 5px 15px rgba(57, 35, 73, 0.4);
+}
 /* reusable-snippets */
 
 /* header */
@@ -235,8 +235,6 @@ body {
   width: 100;
   align-items: center;
 }
-
-
 
 .sign-body {
   display: grid;
@@ -572,3 +570,5 @@ body {
 /* Laptop View */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
 }
+
+/* setting page */

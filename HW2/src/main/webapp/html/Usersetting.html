@@ -1,69 +1,94 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trello 用户设置</title>
+    <title>userSettingsForm</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../css/index.css" />
   </head>
   <body>
     <div class="container">
-      <h1>Trello 用户设置</h1>
+      <h1 style="margin-top: 40px; margin-bottom: 20px">SETTING</h1>
 
-      <form id="userSettingsForm" action="getUserByEmail.jsp">
+      <form id="userForm">
         <div class="form-group">
-          <label for="fullName">全名</label>
+          <label for="userName">USER NAME*</label>
           <input
+            maxlength="20"
             type="text"
             class="form-control"
-            id="fullName"
-            name="fullName"
-            placeholder="请输入您的全名"
-            value="<%=user.getFullName()%>"
+            id="userName"
+            name="userName"
+            placeholder="Please enter your user name"
+            required
           />
         </div>
 
         <div class="form-group">
-          <label for="email">电子邮箱</label>
+          <label for="name">NAME</label>
+          <input
+            maxlength="20"
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Please enter your name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="surname">SURNAME</label>
+          <input
+            maxlength="20"
+            type="text"
+            class="form-control"
+            id="surname"
+            name="surname"
+            placeholder="Please enter your surname"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">EMAIL*</label>
           <input
             type="email"
             class="form-control"
             id="email"
             name="email"
-            placeholder="请输入您的电子邮箱"
-            value="<%=user.getEmail()%>"
+            placeholder="Please enter your email"
+            required
           />
         </div>
 
         <div class="form-group">
-          <label for="password">密码</label>
+          <label for="password">PASSWORD*</label>
           <input
+            maxlength="20"
             type="password"
             class="form-control"
             id="password"
             name="password"
-            placeholder="请输入密码"
+            placeholder="Please enter your password"
+            required
           />
         </div>
 
         <div class="form-group">
-          <label for="confirmPassword">确认密码</label>
+          <label for="confirmPassword">CONFIRM PASSWORD*</label>
           <input
+            maxlength="20"
             type="password"
             class="form-control"
             id="confirmPassword"
             name="confirmPassword"
-            placeholder="请再次输入密码"
+            placeholder="Please enter your password again"
+            required
           />
         </div>
 
-        <button type="submit" class="btn btn-primary">保存</button>
+        <button type="saveButton" class="btn btn-primary">SAVE</button>
       </form>
     </div>
 
