@@ -7,8 +7,9 @@
 .layoutTop {
   width: 100%;
   background-color: rgb(40, 26, 22);
-  height: 50px;
+  height: 35px;
   border: 0;
+  clear: both;
 }
 /* .layoutTop a:focus {
   background-color: transparent;

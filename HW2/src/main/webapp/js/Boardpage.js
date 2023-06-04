@@ -1,12 +1,12 @@
-$("#board-header").load("Reusable-snippets/board-header.html");
 /** 页面board信息渲染存储的对象
- * name: board的名字
- * lists: board的list列表数组
- * lists-title:list的标题
- * lists-cards:list的card列表
+ * name: board's name
+ * lists: board's list
+ * lists-title:list label
+ * lists-cards:list's card list
  * 我看接口中还要传workspace的id和Visibility两个字段，这两个字段不影响页面的渲染，在新增board的时候需要传入，我就都还没加上
  * 每次新增完board/list/card之后重新调用drawBoards()方法渲染就行，编辑和删除功能没来得及加
  */
+
 var boards = [
   {
     name: "test",
@@ -23,6 +23,8 @@ var boards = [
 ];
 
 var currentBoard = boards[0];
+
+function add() {}
 
 // 点击侧边栏board的方法，切换board
 function handleClickBoard(e) {
