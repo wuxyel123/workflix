@@ -1,14 +1,34 @@
-$('ul.nav li.dropdown').hover(function() {
-    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
-    }, function() {
-    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
-});
-class Header extends HTMLElement {
-    constructor() {
-      super();
+$(document).ready(function () {
+  $("ul.nav li.dropdown").hover(
+    function () {
+      $(this).find(".dropdown-menu").stop(true, true).delay(200).fadeIn(500);
+    },
+    function () {
+      $(this).find(".dropdown-menu").stop(true, true).delay(200).fadeOut(500);
     }
-    connectedCallback() {
-        this.innerHTML = `
+  );
+
+  // log out
+  $("#logoutButton").on("click", function () {
+    $("#logoutModal").modal("show");
+  });
+
+  $("#cancelLogoutButton").on("click", function () {
+    $("#logoutModal").modal("hide");
+  });
+
+  $("#confirmLogoutButton").on("click", function () {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
+  });
+});
+
+class Header extends HTMLElement {
+  constructor() {
+    super();
+  }
+  connectedCallback() {
+    this.innerHTML = `
         <style>
           header{
             position: absolute;
@@ -33,11 +53,16 @@ class Header extends HTMLElement {
             width: 50%;
           }
           .settings {
-            width: 100%;
+            width: 50%;
+          }
+          .set{
+            color:black;
+            float:right;
+            margin:2px;
+            margin-right:10px;
+            text-align: center;
           }
           span.user-settings {
-            float: right;
-            position: relative;
             margin-right: 2%;
             background: #80808033;
             /* padding: 1%; */
@@ -99,16 +124,29 @@ class Header extends HTMLElement {
                         </li>
                     </ul>
                     </li>
+                    <form class="navbar-form navbar-left" role="search">
+                    <button
+                      type="submit"
+                      class="btn btn-default create-btn"
+                      data-toggle="modal"
+                      data-target="#boardModal"
+                    >
+                      Create
+                    </button>
+                  </form>
                 </ul>
                 <div class="settings">
-                    <span class="user-settings">EE</span>
+                  <a href=""class ="set">setting</a>
+                  <a href="" class ="set">log out</a>
+                  <span class="user-settings" id="loggedInUser">EE</span> 
                 </div>
             </div>
             </div>
-        </nav>
 
+
+        </nav>
         </header>
         `;
-      }
+  }
 }
-customElements.define('header-component', Header);
+customElements.define("header-component", Header);
