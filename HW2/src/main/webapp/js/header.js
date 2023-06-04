@@ -136,8 +136,6 @@ class Header extends HTMLElement {
                   </form>
                 </ul>
                 <div class="settings">
-                  <a href=""class ="set">setting</a>
-                  <a href="" class ="set">log out</a>
                   <span class="user-settings" id="loggedInUser">EE</span> 
                 </div>
             </div>
