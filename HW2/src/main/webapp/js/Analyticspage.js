@@ -50,6 +50,26 @@ var data_projects = [
         num_comments: 5
     },
 ];
+//Summary data insert
+//projects in progress
+var ProjectInProgressCount = data_projects.length;
+document.getElementById('in-progress-project').innerHTML=`${ProjectInProgressCount}`
+//completed activities
+var totalCompletedActivities = data_projects.reduce(function(sum, project) {
+    return sum + project.num_completed_activities;
+  }, 0);
+document.getElementById('completed-activities').innerHTML=`${totalCompletedActivities}`
+//total worked time
+var totalWorkedTime = data_projects.reduce(function(sum, project) {
+    return sum + project.total_worked_time;
+  }, 0);
+//total activies
+document.getElementById('total-worked-time').innerHTML=`${totalWorkedTime}h`
+var totalActivities = data_projects.reduce(function(sum, project) {
+    return sum + project.num_total_activities;
+  }, 0);
+document.getElementById('total-activities').innerHTML=`${totalActivities}`
+
 
 // CHART JS
 var project_select = document.getElementById('form-select');

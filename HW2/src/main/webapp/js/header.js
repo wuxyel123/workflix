@@ -42,7 +42,7 @@ class Header extends HTMLElement {
             padding: 1%;
           }
           .navbar-brand {
-            background-image: url(./logo.png);
+            background-image: url(../resources/logo/logo.png);
             width: 100px;
             height: 50px;
             background-position: center;
