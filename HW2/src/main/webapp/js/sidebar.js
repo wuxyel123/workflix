@@ -19,13 +19,13 @@ class Sidebar extends HTMLElement {
                         data-bs-target="#offcanvas"></i></button>
             </div>
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false"
-                data-bs-backdrop="false">
+                data-bs-backdrop="false" style="padding-top:100px">
                 <div class="offcanvas-header">
                     <h2 class="offcanvas-title d-none d-sm-block" id="offcanvas">Menu</h2>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body px-0"  >
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu" >
                         <li class="nav-item" >
                             <a href="#" class="nav-link text-truncate"  style="color: #6A2871">
                                 <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline" >Board</span>
