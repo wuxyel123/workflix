@@ -20,7 +20,7 @@ fetch('../html/template.json')
     CreateTemplateListPage(data); 
   })
   .catch(error => {
-    console.error('加载数据出错:', error);
+    console.error('loading data error:', error);
   });
 
 function CreateTemplateListPage(data) {
