@@ -1,3 +1,6 @@
+
+
+
 class Sidebar extends HTMLElement {
     constructor() {
         super();
@@ -13,12 +16,11 @@ class Sidebar extends HTMLElement {
           }
         </style>
         <sidebar>
-            <div class="sidebar-button" >
-                <button class="btn float-end btn-lg" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-                    <i class="bi-arrow-right-square-fill " data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvas"></i></button>
-            </div>
-            <div class="sidebar-button">
+        <div class="sidebar-button">
+            <button class="btn float-end btn-lg" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+                <i class="bi-arrow-right-square-fill " data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i></button>
+        </div>
+        <div class="sidebar-button">
             <button class="btn float-end btn-lg" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
                 <i class="bi-arrow-right-square-fill " data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i></button>
         </div>
@@ -39,15 +41,43 @@ class Sidebar extends HTMLElement {
                             style="color: #6A2871">
                             <i class="fs-5 bi-easel-fill"></i><span class="ms-1 d-none d-sm-inline">Template</span> </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="./BoardPage.html" class="nav-link text-truncate" style="color: #6A2871">
-                            <i class="fs-5 bi-square"></i><span class="ms-1 d-none d-sm-inline">Board</span>
-                        </a>
+                    <li class="accordion nav-item accordion-flush text-truncate" id="accordionFlushExample">
+                        <div class="accordion-item ">
+                            <div class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne" style="padding:0px">
+                                    <a href="#" class="nav-link text-truncate" style="color: #6A2871">
+                                    <i class="bi bi-grid-3x3"></i>
+                                        <span class="ms-1 d-none d-sm-inline">Workspace</span>
+                                    </a>
+                                </button>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <a href="./BoardPage.html" style="text-decoration: none" id='subtemplate-content'>
+                                    </a>
+                                </div>
                     </li>
-    
+                    <li class="accordion nav-item accordion-flush text-truncate" id="accordionFlushExample2">
+                        <div class="accordion-item ">
+                            <div class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                    aria-controls="flush-collapseTwo" style="padding:0px">
+                                    <a href="#" class="nav-link text-truncate" style="color: #6A2871">
+                                    <i class="bi bi-grid-1x2"></i>
+                                        <span class="ms-1 d-none d-sm-inline">Board</span>
+                                    </a>
+                                </button>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionFlushExample2">
+                                    <a href="./BoardPage.html" style="text-decoration: none" id='subboard-content'>
+                                    </a>
+                                </div>
+                    </li>
                     <li>
                         <a href="./Analytics.html" class="nav-link text-truncate" style="color: #6A2871">
-                            <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">Analytics</span></a>
+                        <i class="bi bi-bar-chart-line-fill"></i><span class="ms-1 d-none d-sm-inline">Analytics</span></a>
                     </li>
     
                     <li class="dropdown">
@@ -66,8 +96,11 @@ class Sidebar extends HTMLElement {
                 </ul>
             </div>
         </div>
-        </sidebar>
+    </sidebar>
         `;
     }
 }
 customElements.define('sidebar-component', Sidebar);
+
+
+
