@@ -21,8 +21,8 @@ function getWorkspaceIdFromUrl() {
 
 // Fetch board data from backend API
 function fetchBoards() {
-  const workspaceId = getWorkspaceIdFromUrl();
-
+  // const workspaceId = getWorkspaceIdFromUrl();
+  const workspaceId = 1;
   fetch(
     `http://localhost:8080/workflix-1.0/rest/workspace/${workspaceId}/boards`,
     {
