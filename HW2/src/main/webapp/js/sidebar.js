@@ -37,7 +37,7 @@ class Sidebar extends HTMLElement {
                             <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span></a>
                     </li>
                     <li>
-                        <a href="./template.html" data-bs-toggle="collapse" class="nav-link text-truncate"
+                        <a href="./template.html" class="nav-link text-truncate"
                             style="color: #6A2871">
                             <i class="fs-5 bi-easel-fill"></i><span class="ms-1 d-none d-sm-inline">Template</span> </a>
                     </li>
@@ -48,13 +48,13 @@ class Sidebar extends HTMLElement {
                                     data-bs-target="#flush-collapseOne" aria-expanded="false"
                                     aria-controls="flush-collapseOne" style="padding:0px">
                                     <a href="#" class="nav-link text-truncate" style="color: #6A2871">
-                                    <i class="bi bi-grid-3x3"></i>
+                                        <i class="bi bi-grid-3x3"></i>
                                         <span class="ms-1 d-none d-sm-inline">Workspace</span>
                                     </a>
                                 </button>
                                 <div id="flush-collapseOne" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionFlushExample">
-                                    <a href="./BoardPage.html" style="text-decoration: none" id='subtemplate-content'>
+                                    <a href="./workspace.html" style="text-decoration: none" id='subtemplate-content'>
                                     </a>
                                 </div>
                     </li>
@@ -65,7 +65,7 @@ class Sidebar extends HTMLElement {
                                     data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                     aria-controls="flush-collapseTwo" style="padding:0px">
                                     <a href="#" class="nav-link text-truncate" style="color: #6A2871">
-                                    <i class="bi bi-grid-1x2"></i>
+                                        <i class="bi bi-grid-1x2"></i>
                                         <span class="ms-1 d-none d-sm-inline">Board</span>
                                     </a>
                                 </button>
@@ -77,7 +77,8 @@ class Sidebar extends HTMLElement {
                     </li>
                     <li>
                         <a href="./Analytics.html" class="nav-link text-truncate" style="color: #6A2871">
-                        <i class="bi bi-bar-chart-line-fill"></i><span class="ms-1 d-none d-sm-inline">Analytics</span></a>
+                            <i class="bi bi-bar-chart-line-fill"></i>
+                            <span class="ms-1 d-none d-sm-inline">Analytics</span></a>
                     </li>
     
                     <li class="dropdown">

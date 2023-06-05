@@ -82,7 +82,6 @@ project_select.addEventListener("change", function (event) {
         return project.workspace_name === selectedValue;
     })
     );
-    console.log(selectedValue, project_id);
 
     var xValues = ["completed_activities", "total_activities", "total_worked_time", "comments"];
     var yValues = [data_projects[`${project_id}`].num_completed_activities,

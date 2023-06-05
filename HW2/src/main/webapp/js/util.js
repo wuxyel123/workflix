@@ -44,7 +44,6 @@ data_users.forEach(item => {
     var subboard_content = document.createElement('div')
     subboard_content.innerHTML = `<div class="accordion-body" style="color: #6A2871" >${item.workspace_name}</div></a>`
     var subboard = document.getElementById('subtemplate-content')
-    console.log(subboard)
     subboard.appendChild(subboard_content)
 })
 
@@ -70,6 +69,5 @@ data_workspace.forEach(item => {
     var subboard_content = document.createElement('div')
     subboard_content.innerHTML = `<div class="accordion-body" style="color: #6A2871" >${item.board_name}</div></a>`
     var subboard = document.getElementById('subboard-content')
-    console.log(subboard)
     subboard.appendChild(subboard_content)
 })
