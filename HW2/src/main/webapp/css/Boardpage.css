@@ -131,6 +131,11 @@
   height: 40px;
 }
 
+.delete-button {
+  float: right;
+  font-size: 12px;
+}
+
 .card {
   border-radius: 8px;
   height: 36px;

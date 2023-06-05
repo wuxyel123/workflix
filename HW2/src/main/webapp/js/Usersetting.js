@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function getUserData() {
-    fetch("/user/getData")
+    fetch("http://localhost:8080/workflix-1.0/rest/user/getData")
       .then(function (response) {
         return response.json();
       })
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // update requests
-    fetch("/user/update/" + useId, {
+    fetch("http://localhost:8080/workflix-1.0/rest/user/update/" + useId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
