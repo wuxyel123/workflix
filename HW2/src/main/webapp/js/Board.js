@@ -222,6 +222,7 @@ $.ajax({
     drawSubboards();
   },
 });
+
 $("#formWorkspace").append("<option>Workspace</option>");
 $("#cardModal").on("show.bs.modal", function (event) {
   $("#cardTitle").val("");

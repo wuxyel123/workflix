@@ -26,7 +26,6 @@ fetch('../html/template.json')
 
 function CreateTemplateListPage(data) {
   const jsonList = document.getElementById('json-list');
-
   data.forEach(item => {
     const listItem = document.createElement('div');
     listItem.classList.add('list-item');
@@ -37,7 +36,11 @@ function CreateTemplateListPage(data) {
     image.className = 'tempalte-img'
     const button = document.createElement('button')
     button.className = 'image-use-button';
-    button.textContent = 'use '
+    button.textContent = 'use';
+    // button.addEventListener("click", onclick())
+    // function onclick(){
+    //   console.log('clicked')
+    // }
 
     const editButton = document.createElement('button')
     editButton.className = 'image-edit-button';
@@ -47,7 +50,6 @@ function CreateTemplateListPage(data) {
     listItem.appendChild(editButton);
     jsonList.appendChild(listItem);
   });
-
 }
 
 
