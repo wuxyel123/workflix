@@ -71,7 +71,7 @@ class Sidebar extends HTMLElement {
                                 </button>
                                 <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionFlushExample2">
-                                    <a href="./BoardPage.html" style="text-decoration: none" id='subboard-content'>
+                                    <a href="./boards.html" style="text-decoration: none" id='subboard-content'>
                                     </a>
                                 </div>
                     </li>
