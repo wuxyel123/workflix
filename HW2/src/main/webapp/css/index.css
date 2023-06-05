@@ -113,7 +113,7 @@ span.call-text {
   font-family: monospace;
 }
 .cover-img {
-  background-image: url(../resources/image.png);
+  background-image: url(../resources/image-landing.png);
   background-color: #cccccc;
   background-size: 100% 100vh;
   background-repeat: no-repeat;
@@ -732,7 +732,7 @@ nav.navbar.navbar-expand-lg.bg-body-tertiary {
   padding: 1%;
 }
 .navbar-brand {
-  background-image: url(./logo.png);
+  background-image: url(../resources/logo/logo.png);
   width: 100px;
   height: 50px;
   background-position: center;
