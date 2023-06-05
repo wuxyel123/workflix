@@ -41,9 +41,9 @@ async function createAccount(){
    $.ajax({
        type: "POST",
        url: "http://localhost:8080/workflix-1.0/rest/user/register",
-       data: formData,
+       data: JSON.stringify(formData),
        processData: false,
-       contentType: false,
+       contentType: "multipart/form-data; boundary=something",
        cache: false,
         timeout: 600000,
      success: function(data, textStatus) {
@@ -67,7 +67,9 @@ async function Login(){
 
         url : 'http://localhost:8080/workflix-1.0/rest/workspace/create',
         type : 'POST',
-        data:{obj},
+        data: JSON.stringify(obj),
+        processData: false,
+        contentType: "application/json; charset=utf-8",
         success : function(data) {
             console.log(data)
             console.log(JSON.stringify(data));
