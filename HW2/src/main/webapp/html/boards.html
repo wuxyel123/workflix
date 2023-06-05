@@ -1,48 +1,248 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
     <title>BoardPage</title>
-    <meta name="author" content="HUAN CHEN"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="HUAN CHEN" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Css link-->
-    <link href="/workflix-1.0/css/index.css" rel="stylesheet" type="text/css" media="screen, projection" />
-    <link href="/workflix-1.0/css/Boardpage.css" rel="stylesheet" type="text/css"/>
+    <link
+      href="/workflix-1.0/css/index.css"
+      rel="stylesheet"
+      type="text/css"
+      media="screen, projection"
+    />
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
 
+    <link
+      href="/workflix-1.0/css/Boards.css"
+      rel="stylesheet"
+      type="text/css"
+      media="screen, projection"
+    />
+    <link rel="stylesheet" type="text/css" href="../css/Boardpage.css" />
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
-        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
-        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+      integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+      integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>
-    <script src="/workflix-1.0/js/header.js" type="text/javascript" defer></script>
+    <script
+      src="/workflix-1.0/js/header.js"
+      type="text/javascript"
+      defer
+    ></script>
     <!-- <script src="/workflix-1.0/js/sidebar.js" type="text/javascript" defer></script> -->
-</head>
+  </head>
 
-<body>
-    <header-component></header-component>
+  <body>
+    <!-- <header-component></header-component> -->
     <!-- <sidebar-component></sidebar-component> -->
+    <div style="height: 40px">header</div>
 
-  <div class="background"
-    style="
-      background-image: url('https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1280x1920/c27055897797a5e382379e7bcb63bd79/photo-1685665509769-3a907848565f.jpg');
-    "> 
-eeee
-  </div>
+    <div class="boards-background">
+      <div class="layoutBottom">
+        <div class="sidebar">
+          <div class="border-title">Your boards</div>
+          <ul class="board-list" id="boardList"></ul>
+        </div>
 
+        <!-- right content -->
+        <div class="frameRight" id="boardContent">
+          <div class="lists" id="subboards"></div>
+          <div class="add-list" data-toggle="modal" data-target="#listModal">
+            Add another list +
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="boardModal"
+        tabindex="-1"
+        aria-labelledby="boardModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="boardModalLabel">Create board</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label"
+                    >Board title:</label
+                  >
+                  <input class="form-control" id="formTitle" />
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label"
+                    >Workspace:</label
+                  >
+                  <select class="form-control" id="formWorkspace"></select>
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label"
+                    >Visibility:</label
+                  >
+                  <select class="form-control" id="formVisibility">
+                    <option>Private</option>
+                    <option>Workspace</option>
+                    <option>Public</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                onclick="handleAddBoard()"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="cardModal"
+        tabindex="-1"
+        aria-labelledby="cardModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="cardModalLabel">Add card</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label"
+                    >Card title:</label
+                  >
+                  <input class="form-control" id="cardTitle" />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                onclick="handleAddCard()"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="listModal"
+        tabindex="-1"
+        aria-labelledby="listModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="listModalLabel">Add list</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label"
+                    >Enter list title:</label
+                  >
+                  <input class="form-control" id="listTitle" />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                onclick="handleAddList()"
+              >
+                Add list
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <script src="/workflix-1.0/js/Boardpage.js"></script>
-</body>
-
+    <script src="../js/Board.js"></script>
+  </body>
 </html>
