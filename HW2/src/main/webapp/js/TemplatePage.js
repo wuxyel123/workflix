@@ -5,8 +5,9 @@
 // function getTemplatePageContent() {
 //   $.ajax({
 //     url: new URL('http://127.0.0.1:8080/workflix-1.0/rest/template'),
+//     data: {},
 //     method: 'GET',
-//     success: CreateTemplateListPage,
+//     success: CreateTemplateListPage(result),
 //     fail: function (data) {
 //       console.log(data);
 //       alert("problem processing the request");
@@ -17,10 +18,10 @@
 fetch('../html/template.json')
   .then(response => response.json())
   .then(data => {
-    CreateTemplateListPage(data); 
+    CreateTemplateListPage(data);
   })
   .catch(error => {
-    console.error('加载数据出错:', error);
+    console.error('loading data error:', error);
   });
 
 function CreateTemplateListPage(data) {

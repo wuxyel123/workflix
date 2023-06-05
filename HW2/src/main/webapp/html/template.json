@@ -37,4 +37,20 @@
     "template_name": "Template 8",
     "image_url": "../resources/wallpaper/wallpaper8.jpg"
   }
+  ,
+  {
+    "template_name": "Template 9",
+    "image_url": "../resources/wallpaper/wallpaper9.jpg"
+  }
+  ,
+  {
+    "template_name": "Template 10",
+    "image_url": "../resources/wallpaper/wallpaper10.jpg"
+  }
+  ,
+  {
+    "template_name": "Template 11",
+    "image_url": "../resources/wallpaper/wallpaper11.jpg"
+  }
+
 ]

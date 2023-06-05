@@ -1,4 +1,10 @@
-<footer class="text-center text-white" style="background-color: #6A2871;">
+class Footer extends HTMLElement {
+    constructor() {
+        super();
+    }
+    connectedCallback() {
+        this.innerHTML = `
+        <footer class="text-center text-white" style="background-color: #6A2871;">
         <!-- Grid container -->
         <div class="container">
                 <!-- Section: Links -->
@@ -49,17 +55,14 @@
                 </section>
                 <!-- Section: Links -->
 
-                <hr class="my-5" />
+                <hr class="my-3" />
 
                 <!-- Section: Text -->
-                <section class="mb-5">
+                <section class="mb-3">
                         <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                         <p>
-                                                Organize. Collaborate. Succeed.
-
-                                        </p>
-                                        Wrokflix makes work more flexible.
+                                            Wrokflix makes work more flexible.
                                         </p>
                                 </div>
                         </div>
@@ -83,4 +86,8 @@
                 © 2023 Copyright:
                 <a class="text-white" href="https://www.unipd.it/en/">Workflix</a>
         </div>
-</footer>
+    </footer>               
+        `;
+    }
+}
+customElements.define('footer-component', Footer);
