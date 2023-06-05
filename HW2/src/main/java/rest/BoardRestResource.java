@@ -69,7 +69,7 @@ public class BoardRestResource extends RestResource{
      */
     public void GetBoardsByWorkspaceId() throws IOException {
         try {
-            WorkSpace workspace = resource.WorkSpace.fromJSON(req.getInputStream());
+            WorkSpace workspace = new WorkSpace();
             workspace.setWorkspaceId(Integer.parseInt(tokens[4]));
             List<Board> boards = new GetBoardByWorkspaceIdDatabase(con, workspace).getBoardByWorkspaceId();
             if (boards == null || boards.isEmpty()) {

@@ -35,7 +35,7 @@ public class ActivitiesServlet extends AbstractServlet{
                 // /activity/{activity_id}/
                 Integer activityId = Integer.parseInt(tokens[3]);
                 try{
-                    Activities activity = Activities.fromJSON(req.getInputStream());
+                    Activities activity = new Activities();
                     activity.setActivityId(activityId);
                     activity = new GetActivityByIdDatabase(getDataSource().getConnection(),activity).getActivityById();
                     if (activity == null){

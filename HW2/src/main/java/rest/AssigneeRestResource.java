@@ -100,7 +100,7 @@ public class AssigneeRestResource extends RestResource {
      */
     public void getAssignee() throws IOException {
         try {
-            Activities activity = Activities.fromJSON(req.getInputStream());
+            Activities activity = new Activities();
             activity.setActivityId(Integer.parseInt(tokens[4]));
             List<User> users= new GetAssigneeDatabase(con, activity).getAssignee();
             if (users == null || users.isEmpty()) {

@@ -47,7 +47,7 @@ public class CommentRestResource extends RestResource {
      */
     public void GetComments() throws IOException {
         try {
-            Activities activity = Activities.fromJSON(req.getInputStream());
+            Activities activity = new Activities();
             activity.setActivityId(Integer.parseInt(tokens[4]));
             List<Comments> comments = new GetCommentDatabase(con, activity).getComments();
             if (comments == null || comments.isEmpty()) {
