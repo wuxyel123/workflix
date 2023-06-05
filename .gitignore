@@ -58,3 +58,6 @@ Thumbs.db
 */.factorypath~.bak
 */.
 
+*/TestMultipart
+*/TestMultipart/
+/TestMultipart/*
