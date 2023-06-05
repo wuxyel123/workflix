@@ -108,6 +108,15 @@
                     <include>**/*.*</include>
                 </includes>
             </resource>
+
+            <resource>
+                <targetPath>${basedir}/target/${project.artifactId}-${project.version}/user_images</targetPath>
+                <directory>${basedir}/src/main/webapp/user_images</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+
         </resources>
 
     </build>

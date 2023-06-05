@@ -1,6 +1,7 @@
 package servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import rest.*;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
  * Output: None
  * Usage: Called by frontend
  */
+@MultipartConfig
 public class RestDispatcherServlet extends AbstractServlet{
 
 
@@ -162,7 +164,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             writeError(res, ErrorCode.WRONG_REST_FORMAT);
             logger.error("stacktrace:", e);
         }
-        catch (NamingException | SQLException e){
+        catch (NamingException | SQLException | ServletException e){
             writeError(res, ErrorCode.INTERNAL_ERROR);
             logger.error("stacktrace:", e);
         }

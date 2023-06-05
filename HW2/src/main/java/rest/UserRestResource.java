@@ -1,8 +1,11 @@
 package rest;
 
 import dao.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import org.apache.commons.io.FilenameUtils;
 import utils.ErrorCode;
 
 import resource.User;
@@ -10,6 +13,8 @@ import resource.User;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -42,9 +47,28 @@ public class UserRestResource extends RestResource{
      * Create a user
      * @throws IOException Error in IO operations
      */
-    public void CreateUser() throws IOException {
+    public void CreateUser() throws IOException, IllegalStateException, ServletException {
         try {
-            User user = User.fromJSON(req.getInputStream());
+            //Get user
+            Part userPart = req.getPart("user");
+            if (userPart == null) {
+                initError(ErrorCode.INVALID_INPUT);
+                logger.warn("Missing data");
+            }
+            User user = User.fromJSON(userPart.getInputStream());
+            //Get image
+            Part filePart = req.getPart("image");
+            if (filePart != null) {
+                //Save image to disk
+                String fileName = "user_" + user.getUsername() +"." + FilenameUtils.getExtension(filePart.getSubmittedFileName());
+                String filePath =  "/user_images/"+fileName;
+                filePath = req.getServletContext().getRealPath(filePath);
+                //Create new file in path
+                filePart.write(filePath);
+                user.setProfilePicture(filePath);
+            }
+
+
             if(user.getEmail()==null || user.getPassword()==null || user.getUsername()==null){
                 initError(ErrorCode.INVALID_INPUT);
                 logger.warn("Missing data");
@@ -119,11 +143,30 @@ public class UserRestResource extends RestResource{
      * Update a user
      * @throws IOException Error in IO operations
      */
-    public void UpdateUserNoPassword() throws IOException{
+    public void UpdateUserNoPassword() throws IOException, IllegalStateException, ServletException{
         try {
 
-            User user = User.fromJSON(req.getInputStream());
+            //Get user
+            Part userPart = req.getPart("user");
+            if (userPart == null) {
+                initError(ErrorCode.INVALID_INPUT);
+                logger.warn("Missing data");
+            }
+            User user = User.fromJSON(userPart.getInputStream());
             user.setUserId(Integer.parseInt(tokens[5]));
+
+            //Get image
+            Part filePart = req.getPart("image");
+            if (filePart != null) {
+                //Save image to disk
+                String fileName = "user_" + user.getUsername() +"." + FilenameUtils.getExtension(filePart.getSubmittedFileName());
+                String filePath =  "/user_images/"+fileName;
+                filePath = req.getServletContext().getRealPath(filePath);
+                //Create new file in path
+                filePart.write(filePath);
+                user.setProfilePicture(filePath);
+            }
+
             User newUser = new UpdateUserDatabase(con, user).updateUser();
             if (newUser == null) {
                 initError(ErrorCode.USER_NOT_FOUND);
