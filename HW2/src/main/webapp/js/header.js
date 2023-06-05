@@ -124,16 +124,34 @@ class Header extends HTMLElement {
                         </li>
                     </ul>
                     </li>
-                    <form class="navbar-form navbar-left" role="search">
-                    <button
+                    <li class="nav-item dropdown">
+                      <!-- <a class="nav-link dropdown-toggle" style="color: black;" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Create <i class="fa-solid fa-magnifying-glass"></i>
+                      </a> -->
+
+                      <button
                       type="submit"
                       class="btn btn-default create-btn"
-                      data-toggle="modal"
+                      data-toggle="dropdown"
                       data-target="#boardModal"
                     >
-                      Create
+                      Create +
                     </button>
-                  </form>
+
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i> Friends
+                            Create board</a>
+                            <p;>A board is made up of cards ordered on lists. Use it to manage projects, track information, or organize anything.</p>
+                        </li>
+                        <li>
+                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i> Friends
+                          Create board</a>
+                          <p>A board is made up of cards ordered on lists. Use it to manage projects, track information, or organize anything.</p>
+                      </li>
+                      </ul>
+                    </li>
                 </ul>
                 <div class="settings">
                   <span class="user-settings" id="loggedInUser">EE</span> 
