@@ -141,20 +141,24 @@ class Header extends HTMLElement {
 
                       <ul class="dropdown-menu">
                         <li>
-                          <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i> Friends
+                          <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i> 
                             Create board</a>
-                            <p;>A board is made up of cards ordered on lists. Use it to manage projects, track information, or organize anything.</p>
                         </li>
                         <li>
-                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i> Friends
-                          Create board</a>
-                          <p>A board is made up of cards ordered on lists. Use it to manage projects, track information, or organize anything.</p>
-                      </li>
+                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i>
+                          Start with a  template</a>
+                         </li>
+                         <li>
+                         <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i>
+                           Create workspace</a>
+                          </li>
                       </ul>
                     </li>
                 </ul>
                 <div class="settings">
-                  <span class="user-settings" id="loggedInUser">EE</span> 
+                    <a href=""class ="set">setting</a>
+                    <a href="" class ="set">log out</a>
+                    <span class="user-settings" id="loggedInUser">EE</span> 
                 </div>
             </div>
             </div>
