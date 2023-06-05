@@ -123,7 +123,7 @@ public class WorkspaceRestResource extends RestResource {
      */
     public void GetWorkSpacesByUserId() throws IOException {
         try {
-            User user = User.fromJSON(req.getInputStream());
+            User user = new User();
             user.setUserId(Integer.parseInt(tokens[4]));
             List<WorkSpace> workSpaces = new GetWorkspaceByUserIdDatabase(con, user).getWorkspaceByUserId();
 

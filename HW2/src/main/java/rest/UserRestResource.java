@@ -101,7 +101,7 @@ public class UserRestResource extends RestResource{
      */
     public void GetUserFromId() throws IOException{
         try {
-            User user = User.fromJSON(req.getInputStream());
+            User user = new User();
             user.setUserId(Integer.parseInt(tokens[4]));
             user = new GetUserByIdDatabase(con, user).getUserById();
             if (user == null) {

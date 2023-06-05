@@ -141,7 +141,7 @@ public class RestDispatcherServlet extends AbstractServlet{
             else if (tokens.length==5 && tokens[4].equals("getbyemail")){
                 UserRestResource urr = new UserRestResource(req, res, getDataSource().getConnection());
                 switch (req.getMethod()) {
-                    case "GET" -> urr.GetUserFromMail();
+                    case "POST" -> urr.GetUserFromMail();
                     default -> writeError(res, ErrorCode.METHOD_NOT_ALLOWED);
                 }
             }
