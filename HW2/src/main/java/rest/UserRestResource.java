@@ -49,7 +49,7 @@ public class UserRestResource extends RestResource{
      */
     public void CreateUser() throws IOException, IllegalStateException, ServletException {
         try {
-            //Get user
+           /* //Get user
             Part userPart = req.getPart("user");
             if (userPart == null) {
                 initError(ErrorCode.INVALID_INPUT);
@@ -66,8 +66,10 @@ public class UserRestResource extends RestResource{
                 //Create new file in path
                 filePart.write(filePath);
                 user.setProfilePicture(filePath);
-            }
+            }*/
 
+
+            User user  = User.fromJSON(req.getInputStream());
 
             if(user.getEmail()==null || user.getPassword()==null || user.getUsername()==null){
                 initError(ErrorCode.INVALID_INPUT);
@@ -146,6 +148,7 @@ public class UserRestResource extends RestResource{
     public void UpdateUserNoPassword() throws IOException, IllegalStateException, ServletException{
         try {
 
+            /*
             //Get user
             Part userPart = req.getPart("user");
             if (userPart == null) {
@@ -165,7 +168,10 @@ public class UserRestResource extends RestResource{
                 //Create new file in path
                 filePart.write(filePath);
                 user.setProfilePicture(filePath);
-            }
+            }*/
+
+            User user  = User.fromJSON(req.getInputStream());
+
 
             User newUser = new UpdateUserDatabase(con, user).updateUser();
             if (newUser == null) {
