@@ -12,7 +12,7 @@ const boardsData = [
   },
 ];
 
-var currentBoard = boards[0];
+var currentBoard = boardsData[0];
 
 // Fetch board data from backend API
 function fetchBoards() {
@@ -21,50 +21,57 @@ function fetchBoards() {
   fetch(`/workspace/${workspaceId}/boards`, {
     method: "GET",
   })
-    .then((response) => response.json())
-    .then((data) => {
-      const boardList = document.getElementById("boardList");
-      boardList.innerHTML = "";
+      .then((response) => response.json())
+      .then((data) => {
+        // 把拿到的boards放在boardsData里，如果后端拿到data和最上面的示例不一样就需要处理成一样的格式
+        boardsData = data;
+        currentBoard = boardsData[0];
+        drawSubBoards();
+        const boardList = document.getElementById("boardList");
+        boardList.innerHTML = "";
 
-      data.forEach((board) => {
-        const boardElement = document.createElement("li");
-        boardElement.classList.add("board");
-        boardElement.textContent = board.name;
-        boardElement.dataset.id = board.id;
+        data.forEach((board) => {
+          const boardElement = document.createElement("li");
+          boardElement.classList.add("board");
+          boardElement.textContent = board.name;
+          boardElement.dataset.id = board.id;
 
-        if (board.visible) {
-          boardElement.classList.add("visible");
-        }
+          if (board.visible) {
+            boardElement.classList.add("visible");
+          }
 
-        boardElement.textContent = board.name;
-        boardElement.addEventListener("click", () =>
-          drawSubboards(boardElement)
-        );
-        boardList.appendChild(boardElement);
-      });
-    })
-    .catch((error) => console.log(error));
+          boardElement.textContent = board.name;
+          boardElement.addEventListener("click", () =>
+              handleClickBoard(board.id)
+          );
+          boardList.appendChild(boardElement);
+        });
+      })
+      .catch((error) => console.log(error));
 }
 
 // Fetch subboards items of a specific board from backend API
-function drawSubboards(boardId) {
-  fetch(`/board/${boardId}/subboards`)
-    .then((response) => response.json())
-    .then((data) => {
-      var elementArray = [];
-      data.forEach((item) => {
-        elementArray.push(
-          `<div class="menu-item ${
-            currentBoard.name === item.name ? "menu-item--active" : ""
-          }" onclick="handleClickBoard('${item.name}')">
-          <div style="width: 80%; text-align: left" >${item.name}</div>
-        </div>`
-        );
-      });
-      $("#boards").html(elementArray);
-      drawSubboards();
-    })
-    .catch((error) => console.log(error));
+function drawSubBoards() {
+  if (!currentBoard) {
+    document.getElementById("subboards").innerHTML = "";
+  }
+  fetch(`/board/${currentBoard.id}/subboards`)
+      .then((response) => response.json())
+      .then((data) => {
+        var elementList = [];
+        currentBoard.subboard = data;
+        currentBoard.subboard.forEach((subboards) => {
+          elementList.push(`<div class="list">
+              <div class="list-title">${subboards.title}</div>
+              <div class="cards">
+                ${drawCard(subboards.cards)}
+              </div>
+              ${drawAddCard(subboards)}
+            </div>`);
+        });
+        $("#subboards").html(elementList);
+      })
+      .catch((error) => console.log(error));
 }
 
 // Initial board fetch on page load
@@ -73,41 +80,41 @@ fetchBoards();
 // Delete a board using the backend API
 function deleteBoard(boardId) {
   fetch(`/board/${boardId}/delete`, { method: "DELETE" })
-    .then((response) => {
-      if (response.ok) {
-        fetchBoards();
-      }
-    })
-    .catch((error) => console.log(error));
+      .then((response) => {
+        if (response.ok) {
+          fetchBoards();
+        }
+      })
+      .catch((error) => console.log(error));
 }
 
 function add() {}
 
 // Click to switch board
 function handleClickBoard(e) {
-  boards.forEach((item) => {
-    item.name === e && (currentBoard = item);
+  boardsData.forEach((item) => {
+    item.id === e && (currentBoard = item);
   });
-  drawSubboards();
+  drawSubBoards();
 }
 
 // Methods for drawing a single board
-function drawBoard() {
-  if (!currentBoard) {
-    document.getElementById("subboards").innerHTML = "";
-  }
-  var elementList = [];
-  currentBoard.subboard.forEach((subboards) => {
-    elementList.push(`<div class="list">
-          <div class="list-title">${subboards.title}</div>
-          <div class="cards">
-            ${drawCard(subboards.cards)}
-          </div>
-          ${drawAddCard(subboards)}
-        </div>`);
-  });
-  $("#subboards").html(elementList);
-}
+// function drawBoard() {
+//   if (!currentBoard) {
+//     document.getElementById("subboards").innerHTML = "";
+//   }
+//   var elementList = [];
+//   currentBoard.subboard.forEach((subboards) => {
+//     elementList.push(`<div class="list">
+//           <div class="list-title">${subboards.title}</div>
+//           <div class="cards">
+//             ${drawCard(subboards.cards)}
+//           </div>
+//           ${drawAddCard(subboards)}
+//         </div>`);
+//   });
+//   $("#subboards").html(elementList);
+// }
 
 //draw card
 function drawCard(cards) {
@@ -140,7 +147,7 @@ function handleAddCard() {
     return;
   }
   const requestData = {
-    name: input,
+    name: input.val(),
     subboard_id: currentSubboardId,
   };
   fetch("/activity/create", {
@@ -150,13 +157,13 @@ function handleAddCard() {
     },
     body: JSON.stringify(requestData),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      currentList.cards.push(input.val());
-      // Retrieve data and re-render the page after a successful request
-      drawSubboards();
-    })
-    .catch((error) => console.log(error));
+      .then((response) => response.json())
+      .then((data) => {
+        currentList.cards.push(input.val());
+        // Retrieve data and re-render the page after a successful request
+        drawSubBoards();
+      })
+      .catch((error) => console.log(error));
 }
 
 // add board
@@ -168,9 +175,9 @@ function handleAddBoard() {
   const workspace = $("#formWorkspace");
   const visibility = $("#formVisibility");
   const requestData = {
-    name: input,
-    workspace_id: workspace,
-    visibility: visibility,
+    name: input.val(),
+    workspace_id: workspace.val(),
+    visibility: visibility.val(),
   };
 
   fetch("/board/create", {
@@ -180,12 +187,12 @@ function handleAddBoard() {
     },
     body: JSON.stringify(requestData),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Board created:", data);
-      drawSubboards();
-    })
-    .catch((error) => console.log(error));
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Board created:", data);
+        drawSubBoards();
+      })
+      .catch((error) => console.log(error));
 }
 
 // create subboards
@@ -193,8 +200,8 @@ function handleAddList() {
   const input = $("#listTitle");
   if (input) {
     const requestData = {
-      title: input,
-      boardId: currentBoardId,
+      title: input.val(),
+      boardId: currentBoard.id,
     };
 
     fetch("/subboard/create", {
@@ -204,12 +211,12 @@ function handleAddList() {
       },
       body: JSON.stringify(requestData),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("subboard created:", data);
-        drawSubboards();
-      })
-      .catch((error) => console.log(error));
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("subboard created:", data);
+          drawSubBoards();
+        })
+        .catch((error) => console.log(error));
     return;
   }
 }
@@ -219,9 +226,10 @@ $.ajax({
   url: "",
   async: false,
   complete: function () {
-    drawSubboards();
+    drawSubBoards();
   },
 });
+
 $("#formWorkspace").append("<option>Workspace</option>");
 $("#cardModal").on("show.bs.modal", function (event) {
   $("#cardTitle").val("");

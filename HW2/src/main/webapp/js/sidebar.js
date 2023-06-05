@@ -33,7 +33,7 @@ class Sidebar extends HTMLElement {
             <div class="offcanvas-body px-0">
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
                     <li>
-                        <a href="./landing-page.html" class="nav-link text-truncate" style="color: #6A2871">
+                        <a href="./index.html" class="nav-link text-truncate" style="color: #6A2871">
                             <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span></a>
                     </li>
                     <li>
