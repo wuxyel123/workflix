@@ -12,17 +12,18 @@ const boardsData = [
   },
 ];
 
-var currentBoard = boardsData[0];
 //get workspace id
-function getWorkspaceIdFromUrl() {
+async function getBoardIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get("workspaceId");
+  return urlParams.get("id");
 }
 
 // Fetch board data from backend API
-function fetchBoards() {
-  // const workspaceId = getWorkspaceIdFromUrl();
-  const workspaceId = 1;
+async function fetchBoards() {
+  const workspaceId = localStorage.getItem("workspaceid");
+  // const workspaceId = 1;
+  //  currentBoard = await getBoardIdFromUrl();
+
   fetch(
     `http://localhost:8080/workflix-1.0/rest/workspace/${workspaceId}/boards`,
     {
@@ -31,9 +32,6 @@ function fetchBoards() {
   )
     .then((response) => response.json())
     .then((data) => {
-      var boardsData = data;
-
-      currentBoard = boardsData[0];
       drawSubBoards();
       const boardList = document.getElementById("boardList");
       boardList.innerHTML = "";
@@ -67,24 +65,27 @@ function fetchBoards() {
 }
 
 // Fetch subboards items of a specific board from backend API
-function drawSubBoards() {
+async function drawSubBoards(e) {
+  var urlParam = new URLSearchParams(window.location.search);
+  currentBoard = e || urlParam.get("id");
+  console.log(currentBoard);
+
   if (!currentBoard) {
     document.getElementById("subboards").innerHTML = "";
   }
   fetch(
-    `http://localhost:8080/workflix-1.0/rest/board/${currentBoard.board_id}/subboards`
+    `http://localhost:8080/workflix-1.0/rest/board/${currentBoard}/subboards`
   )
     .then((response) => response.json())
     .then((data) => {
       var elementList = [];
-      currentBoard.subboard = data;
-      currentBoard.subboard.forEach((subboards) => {
+      data.forEach((subboards) => {
         elementList.push(`<div class="list">
-              <div class="list-title">${subboards.title} 
+              <div class="list-title">${subboards.name} 
               <button type="button" class="btn btn-danger delete-button" onclick="deleteList(${subboards})">Delete</button>
               </div>
               <div class="cards">
-                ${drawCard(subboards.cards)}
+                ${drawCard(currentBoard)}
               </div>
               ${drawAddCard(subboards)}
             </div>`);
@@ -118,7 +119,7 @@ function handleClickBoard(e) {
   boardsData.forEach((item) => {
     item.id === e && (currentBoard = item);
   });
-  drawSubBoards();
+  drawSubBoards(e);
 }
 
 // Methods for drawing a single board
@@ -140,16 +141,29 @@ function handleClickBoard(e) {
 // }
 
 //draw card
-function drawCard(cards) {
-  var elementCards = [];
-  cards.forEach((card) => {
-    elementCards.push(`<div class="card">${card}</div>`);
-  });
-  return elementCards.join("");
+function drawCard(id) {
+  fetch(`http://localhost:8080/workflix-1.0/rest/subboard/${id}/activities`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data) {
+        var cards = data;
+        cards.forEach((card) => {
+          elementCards.push(`<div class="card">${card}</div>`);
+        });
+      }
+    })
+    .catch((error) => console.log(error));
 }
+
 function drawAddCard(subboards, isAdding = false) {
   return ` <div class="add-card" 
-                onclick="handleOpenCard('${subboards.title}')"
+                onclick="handleOpenCard('${subboards.name}')"
                 data-toggle="modal"
                 data-target="#cardModal"
               >Add a card</div>`;
@@ -226,7 +240,7 @@ function handleAddList() {
   if (input) {
     const requestData = {
       title: input.val(),
-      boardId: currentBoard.id,
+      boardId: currentBoard,
     };
 
     fetch("http://localhost:8080/workflix-1.0/rest/subboard/create", {
