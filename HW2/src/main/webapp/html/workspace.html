@@ -34,125 +34,64 @@
 <body>
     <header-component></header-component>
     <div class="container-workspace">
+        <div class="modal__overlay"></div>
+        <div class="modal" id="modal-create">
+            <div class="modal__close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="row">
+                <div class="col-7 col-xl-7 col-lg-7">
+                    <div class="workspace-form" id="workspace-form">
+                        <input type="text" placeholder="Workspace name" id="workspace-name">
+                        <input type="text" placeholder="Workspace description" id="workspace-description">
+                        <button onclick="Create()">Create</button>
+                    </div>
+
+
+                </div>
+                <div class="col-5 col-xl-5 col-lg-5 createboard-img">
+                </div>
+
+            </div>
+
+
+        </div>
         <h3>Your Boards</h3>
+        <div class="create-newboard" id="create-newboard">
+            <img src="../resources/create_board.svg">
+            <span> Boards are where work gets done in Workflix. On a board, you can move cards between lists to keep projects, tasks, and more on track.</span>
+            <button onclick="CreateNewBoard()">Create Your First Board</button>
+        </div>
         <div class="wrapper">
             <div class="background">
                 <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1537132206/news-slider/background.webp"
                     alt="">
             </div>
-            <div class="item-bg"></div>
 
             <div class="news-slider">
-                <div class="news-slider__wrp swiper-wrapper">
-
+                <div class="news-slider__wrp swiper-wrapper" id="slider-wrapper">
 
                     <div class="news-slider__item swiper-slide">
-                        <a href="#" class="news__item">
+                        <a href="#" class="news__item" onclick="CreateNewBoard()">
                             <div class="news__title">
-                                Lorem Ipsum Dolor Sit Amed
+                                Create New Board
                             </div>
                         </a>
                     </div>
-
                     <div class="news-slider__item swiper-slide">
-                        <a href="#" class="news__item">
+                        <a href="#" class="news__item" onclick="CreateNewWorkspace()">
                             <div class="news__title">
-                                Lorem Ipsum Dolor Sit Amed
+                                Create New Workspace
                             </div>
                         </a>
                     </div>
 
-                    <div class="news-slider__item swiper-slide">
-                        <a href="#" class="news__item">
-                            <div class="news__title">
-                                Lorem Ipsum Dolor Sit Amed
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="news-slider__item swiper-slide">
-                        <a href="#" class="news__item">
-                            <div class="news__title">
-                                Lorem Ipsum Dolor Sit Amed
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="news-slider__item swiper-slide">
-                        <a href="#" class="news__item">
-                            <div class="news__title">
-                                Lorem Ipsum Dolor Sit Amed
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="news-slider__item swiper-slide">
-                        <a href="#" class="news__item">
-                            <div class="news__title">
-                                Lorem Ipsum Dolor Sit Amed
-                            </div>
-                        </a>
-                    </div>
-                    <div class="news-slider__item swiper-slide">
-                        <a href="#" class="news__item">
-                            <div class="news__title">
-                                Lorem Ipsum Dolor Sit Ameddsgsdgsdg
-                            </div>
-                        </a>
-                    </div>
-                    <div class="news-slider__item swiper-slide">
-                        <a href="#" class="news__item">
-                            <div class="news__title">
-                                Lorem Ipsum Dolor Sit Agfsdgdsgsdgsdgmed
-                            </div>
-                        </a>
-                    </div>
                 </div>
 
-                <div class="news-slider__ctr">
-
-                    <div class="news-slider__arrows">
-                        <button class="news-slider__arrow news-slider-prev">
-                            <span class="icon-font">
-                                <svg class="icon icon-arrow-left">
-                                    <use xlink:href="#icon-arrow-left"></use>
-                                </svg>
-                            </span>
-                        </button>
-                        <button class="news-slider__arrow news-slider-next">
-                            <span class="icon-font">
-                                <svg class="icon icon-arrow-right">
-                                    <use xlink:href="#icon-arrow-right"></use>
-                                </svg>
-                            </span>
-                        </button>
-                    </div>
-
-                    <div class="news-slider__pagination"></div>
-
-                </div>
 
             </div>
 
         </div>
-
-
-        <svg hidden="hidden">
-            <defs>
-                <symbol id="icon-arrow-left" viewBox="0 0 32 32">
-                    <title>arrow-left</title>
-                    <path
-                        d="M0.704 17.696l9.856 9.856c0.896 0.896 2.432 0.896 3.328 0s0.896-2.432 0-3.328l-5.792-5.856h21.568c1.312 0 2.368-1.056 2.368-2.368s-1.056-2.368-2.368-2.368h-21.568l5.824-5.824c0.896-0.896 0.896-2.432 0-3.328-0.48-0.48-1.088-0.704-1.696-0.704s-1.216 0.224-1.696 0.704l-9.824 9.824c-0.448 0.448-0.704 1.056-0.704 1.696s0.224 1.248 0.704 1.696z">
-                    </path>
-                </symbol>
-                <symbol id="icon-arrow-right" viewBox="0 0 32 32">
-                    <title>arrow-right</title>
-                    <path
-                        d="M31.296 14.336l-9.888-9.888c-0.896-0.896-2.432-0.896-3.328 0s-0.896 2.432 0 3.328l5.824 5.856h-21.536c-1.312 0-2.368 1.056-2.368 2.368s1.056 2.368 2.368 2.368h21.568l-5.856 5.824c-0.896 0.896-0.896 2.432 0 3.328 0.48 0.48 1.088 0.704 1.696 0.704s1.216-0.224 1.696-0.704l9.824-9.824c0.448-0.448 0.704-1.056 0.704-1.696s-0.224-1.248-0.704-1.664z">
-                    </path>
-                </symbol>
-            </defs>
-        </svg>
 
 
     </div>
