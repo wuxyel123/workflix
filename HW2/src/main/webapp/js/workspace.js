@@ -42,6 +42,7 @@ $( document ).ready(function() {
 
                         },error: function(request,error){
                             document.getElementById("create-newboard").style.display="block"
+                            document.getElementById("modal-create").style.display="block"
                         }
 
 
