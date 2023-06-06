@@ -26,7 +26,7 @@ $(document).ready(function () {
   });
 });
  function ChangeWorkSpace(id){
-    location.href="/html/workspace"
+    location.href="workflix-1.0/html/workspace.html"
     localStorage.setItem("workspaceid","1")
 }
 class Header extends HTMLElement {
