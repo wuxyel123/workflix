@@ -23,48 +23,66 @@ async function fetchBoards() {
   const workspaceId = localStorage.getItem("workspaceid");
   // const workspaceId = 1;
   //  currentBoard = await getBoardIdFromUrl();
+  try {
+    const response = await fetch(
+      `http://localhost:8080/workflix-1.0/rest/workspace/${workspaceId}/boards`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await response.json();
 
-  fetch(
-    `http://localhost:8080/workflix-1.0/rest/workspace/${workspaceId}/boards`,
-    {
-      method: "GET",
+    drawSubBoards();
+    const boardList = document.getElementById("boardList");
+    boardList.innerHTML = "";
+
+    for (const board of data) {
+      const boardElement = createBoardElement(board);
+      boardList.appendChild(boardElement);
     }
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      drawSubBoards();
-      const boardList = document.getElementById("boardList");
-      boardList.innerHTML = "";
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-      data.forEach((board) => {
-        const boardElement = document.createElement("li");
-        boardElement.classList.add("board");
-        boardElement.textContent = board.name;
-        boardElement.dataset.id = board.id;
+function createBoardElement(board) {
+  const boardElement = document.createElement("li");
+  boardElement.classList.add("board");
+  boardElement.dataset.id = board.board_id;
 
-        if (board.visible) {
-          boardElement.classList.add("visible");
-        }
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.addEventListener("click", (event) => {
-          event.stopPropagation(); // Prevent event propagation to the boardElement click event
-          deleteBoard(board.id);
-        });
+  if (board.visible) {
+    boardElement.classList.add("visible");
+  }
 
-        boardElement.appendChild(deleteButton);
+  const container = document.createElement("div");
+  container.classList.add("board-container");
 
-        boardElement.textContent = board.name;
-        boardElement.addEventListener("click", () =>
-          handleClickBoard(board.id)
-        );
-        boardList.appendChild(boardElement);
-      });
-    })
-    .catch((error) => console.log(error));
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "Delete";
+  deleteButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    deleteBoard(board.board_id);
+  });
+
+  container.appendChild(deleteButton);
+
+  const boardName = document.createElement("span");
+  boardName.textContent = board.name;
+
+  container.appendChild(boardName);
+
+  boardElement.appendChild(container);
+
+  boardElement.addEventListener("click", () => {
+    handleClickBoard(board.board_id);
+    drawSubBoards(board.board_id);
+  });
+
+  return boardElement;
 }
 
 // Fetch subboards items of a specific board from backend API
+
 async function drawSubBoards(e) {
   var urlParam = new URLSearchParams(window.location.search);
   currentBoard = e || urlParam.get("id");
@@ -151,11 +169,13 @@ function drawCard(id) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      if (data) {
+      if (data !== undefined) {
         var cards = data;
-        cards.forEach((card) => {
-          elementCards.push(`<div class="card">${card}</div>`);
-        });
+        if (Array.isArray(cards)) {
+          cards.forEach((card) => {
+            elementCards.push(`<div class="card">${card}</div>`);
+          });
+        }
       }
     })
     .catch((error) => console.log(error));
