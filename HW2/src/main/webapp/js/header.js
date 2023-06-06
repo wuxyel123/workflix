@@ -1,4 +1,7 @@
 $(document).ready(function () {
+  var user=localStorage.getItem("ProfilePicture")
+  console.log(user)
+  document.getElementById("loggedInUser").innerHTML=user.toUpperCase()
   $("ul.nav li.dropdown").hover(
     function () {
       $(this).find(".dropdown-menu").stop(true, true).delay(200).fadeIn(500);
@@ -22,11 +25,15 @@ $(document).ready(function () {
     window.location.href = "login.html";
   });
 });
-
+ function ChangeWorkSpace(id){
+    location.href="/html/workspace"
+    localStorage.setItem("workspaceid","1")
+}
 class Header extends HTMLElement {
   constructor() {
     super();
-  }
+}
+
   connectedCallback() {
     this.innerHTML = `
         <style>
@@ -90,19 +97,7 @@ class Header extends HTMLElement {
                     <a class="nav-link dropdown-toggle" style="color: black;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Workspaces <i class="fa-solid fa-magnifying-glass"></i>
                     </a>
-                    <ul class="dropdown-menu">
-                    <li>
-                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i> Friends Updates</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-calendar"></i> Events near you</a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <li>
-                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-ticket"></i> Buy a Ticket</a>
-                    </li>
+                    <ul class="dropdown-menu" id="workspaces-dropdown">
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
