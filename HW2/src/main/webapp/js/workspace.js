@@ -1,128 +1,258 @@
-var bg = document.querySelector('.item-bg');
-var items = document.querySelectorAll('.news__item');
-var item = document.querySelector('.news__item');
-
-function cLog(content) {
-    console.log(content)
-}
-
-if($(window).width() > 800) {
-    $(document).on("mouseover", ".news__item", function (_event, _element) {
-
-        var newsItem = document.querySelectorAll('.news__item');
-        newsItem.forEach(function (element, index) {
-            element.addEventListener('mouseover', function () {
-                var x = this.getBoundingClientRect().left;
-                var y = this.getBoundingClientRect().top;
-                var width = this.getBoundingClientRect().width;
-                var height = this.getBoundingClientRect().height;
-
-                $('.item-bg').addClass('active');
-                $('.news__item').removeClass('active');
-                // $('.news__item').removeClass('active');
-
-
-                bg.style.width = width + 'px';
-                bg.style.height = height + 'px';
-                bg.style.transform = 'translateX(' + x + 'px ) translateY(' + y + 'px)';
-            });
-
-            element.addEventListener('mouseleave', function () {
-                $('.item-bg').removeClass('active');
-                $('.news__item').removeClass('active');
-            });
-
-        });
-
-    });
-}
-
-
-var swiper = new Swiper('.news-slider', {
-    effect: 'coverflow',
-    grabCursor: true,
-    loop: true,
-    centeredSlides: true,
-    keyboard: true,
-    spaceBetween: 0,
-    slidesPerView: 'auto',
-    speed: 300,
-    coverflowEffect: {
-        rotate: 0,
-        stretch: 0,
-        depth: 0,
-        modifier: 3,
-        slideShadows: false
-    },
-    breakpoints: {
-        480: {
-            spaceBetween: 0,
-            centeredSlides: true
-        }
-    },
-    simulateTouch: true,
-    navigation: {
-        nextEl: '.news-slider-next',
-        prevEl: '.news-slider-prev'
-    },
-    pagination: {
-        el: '.news-slider__pagination',
-        clickable: true
-    },
-    on: {
-        init: function () {
-            var activeItem = document.querySelector('.swiper-slide-active');
-
-            var sliderItem = activeItem.querySelector('.news__item');
-
-            $('.swiper-slide-active .news__item').addClass('active');
-
-            var x = sliderItem.getBoundingClientRect().left;
-            var y = sliderItem.getBoundingClientRect().top;
-            var width = sliderItem.getBoundingClientRect().width;
-            var height = sliderItem.getBoundingClientRect().height;
-
-
-            $('.item-bg').addClass('active');
-
-            bg.style.width = width + 'px';
-            bg.style.height = height + 'px';
-            bg.style.transform = 'translateX(' + x + 'px ) translateY(' + y + 'px)';
-        }
-    }
-});
-
-swiper.on('touchEnd', function () {
-    $('.news__item').removeClass('active');
-    $('.swiper-slide-active .news__item').addClass('active');
-});
-
-swiper.on('slideChange', function () {
-    $('.news__item').removeClass('active');
-});
-
-swiper.on('slideChangeTransitionEnd', function () {
-    $('.news__item').removeClass('active');
-    var activeItem = document.querySelector('.swiper-slide-active');
-
-    var sliderItem = activeItem.querySelector('.news__item');
-
-    $('.swiper-slide-active .news__item').addClass('active');
-
-    var x = sliderItem.getBoundingClientRect().left;
-    var y = sliderItem.getBoundingClientRect().top;
-    var width = sliderItem.getBoundingClientRect().width;
-    var height = sliderItem.getBoundingClientRect().height;
-
-
-    $('.item-bg').addClass('active');
-
-    bg.style.width = width + 'px';
-    bg.style.height = height + 'px';
-    bg.style.transform = 'translateX(' + x + 'px ) translateY(' + y + 'px)';
-});
-
 
 $( document ).ready(function() {
-    console.log( "ready!" );
+    var userid=localStorage.getItem("userid")
+    var workspace=localStorage.getItem("workspaceid")
+    if(workspace==null){
+        $.ajax({
+                url : 'http://localhost:8080/workflix-1.0/rest/user/'+userid+'/workspaces',
+                type : 'GET',
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                success : function(data) {
+                    console.log(data)
+                    for(let item of data){
+                        $("#workspaces-dropdown").append(`
+                            <li>
+                            <a class="dropdown-item" style="color: black;" href="#" onclick="ChangeWorkSpace('${item.workspace_id}')"><i class="fa-solid fa-user-group"></i> ${item.workspace_name}</a>
+                            </li>
+
+                        `)
+                    }
+                    workspace=data[0].workspace_id
+                    $.ajax({
+                        url:"http://localhost:8080/workflix-1.0/rest/workspace/"+workspace.toString()+"/boards",
+                        type : 'GET',
+                        processData: false,
+                        contentType: "application/json; charset=utf-8",
+                        success : function(data) {
+                            document.getElementById("create-newboard").style.display="none"
+                            for(let item of data ){
+                                 $("#slider-wrapper").append(`
+                                        <div class="news-slider__item swiper-slide">
+                                            <a href="/html/boards.html?id=${item.board_id}" class="news__item">
+                                                <div class="news__title">
+                                                    ${item.name}
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                 `)
+
+                            }
+
+                        },error: function(request,error){
+                            document.getElementById("create-newboard").style.display="block"
+                        }
+
+
+
+                    })
+                },
+                error: function(request,error){
+                    document.getElementById("modal-create").style.display="block"
+                    document.getElementById("slider-wrapper").style.display="none"
+
+                }
+        })
+    }else if(workspace!=null){
+        $.ajax({
+            url:"http://localhost:8080/workflix-1.0/rest/workspace/"+workspace.toString()+"/boards",
+            type : 'GET',
+            processData: false,
+            contentType: "application/json; charset=utf-8",
+            success : function(data) {
+                document.getElementById("create-newboard").style.display="none"
+                for(let item of data ){
+                     $("#slider-wrapper").append(`
+                            <div class="news-slider__item swiper-slide">
+                                <a href="/html/boards.html?id=${item.board_id}" class="news__item">
+                                    <div class="news__title">
+                                        ${item.name}
+                                    </div>
+                                </a>
+                            </div>
+
+                     `)
+
+                }
+
+            },error: function(request,error){
+                 console.log(request)
+                 document.getElementById("create-newboard").style.display="block"
+
+            }
+
+
+
+        })
+    }
+
+});
+async function CreateNewWorkspace(){
+    document.getElementById("workspace-form").innerHTML=""
+    $("#workspace-form").append(`
+        <input type="text" placeholder="Workspace name" id="workspace-name">
+        <input type="text" placeholder="Workspace description" id="workspace-description">
+        <button onclick="Create()">Create</button>
+    `)
+    document.getElementById("modal-create").style.display="block"
+}
+async function CreateNewBoard(){
+    document.getElementById("workspace-form").innerHTML=""
+    $("#workspace-form").append(`
+        <input type="text" placeholder="Board name" id="board-name">
+        <input type="text" placeholder="Board description" id="board-description">
+        <button onclick="SendBoard()">Create</button>
+    `)
+    document.getElementById("modal-create").style.display="block"
+    document.getElementById("create-newboard").style.display="none"
+}
+async function SendBoard(){
+    boardname=document.getElementById("board-name").value
+    boarddescription=document.getElementById("board-description").value
+    workspace_id=localStorage.getItem("workspaceid")
+
+    var obj={
+        "board_id": "",
+        "workspace_id": workspace_id,
+        "name": boardname,
+        "description": boarddescription,
+        "visibility": "PUBLIC",
+        "create_time": ""
+    }
+     $("#slider-wrapper").append(`
+                <div class="news-slider__item swiper-slide">
+                    <a href="/html/boards.html?id=${workspace_id}" class="news__item">
+                        <div class="news__title">
+                            ${boardname}
+                        </div>
+                    </a>
+                </div>
+
+     `)
+   document.getElementById("modal-create").style.display="none"
+   document.getElementById("slider-wrapper").style.display="flex"
+   document.getElementById("create-newboard").style.display="none"
+    console.log(obj)
+    $.ajax({
+        url : 'http://localhost:8080/workflix-1.0/rest/board/create',
+        type : 'POST',
+        data: JSON.stringify(obj),
+        processData: false,
+        contentType: "application/json; charset=utf-8",
+        success : function(data) {
+          console.log(data)
+          $("#slider-wrapper").append(`
+                <div class="news-slider__item swiper-slide">
+                    <a href="/html/boards.html?id=${data.board_id}" class="news__item">
+                        <div class="news__title">
+                            ${data.name}
+                        </div>
+                    </a>
+                </div>
+
+          `)
+           document.getElementById("modal-create").style.display="none"
+           document.getElementById("slider-wrapper").style.display="flex"
+
+        },
+        error : function(request,error)
+        {
+            alert("Request: "+JSON.stringify(request));
+        }
+    })
+
+}
+
+async function Create(){
+    workspacename=document.getElementById("workspace-name").value
+    workspacedescription=document.getElementById("workspace-description").value
+    var obj={
+        "workspace_id": "",
+        "creation_time": "2023-05-19",
+        "template_id": 1,
+        "workspace_name": workspacename
+    }
+    $.ajax({
+        url : 'http://localhost:8080/workflix-1.0/rest/workspace/create',
+        type : 'POST',
+        data: JSON.stringify(obj),
+        processData: false,
+        contentType: "application/json; charset=utf-8",
+        success : function(data) {
+            console.log(data)
+            workspace_id=data.workspace_id
+            localStorage.setItem("workspaceid",workspace_id)
+            $("#workspaces-dropdown").append(`
+                <li>
+                <a class="dropdown-item" style="color: black;" href="#" onclick="ChangeWorkSpace('${workspace_id}')"><i class="fa-solid fa-user-group"></i> ${workspacename}</a>
+                </li>
+
+            `)
+            var userid=localStorage.getItem("userid")
+            var obj={
+                "user_id": userid,
+                "workspace_id": workspace_id,
+                "permission_id": 1
+            }
+            $.ajax({
+                url : 'http://localhost:8080/workflix-1.0/rest/workspace/'+workspace_id.toString()+'/adduser',
+                type : 'POST',
+                data: JSON.stringify(obj),
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                success : function(data) {
+                    document.getElementById("modal-create").style.display="none"
+                },
+                error : function(request,error)
+                {
+                    alert("Request: "+JSON.stringify(request));
+                }
+            })
+
+        },
+        error : function(request,error)
+        {
+            alert("Request: "+JSON.stringify(request));
+        }
+    })
+
+}
+
+
+
+
+
+
+
+
+
+
+const modal = document.querySelector('.modal');
+const modalOverlay = document.querySelector('.modal__overlay');
+const closeBtn = document.querySelector('.modal__close-btn');
+// ---- ---- cookies ---- ---- //
+const createCookie = () => {
+  let maxAge = ';max-age=10';
+  let path = ';path=/';
+  document.cookie = 'modalpopup=displayed' + maxAge + path;
+};
+
+// ---- ---- add active and cookie ---- ---- //
+const displayModal = () => {
+  if (document.cookie.indexOf('modalpopup') == -1) {
+    modal.classList.add('active');
+    modalOverlay.classList.add('active');
+    createCookie();
+  }
+};
+
+setTimeout(() => {
+  displayModal();
+}, 3000);
+
+// ---- ---- remove active ---- ---- //
+closeBtn.addEventListener('click', () => {
+  modal.classList.remove('active');
+  modalOverlay.classList.remove('active');
 });
