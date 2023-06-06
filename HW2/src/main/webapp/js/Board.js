@@ -32,6 +32,7 @@ function fetchBoards() {
     .then((response) => response.json())
     .then((data) => {
       var boardsData = data;
+
       currentBoard = boardsData[0];
       drawSubBoards();
       const boardList = document.getElementById("boardList");
@@ -71,7 +72,7 @@ function drawSubBoards() {
     document.getElementById("subboards").innerHTML = "";
   }
   fetch(
-    `http://localhost:8080/workflix-1.0/rest/board/${currentBoard.id}/subboards`
+    `http://localhost:8080/workflix-1.0/rest/board/${currentBoard.board_id}/subboards`
   )
     .then((response) => response.json())
     .then((data) => {
