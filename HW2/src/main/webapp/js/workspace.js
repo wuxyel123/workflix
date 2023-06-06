@@ -29,7 +29,7 @@ $( document ).ready(function() {
                             for(let item of data ){
                                  $("#slider-wrapper").append(`
                                         <div class="news-slider__item swiper-slide">
-                                            <a href="/html/boards.html?id=${item.board_id}" class="news__item">
+                                            <a href="/workflix-1.0/html/boards.html?id=${item.board_id}" class="news__item">
                                                 <div class="news__title">
                                                     ${item.name}
                                                 </div>
@@ -65,7 +65,7 @@ $( document ).ready(function() {
                 for(let item of data ){
                      $("#slider-wrapper").append(`
                             <div class="news-slider__item swiper-slide">
-                                <a href="/html/boards.html?id=${item.board_id}" class="news__item">
+                                <a href="/workflix-1.0/html/boards.html?id=${item.board_id}" class="news__item">
                                     <div class="news__title">
                                         ${item.name}
                                     </div>
@@ -122,7 +122,7 @@ async function SendBoard(){
     }
      $("#slider-wrapper").append(`
                 <div class="news-slider__item swiper-slide">
-                    <a href="/html/boards.html?id=${workspace_id}" class="news__item">
+                    <a href="/workflix-1.0/html/boards.html?id=${workspace_id}" class="news__item">
                         <div class="news__title">
                             ${boardname}
                         </div>
@@ -144,7 +144,7 @@ async function SendBoard(){
           console.log(data)
           $("#slider-wrapper").append(`
                 <div class="news-slider__item swiper-slide">
-                    <a href="/html/boards.html?id=${data.board_id}" class="news__item">
+                    <a href="/workflix-1.0/html/boards.html?id=${data.board_id}" class="news__item">
                         <div class="news__title">
                             ${data.name}
                         </div>
