@@ -21,36 +21,62 @@ async function createAccount(){
     pp=name[0]+surname[0]
     description="user"
 
-
-    let formData = new FormData();
-         formData.append('user_id',"");
-         formData.append('username',username);
-         formData.append('password',password);
-         formData.append('email',email);
-         formData.append('first_name',name);
-         formData.append('last_name',surname);
-         formData.append('profile_picture',pp);
-         formData.append('description',description);
-         formData.append('create_date',"");
-
-
-
-    		// Create an FormData object
-            console.log(formData)
-    		// If you want to add an extra field for the FormData
-   $.ajax({
-       type: "POST",
-       url: "http://localhost:8080/workflix-1.0/rest/user/register",
-       data: JSON.stringify(formData),
-       processData: false,
-       contentType: "multipart/form-data; boundary=something",
-       cache: false,
-        timeout: 600000,
-     success: function(data, textStatus) {
-       console.log(data)
-    },
-    error: function(data,errr){
+    var obj={
+        "user_id":"",
+        "username":username,
+        "password":password,
+        "email":email,
+        "first_name":name,
+        "last_name":surname,
+        "profile_picture":pp,
+        "description":description,
+        "create_date":""
     }
+
+    toast = document.querySelector(".toast")
+    closeIcon = document.querySelector(".close"),
+    progress = document.querySelector(".progress");
+
+
+    let timer1, timer2;
+    toast.classList.add("active");
+    progress.classList.add("active");
+
+    timer1 = setTimeout(() => {
+        toast.classList.remove("active");
+    }, 5000); //1s = 1000 milliseconds
+
+    timer2 = setTimeout(() => {
+      progress.classList.remove("active");
+    }, 5300);
+
+    closeIcon.addEventListener("click", () => {
+        toast.classList.remove("active");
+
+        setTimeout(() => {
+          progress.classList.remove("active");
+        }, 300);
+
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+    });
+    container.classList.remove("right-panel-active")
+    localStorage.setItem("ProfilePicture", pp);
+
+   $.ajax({
+      url : 'http://localhost:8080/workflix-1.0/rest/user/register',
+              type : 'POST',
+              data: JSON.stringify(obj),
+              processData: false,
+              contentType: "application/json; charset=utf-8",
+              success : function(data) {
+                  console.log(data)
+                  console.log(JSON.stringify(data));
+              },
+              error : function(request,error)
+              {
+                  alert("Request: "+JSON.stringify(request));
+              }
    });
 
 }
@@ -58,14 +84,18 @@ async function Login(){
     email=document.getElementById("email-login").value
     password=document.getElementById("password-login").value
     var obj={
-        "workspace_id": "",
-        "creation_time": "2023-05-19",
-        "template_id": 1,
-        "workspace_name": "Workspace 4w"
+        "user_id":"",
+        "username":"",
+        "password":password,
+        "email":email,
+        "first_name":"",
+        "last_name":"",
+        "profile_picture":"",
+        "description":"",
+        "create_date":""
     }
     $.ajax({
-
-        url : 'http://localhost:8080/workflix-1.0/rest/workspace/create',
+        url : 'http://localhost:8080/workflix-1.0/rest/user/login',
         type : 'POST',
         data: JSON.stringify(obj),
         processData: false,
@@ -73,6 +103,34 @@ async function Login(){
         success : function(data) {
             console.log(data)
             console.log(JSON.stringify(data));
+            var obj={
+                "user_id":"",
+                "username":"",
+                "password":"",
+                "email":email,
+                "first_name":"",
+                "last_name":"",
+                "profile_picture":"",
+                "description":"",
+                "create_date":""
+            }
+            $.ajax({
+                url : 'http://localhost:8080/workflix-1.0/rest/user/getbyemail',
+                type : 'GET',
+                data: JSON.stringify(obj),
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                success : function(data) {
+                    console.log(data)
+                    localStorage.setItem("userid",data.user_id)
+                    localStorage.setItem("ProfilePicture",data.profile_picture)
+                    location.href = "/html/workspace.html";
+                },
+                error : function(request,error)
+                {
+                    alert("Request: "+JSON.stringify(request));
+                }
+            })
         },
         error : function(request,error)
         {
