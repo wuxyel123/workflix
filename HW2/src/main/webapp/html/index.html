@@ -33,11 +33,11 @@
                     <div class="col-6 col-lg-6 col-xl-6 landing-action">
                        <div class="container-sign-elements">
                             <div class="col-6 col-xl-6 col-lg-6 sign-element-1">
-                                <span class="call-action">Log in</span>
+                                <span class="call-action" onclick="myhref('/html/sign-in.html');">Log in</span>
 
                             </div>
                             <div class="col-6 col-xl-6 col-lg-6 sign-element-2" >
-                                <span class="call-action" >Sign Up For Free</span>
+                                <span class="call-action" onclick="myhref('/html/sign-in.html');" >Sign Up For Free</span>
                             </div>
                        </div>
                     </div>
@@ -66,7 +66,7 @@
                             <span class="call-text-mini">Your teamwork will be much easier.</span>
                         </div>
                         <div class="row">
-                            <button class="sign-up-btn" style="background-color: #6A2871">Sign Up For Free</button>
+                            <button class="sign-up-btn" style="background-color: #6A2871" onclick="myhref('/html/sign-in.html');">Sign Up For Free</button>
                         </div>
 
                     </div>
@@ -79,3 +79,7 @@
 
 
 </html>
+<script type="text/javascript">
+    function myhref(web){
+      window.location.href = web;}
+</script>
