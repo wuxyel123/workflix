@@ -762,7 +762,258 @@ span.user-settings {
   color: #0b0b43;
   cursor: pointer;
 }
+.toast{
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 20px 35px 20px 25px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    border-left: 6px solid #4070f4;
+    overflow: hidden;
+    transform: translateX(calc(100% + 30px));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
 
+.toast.active{
+    transform: translateX(0%);
+}
+
+.toast .toast-content{
+    display: flex;
+    align-items: center;
+}
+
+.toast-content .check{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    background-color: #4070f4;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+}
+
+.toast-content .message{
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.message .text{
+    font-size: 20px;
+    font-weight: 400;;
+    color: #666666;
+}
+
+.message .text.text-1{
+    font-weight: 600;
+    color: #333;
+}
+
+.toast .close{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.toast .close:hover{
+    opacity: 1;
+}
+
+.toast .progress{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: #ddd;
+}
+
+.toast .progress:before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #4070f4;
+}
+
+.progress.active:before{
+    animation: progress 5s linear forwards;
+}
+
+@keyframes progress {
+    100%{
+        right: 100%;
+    }
+}
+.modal {
+  position: fixed;
+  top: 50% !important;
+  left: 50% !important;
+  width: 70% !important;
+  height: 47% !important;
+  transform: translate(-50%, calc(-50% - 10px));
+  display: flex;
+  min-width: 550px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 5px 26px -8px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+  transition: all 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  transition: all 0.4s ease;
+  opacity: 0;
+}
+.modal__overlay.active {
+  opacity: 1;
+}
+.modal__close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+}
+.modal__left {
+  text-align: center;
+  font-size: 24px;
+  text-transform: uppercase;
+  background-color: #242424;
+  color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 17px 0 17px -8px rgba(0, 0, 0, 0.3);
+  padding: 26px 20px;
+}
+.modal__left span {
+  display: block;
+  font-size: 36px;
+}
+.modal__discount {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  color: #ebff00;
+  margin-top: 32px;
+}
+.modal__discount span {
+  font-size: 60px;
+}
+.modal__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px;
+}
+.modal__text {
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.modal__info {
+  color: #222;
+  margin-bottom: 12px;
+}
+.modal__button {
+  align-self: flex-start;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: #ff5555;
+  border-radius: 12px;
+  padding: 10px 32px;
+  cursor: pointer;
+}
+.createboard-img {
+    width: 50% !important;
+    height: 40vh;
+    background-image: url(../resources/board.svg);
+    background-size: cover;
+}
+.workspace-form input {
+    width: 60%;
+    margin-top: 12%;
+    /* margin: 0 auto; */
+    margin-left: 10%;
+    height: 50px;
+    text-align: center;
+    color: black;
+    border-radius: 5px;
+    border: 1px solid #e3dbdb;
+}
+.workspace-form button {
+    width: 60%;
+    margin-left: 10%;
+    margin-top: 8%;
+    padding: 2%;
+    background: #6A2871;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+}
+.create-newboard {
+    position: absolute;
+    z-index: 999;
+    background: #6A2871;
+    padding: 2%;
+    width: 100%;
+    left: 0%;
+    height: 100vh;
+}
+.create-newboard img {
+    width: 53%;
+    margin-left: 25%;
+    position: relative;
+    display: block;
+    margin-top: 10%;
+}
+.create-newboard span {
+    width: 50%;
+    position: relative;
+    color: #ffff;
+    margin-top: 2%;
+    font-size: 20px;
+    display: block;
+    margin-left: 27%;
+}
+.create-newboard button {
+    margin-left: 27%;
+    padding: 1%;
+    margin-top: 3%;
+    border-radius: 5px;
+    border: none;
+    background: #fff;
+    color: #6a2870;
+}
 /* always put  those @media at the bottom */
 
 /* Mobile View */
