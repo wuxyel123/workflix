@@ -207,10 +207,15 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <label for="message-text" class="col-form-label"
+                  <label for="listTitle" class="col-form-label"
                     >Enter list title:</label
                   >
-                  <input class="form-control" id="listTitle" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="listTitle"
+                    placeholder="List title is required"
+                  />
                 </div>
               </form>
             </div>
@@ -225,7 +230,6 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                data-dismiss="modal"
                 onclick="handleAddList()"
               >
                 Add list
