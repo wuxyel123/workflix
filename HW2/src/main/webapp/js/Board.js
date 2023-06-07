@@ -260,7 +260,7 @@ function handleAddList() {
 
   const requestData = {
     title: input.val(),
-    boardId: currentBoard,
+    boardId: currentBoard || 1,
   };
 
   fetch("http://localhost:8080/workflix-1.0/rest/subboard/create", {
@@ -321,8 +321,38 @@ $(function () {
     $("#formTitle").val("");
   });
 });
+// $(function () {
+//   $("#listModal").on("show.bs.modal", function () {
+//     $("#listTitle").val("");
+//   });
+// });
 $(function () {
+  var $listTitleInput = $("#listTitle");
+  var $listForm = $("#listForm");
+  var $createListButton = $("#createListButton");
+
+  $createListButton.on("click", function () {
+    var listTitle = $listTitleInput.val();
+    if (listTitle.trim() === "") {
+      alert("Please enter a valid list title.");
+      return;
+    }
+
+    var confirmCreate = confirm(
+      "Are you sure you want to create a list with the title: '" +
+        listTitle +
+        "'?"
+    );
+    if (confirmCreate) {
+      // Perform the necessary actions to create the list
+      // ...
+      handleAddList($listTitleInput);
+      $listForm[0].reset();
+      $("#listModal").modal("hide");
+    }
+  });
+
   $("#listModal").on("show.bs.modal", function () {
-    $("#listTitle").val("");
+    $listForm[0].reset();
   });
 });
