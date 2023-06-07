@@ -101,21 +101,21 @@ class Header extends HTMLElement {
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" style="color: black;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" style="color: black;" href="./template.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Templates <i class="fa-solid fa-magnifying-glass"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i> Friends Updates</a>
+                        <a class="dropdown-item" style="color: black;" href="./template.html"><i class="fa-solid fa-user-group"></i> Template Views</a>
                         </li>
                         <li>
-                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-calendar"></i> Events near you</a>
+                        <a class="dropdown-item" style="color: black;" href="./template.html"><i class="fa-solid fa-calendar"></i> Template Views</a>
                         </li>
                         <li>
                         <hr class="dropdown-divider" />
                         </li>
                         <li>
-                        <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-ticket"></i> Buy a Ticket</a>
+                        <a class="dropdown-item" style="color: black;" href="./template.html"><i class="fa-solid fa-ticket"></i> Template Views</a>
                         </li>
                     </ul>
                     </li>
