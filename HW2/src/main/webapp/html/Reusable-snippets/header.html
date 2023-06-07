@@ -7,7 +7,7 @@
   <meta name="keywords" content="HTML, header">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Css link-->
-  <link href="./workflix-1.0/css/index.css" rel="stylesheet" type="text/css" media="screen, projection" />
+  <link href="/workflix-1.0/css/index.css" rel="stylesheet" type="text/css" media="screen, projection" />
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -41,32 +41,18 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown" onclick="openMenu()">
+                Workspaces
+                <ul class="dropdown-menu" id="workspaces-dropdown">
+                </ul>
+
+            </li>
+
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" style="color: black;" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Workspaces <i class="fa-solid fa-magnifying-glass"></i>
-            </a>
-            <ul class="dropdown-menu" id="workspaces-dropdown">
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" style="color: black;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" style="color: black;" href="/workflix-1.0/html/template.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Templates <i class="fa-solid fa-magnifying-glass"></i>
             </a>
-            <ul class="dropdown-menu">
-                <li>
-                <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-user-group"></i> Friends Updates</a>
-                </li>
-                <li>
-                <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-calendar"></i> Events near you</a>
-                </li>
-                <li>
-                <hr class="dropdown-divider" />
-                </li>
-                <li>
-                <a class="dropdown-item" style="color: black;" href="#"><i class="fa-solid fa-ticket"></i> Buy a Ticket</a>
-                </li>
-            </ul>
+
             </li>
             <li class="nav-item dropdown">
               <!-- <a class="nav-link dropdown-toggle" style="color: black;" href="#" role="button" data-bs-toggle="dropdown"

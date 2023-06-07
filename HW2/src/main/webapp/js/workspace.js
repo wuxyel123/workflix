@@ -2,6 +2,26 @@
 $( document ).ready(function() {
     var userid=localStorage.getItem("userid")
     var workspace=localStorage.getItem("workspaceid")
+    $.ajax({
+        url : 'http://localhost:8080/workflix-1.0/rest/user/'+userid+'/workspaces',
+        type : 'GET',
+        processData: false,
+        contentType: "application/json; charset=utf-8",
+        success : function(data) {
+            document.getElementById("workspaces-dropdown").innerHTML=""
+            console.log(data)
+            for(let item of data){
+                $("#workspaces-dropdown").append(`
+                            <li onclick="ChangeWorkSpace('${item.workspace_id}')">
+                            <a class="dropdown-item" style="color: black;" href="#" ><i class="fa-solid fa-user-group"></i> ${item.workspace_name}</a>
+                            </li>
+
+                        `)
+            }
+        },error: function(request,error){
+
+        }
+    });
     if(workspace==null){
         $.ajax({
                 url : 'http://localhost:8080/workflix-1.0/rest/user/'+userid+'/workspaces',
@@ -28,12 +48,14 @@ $( document ).ready(function() {
                             document.getElementById("create-newboard").style.display="none"
                             for(let item of data ){
                                  $("#slider-wrapper").append(`
-                                        <div class="news-slider__item swiper-slide">
-                                            <a href="/html/boards.html?id=${item.board_id}" class="news__item">
-                                                <div class="news__title">
-                                                    ${item.name}
-                                                </div>
-                                            </a>
+                                        <div class="wrp-slide" onclick="GoBoard('${item.board_id}')">
+                                            <div class="news-slider__item swiper-slide">
+                                                <a href="/workflix-1.0/html/boards.html?id=${item.board_id}" class="news__item">
+                                                    <div class="news__title">
+                                                        ${item.name}
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
 
                                  `)
@@ -61,15 +83,18 @@ $( document ).ready(function() {
             processData: false,
             contentType: "application/json; charset=utf-8",
             success : function(data) {
+                console.log(data)
                 document.getElementById("create-newboard").style.display="none"
                 for(let item of data ){
                      $("#slider-wrapper").append(`
-                            <div class="news-slider__item swiper-slide">
-                                <a href="/html/boards.html?id=${item.board_id}" class="news__item">
-                                    <div class="news__title">
-                                        ${item.name}
-                                    </div>
-                                </a>
+                            <div class="wrp-slide" onclick="GoBoard('${item.board_id}')">
+                                <div class="news-slider__item swiper-slide">
+                                    <a href="/html/boards.html?id=${item.board_id}" class="news__item">
+                                        <div class="news__title">
+                                            ${item.name}
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
 
                      `)
@@ -89,6 +114,7 @@ $( document ).ready(function() {
 
 });
 async function CreateNewWorkspace(){
+    console.log("test")
     document.getElementById("workspace-form").innerHTML=""
     $("#workspace-form").append(`
         <input type="text" placeholder="Workspace name" id="workspace-name">
@@ -98,6 +124,7 @@ async function CreateNewWorkspace(){
     document.getElementById("modal-create").style.display="block"
 }
 async function CreateNewBoard(){
+    console.log("test")
     document.getElementById("workspace-form").innerHTML=""
     $("#workspace-form").append(`
         <input type="text" placeholder="Board name" id="board-name">
@@ -120,16 +147,6 @@ async function SendBoard(){
         "visibility": "PUBLIC",
         "create_time": ""
     }
-     $("#slider-wrapper").append(`
-                <div class="news-slider__item swiper-slide">
-                    <a href="/html/boards.html?id=${workspace_id}" class="news__item">
-                        <div class="news__title">
-                            ${boardname}
-                        </div>
-                    </a>
-                </div>
-
-     `)
    document.getElementById("modal-create").style.display="none"
    document.getElementById("slider-wrapper").style.display="flex"
    document.getElementById("create-newboard").style.display="none"
@@ -143,12 +160,14 @@ async function SendBoard(){
         success : function(data) {
           console.log(data)
           $("#slider-wrapper").append(`
-                <div class="news-slider__item swiper-slide">
-                    <a href="/html/boards.html?id=${data.board_id}" class="news__item">
-                        <div class="news__title">
-                            ${data.name}
-                        </div>
-                    </a>
+                <div class="wrp-slide" onclick="GoBoard('${data.board_id}')">
+                    <div class="news-slider__item swiper-slide">
+                        <a href="/workflix-1.0/html/boards.html?id=${data.board_id}" class="news__item">
+                            <div class="news__title">
+                                ${data.name}
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
           `)
@@ -197,7 +216,7 @@ async function Create(){
             }
             $.ajax({
                 url : 'http://localhost:8080/workflix-1.0/rest/workspace/'+workspace_id.toString()+'/adduser',
-                type : 'POST',
+                type : 'PUT',
                 data: JSON.stringify(obj),
                 processData: false,
                 contentType: "application/json; charset=utf-8",
@@ -220,7 +239,10 @@ async function Create(){
 }
 
 
-
+function GoBoard(id){
+    localStorage.setItem("boardid",id)
+    window.location.href="/workflix-1.0/html/boards.html?id="+id
+}
 
 
 

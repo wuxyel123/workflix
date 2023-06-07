@@ -102,35 +102,9 @@ async function Login(){
         contentType: "application/json; charset=utf-8",
         success : function(data) {
             console.log(data)
-            console.log(JSON.stringify(data));
-            var obj={
-                "user_id":"",
-                "username":"",
-                "password":"",
-                "email":email,
-                "first_name":"",
-                "last_name":"",
-                "profile_picture":"",
-                "description":"",
-                "create_date":""
-            }
-            $.ajax({
-                url : 'http://localhost:8080/workflix-1.0/rest/user/getbyemail',
-                type : 'GET',
-                data: JSON.stringify(obj),
-                processData: false,
-                contentType: "application/json; charset=utf-8",
-                success : function(data) {
-                    console.log(data)
-                    localStorage.setItem("userid",data.user_id)
-                    localStorage.setItem("ProfilePicture",data.profile_picture)
-                    location.href = "/html/workspace.html";
-                },
-                error : function(request,error)
-                {
-                    alert("Request: "+JSON.stringify(request));
-                }
-            })
+            localStorage.setItem("userid",data.user_id)
+            localStorage.setItem("ProfilePicture",data.profile_picture)
+            location.href = "/workflix-1.0/html/workspace.html";
         },
         error : function(request,error)
         {
