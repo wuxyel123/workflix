@@ -12,8 +12,8 @@ $( document ).ready(function() {
                     console.log(data)
                     for(let item of data){
                         $("#workspaces-dropdown").append(`
-                            <li>
-                            <a class="dropdown-item" style="color: black;" href="#" onclick="ChangeWorkSpace('${item.workspace_id}')"><i class="fa-solid fa-user-group"></i> ${item.workspace_name}</a>
+                            <li onclick="ChangeWorkSpace('${item.workspace_id}')">
+                            <a class="dropdown-item" style="color: black;" href="#" ><i class="fa-solid fa-user-group"></i> ${item.workspace_name}</a>
                             </li>
 
                         `)
@@ -29,7 +29,7 @@ $( document ).ready(function() {
                             for(let item of data ){
                                  $("#slider-wrapper").append(`
                                         <div class="news-slider__item swiper-slide">
-                                            <a href="/workflix-1.0/html/boards.html?id=${item.board_id}" class="news__item">
+                                            <a href="/html/boards.html?id=${item.board_id}" class="news__item">
                                                 <div class="news__title">
                                                     ${item.name}
                                                 </div>
@@ -42,7 +42,6 @@ $( document ).ready(function() {
 
                         },error: function(request,error){
                             document.getElementById("create-newboard").style.display="block"
-                            document.getElementById("modal-create").style.display="block"
                         }
 
 
@@ -66,7 +65,7 @@ $( document ).ready(function() {
                 for(let item of data ){
                      $("#slider-wrapper").append(`
                             <div class="news-slider__item swiper-slide">
-                                <a href="/workflix-1.0/html/boards.html?id=${item.board_id}" class="news__item">
+                                <a href="/html/boards.html?id=${item.board_id}" class="news__item">
                                     <div class="news__title">
                                         ${item.name}
                                     </div>
@@ -123,7 +122,7 @@ async function SendBoard(){
     }
      $("#slider-wrapper").append(`
                 <div class="news-slider__item swiper-slide">
-                    <a href="/workflix-1.0/html/boards.html?id=${workspace_id}" class="news__item">
+                    <a href="/html/boards.html?id=${workspace_id}" class="news__item">
                         <div class="news__title">
                             ${boardname}
                         </div>
@@ -145,7 +144,7 @@ async function SendBoard(){
           console.log(data)
           $("#slider-wrapper").append(`
                 <div class="news-slider__item swiper-slide">
-                    <a href="/workflix-1.0/html/boards.html?id=${data.board_id}" class="news__item">
+                    <a href="/html/boards.html?id=${data.board_id}" class="news__item">
                         <div class="news__title">
                             ${data.name}
                         </div>
@@ -185,8 +184,8 @@ async function Create(){
             workspace_id=data.workspace_id
             localStorage.setItem("workspaceid",workspace_id)
             $("#workspaces-dropdown").append(`
-                <li>
-                <a class="dropdown-item" style="color: black;" href="#" onclick="ChangeWorkSpace('${workspace_id}')"><i class="fa-solid fa-user-group"></i> ${workspacename}</a>
+                <li onclick="ChangeWorkSpace('${workspace_id}')">
+                <a class="dropdown-item" style="color: black;" href="#" ><i class="fa-solid fa-user-group"></i> ${workspacename}</a>
                 </li>
 
             `)
