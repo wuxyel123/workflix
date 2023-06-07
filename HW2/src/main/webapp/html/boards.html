@@ -27,6 +27,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
@@ -63,11 +65,70 @@
         <!-- right content -->
         <div class="frameRight" id="boardContent">
           <div class="lists" id="subboards"></div>
-          <div class="add-list" data-toggle="modal" data-target="#listModal">
+          <div
+            class="add-list"
+            data-toggle="modal"
+            data-target="#listModal"
+            onclick="openListModal()"
+          >
             Add another list +
           </div>
         </div>
       </div>
+
+      <div
+        class="modal fade"
+        id="listModal"
+        tabindex="-1"
+        aria-labelledby="listModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div
+            class="modal-content"
+            style="background-color: rgb(238, 209, 134)"
+          >
+            <div class="modal-header">
+              <h5 class="modal-title" id="listModalLabel">Add list</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="listForm">
+                <div class="form-group">
+                  <label for="listTitle" class="col-form-label"
+                    >Enter list title:</label
+                  >
+                  <input type="text" class="form-control" id="listTitle" />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="createListButton"
+              >
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div
         class="modal fade"
         id="boardModal"
@@ -184,7 +245,7 @@
           </div>
         </div>
       </div>
-      <div
+      <!-- <div
         class="modal fade"
         id="listModal"
         tabindex="-1"
@@ -207,10 +268,15 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <label for="message-text" class="col-form-label"
+                  <label for="listTitle" class="col-form-label"
                     >Enter list title:</label
                   >
-                  <input class="form-control" id="listTitle" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="listTitle"
+                    placeholder="List title is required"
+                  />
                 </div>
               </form>
             </div>
@@ -225,7 +291,6 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                data-dismiss="modal"
                 onclick="handleAddList()"
               >
                 Add list
@@ -233,7 +298,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <script src="../js/Board.js"></script>

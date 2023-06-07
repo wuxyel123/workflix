@@ -527,7 +527,7 @@ body {
   align-items: flex-start;
   position: relative;
   z-index: 2;
-  width: 96%;
+  width:94%;
   overflow-x: auto;
 }
 .news-slider__item {
@@ -626,6 +626,7 @@ body {
   display: block;
   transition: all 0.3s;
   height: 20vh;
+  cursor:pointer;
 }
 @media screen and (min-width: 800px) {
   .news__item:hover {
@@ -1108,3 +1109,4 @@ span.user-settings {
 }
 
 /* setting page */
+

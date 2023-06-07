@@ -13,13 +13,13 @@ const boardsData = [
 ];
 
 const urlParam = new URLSearchParams(window.location.search);
-let currentBoard =urlParam.get("id") ||1;
+let currentBoard = urlParam.get("id") || 1;
 
 console.log(currentBoard);
 
 // Fetch board data from backend API
 async function fetchBoards() {
-  const workspaceId = localStorage.getItem("workspaceid")||1;
+  const workspaceId = localStorage.getItem("workspaceid") || 1;
 
   try {
     const response = await fetch(
@@ -92,13 +92,17 @@ async function drawSubBoards(e) {
   }
 
   try {
-    const response = await fetch(`http://localhost:8080/workflix-1.0/rest/board/${currentBoard}/subboards`);
+    const response = await fetch(
+      `http://localhost:8080/workflix-1.0/rest/board/${currentBoard}/subboards`
+    );
     const data = await response.json();
 
     const elementList = data.map((subboard) => {
       return `<div class="list">
                 <div class="list-title">${subboard.name} 
-                  <button type="button" class="btn btn-danger delete-button" onclick="deleteList(${subboard.id})">Delete</button>
+                  <button type="button" class="btn btn-danger delete-button" onclick="deleteList(${
+                    subboard.id
+                  })">Delete</button>
                 </div>
                 <div class="cards">
                   ${drawCard(subboard.id)}
@@ -111,7 +115,7 @@ async function drawSubBoards(e) {
   } catch (error) {
     console.log(error);
   }
-
+}
 // Initial board fetch on page load
 fetchBoards();
 
@@ -140,28 +144,33 @@ function handleClickBoard(e) {
 }
 
 //draw card
-  async function drawCard(subboardId) {
-    try {
-      const response = await fetch(`http://localhost:8080/workflix-1.0/rest/subboard/${subboardId}/activities`, {
+async function drawCard(subboardId) {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/workflix-1.0/rest/subboard/${subboardId}/activities`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-      });
-
-      const data = await response.json();
-      console.log(data);
-
-      if (Array.isArray(data)) {
-        const elementCards = data.map((card) => `<div class="card">${card}</div>`);
-        return elementCards.join("");
       }
-    } catch (error) {
-      console.log(error);
-    }
+    );
 
-    return "";
+    const data = await response.json();
+    console.log(data);
+
+    if (Array.isArray(data)) {
+      const elementCards = data.map(
+        (card) => `<div class="card">${card}</div>`
+      );
+      return elementCards.join("");
+    }
+  } catch (error) {
+    console.log(error);
   }
+
+  return "";
+}
 
 function drawAddCard(subboards, isAdding = false) {
   return ` <div class="add-card" 
@@ -174,16 +183,16 @@ function drawAddCard(subboards, isAdding = false) {
 let currentList = {};
 
 // Configure parameters when opening the new card pop-up
-  function handleOpenCard(subboardName) {
-    currentBoard.subboards.forEach((subboard) => {
-      if (subboard.name === subboardName) {
-        currentList = subboard;
-      }
-    });
-  }
+function handleOpenCard(subboardName) {
+  currentBoard.subboards.forEach((subboard) => {
+    if (subboard.name === subboardName) {
+      currentList = subboard;
+    }
+  });
+}
 
 // create card
-  async function handleAddCard() {
+async function handleAddCard() {
   const input = $("#cardTitle");
   if (!input) {
     return;
@@ -193,13 +202,16 @@ let currentList = {};
     subboard_id: currentList.id,
   };
   try {
-    const response = await fetch("http://localhost:8080/workflix-1.0/rest/activity/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    });
+    const response = await fetch(
+      "http://localhost:8080/workflix-1.0/rest/activity/create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      }
+    );
 
     const data = await response.json();
     currentList.cards.push(input.val());
@@ -208,7 +220,6 @@ let currentList = {};
     console.log(error);
   }
 }
-
 
 // add board
 function handleAddBoard() {
@@ -240,8 +251,6 @@ function handleAddBoard() {
     })
     .catch((error) => console.log(error));
 }
-
-// create subboards
 function handleAddList() {
   const input = $("#listTitle");
 
@@ -251,45 +260,46 @@ function handleAddList() {
 
   const requestData = {
     title: input.val(),
-    boardId: currentBoard,
+    boardId: currentBoard || 1,
   };
 
-
   fetch("http://localhost:8080/workflix-1.0/rest/subboard/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("subboard created:", data);
+      drawSubBoards();
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("subboard created:", data);
-        drawSubBoards();
-      })
-      .catch((error) => console.log(error));
-    return;
-  }
+    .catch((error) => console.log(error));
+  return;
 }
 
 //delete subboards
 function deleteList(subboardId) {
   var r = confirm("Confirm deletion of list");
   if (r == true) {
-    fetch(`http://localhost:8080/workflix-1.0/rest/subboard/${subboardId}/delete`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
+    fetch(
+      `http://localhost:8080/workflix-1.0/rest/subboard/${subboardId}/delete`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    })
-        .then((response) => {
-          if (response.ok) {
-            drawSubBoards();
-          } else {
-            console.error("Failed to delete item:", response.status);
-          }
-        })
-        .catch((error) => console.error("Error:", error));
+    )
+      .then((response) => {
+        if (response.ok) {
+          drawSubBoards();
+        } else {
+          console.error("Failed to delete item:", response.status);
+        }
+      })
+      .catch((error) => console.error("Error:", error));
   }
 }
 
@@ -306,11 +316,43 @@ $("#formWorkspace").append("<option>Workspace</option>");
 $("#cardModal").on("show.bs.modal", function (event) {
   $("#cardTitle").val("");
 });
-
-$("#boardModal").on("show.bs.modal", function () {
-  $("#formTitle").val("");
+$(function () {
+  $("#boardModal").on("show.bs.modal", function () {
+    $("#formTitle").val("");
+  });
 });
+// $(function () {
+//   $("#listModal").on("show.bs.modal", function () {
+//     $("#listTitle").val("");
+//   });
+// });
+$(function () {
+  var $listTitleInput = $("#listTitle");
+  var $listForm = $("#listForm");
+  var $createListButton = $("#createListButton");
 
-$("#listModal").on("show.bs.modal", function () {
-  $("#listTitle").val("");
+  $createListButton.on("click", function () {
+    var listTitle = $listTitleInput.val();
+    if (listTitle.trim() === "") {
+      alert("Please enter a valid list title.");
+      return;
+    }
+
+    var confirmCreate = confirm(
+      "Are you sure you want to create a list with the title: '" +
+        listTitle +
+        "'?"
+    );
+    if (confirmCreate) {
+      // Perform the necessary actions to create the list
+      // ...
+      handleAddList($listTitleInput);
+      $listForm[0].reset();
+      $("#listModal").modal("hide");
+    }
+  });
+
+  $("#listModal").on("show.bs.modal", function () {
+    $listForm[0].reset();
+  });
 });
