@@ -6,13 +6,23 @@
   margin: 0;
   padding: 0;
 }
+.cards {
+  padding: 2%;
+  padding-left: 8%;
+}
+
 .wrp-slide {
   margin-right: 2%;
 }
 a {
   text-decoration: none;
 }
-
+.board-container span {
+  color: #fff;
+}
+.boards-background {
+  background-color: #6A2871 !important;
+}
 .container-area {
   display: flex;
   min-height: 100vh;

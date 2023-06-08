@@ -192,7 +192,7 @@ class Header extends HTMLElement {
                     </li>
                 </ul>
                 <div class="settings">
-                    <a href=""class ="set">setting</a>
+                    <a href="userSetting.html"class ="set">setting</a>
                     <a href="" class ="set">log out</a>
                     <span class="user-settings" id="loggedInUser">EE</span> 
                 </div>

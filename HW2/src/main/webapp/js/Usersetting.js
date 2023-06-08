@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
 
     // Get form data
-    var username = document.getElementById("username").value;
+    var username = document.getElementById("userName").value;
     var name = document.getElementById("name").value;
     var surname = document.getElementById("surname").value;
     var email = document.getElementById("email").value;
@@ -32,13 +32,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function getUserData() {
-    fetch("http://localhost:8080/workflix-1.0/rest/user/getData")
+    useid=localStorage.getItem("userid");
+    fetch("http://localhost:8080/workflix-1.0/rest/user/"+useid.toString())
       .then(function (response) {
         return response.json();
       })
       .then(function (data) {
+        console.log(data)
         //Populate the table with the obtained user data
-        document.getElementById("username").value = data.username;
+        document.getElementById("userName").value = data.username;
         document.getElementById("surname").value = data.first_name;
         document.getElementById("name").value = data.last_name;
         document.getElementById("email").value = data.email;
@@ -51,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // update user info
   function updateUserData(username, name, surname, email, password) {
+    useId=localStorage.getItem("userid");
     var userData = {
       user_id: useId,
       username: username,
@@ -62,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // update requests
-    fetch("http://localhost:8080/workflix-1.0/rest/user/update/" + useId, {
+    fetch("http://localhost:8080/workflix-1.0/rest/user/update/2" + useId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

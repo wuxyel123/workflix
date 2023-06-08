@@ -29,55 +29,26 @@ async function fetchBoards() {
       }
     );
     const data = await response.json();
-
-    drawSubBoards();
-    const boardList = document.getElementById("boardList");
-    boardList.innerHTML = "";
-
-    for (const board of data) {
-      const boardElement = createBoardElement(board);
-      boardList.appendChild(boardElement);
+    console.log(data);
+    for(let item of data){
+      $("#boardList").append(`
+      <li class="board" id="${item.board_id}">
+        <div class="board-container">
+          <button class="btn btn-danger delete-button" onclick="deleteBoard(${item.board_id})">Delete</button>
+          <span>${item.name}</span>
+        </div>
+        
+      `)
     }
+   
+    drawSubBoards();
+
   } catch (error) {
     console.log(error);
   }
 }
 
-function createBoardElement(board) {
-  const boardElement = document.createElement("li");
-  boardElement.classList.add("board");
-  boardElement.dataset.id = board.board_id;
 
-  if (board.visible) {
-    boardElement.classList.add("visible");
-  }
-
-  const container = document.createElement("div");
-  container.classList.add("board-container");
-
-  const deleteButton = document.createElement("button");
-  deleteButton.classList.add("btn btn-danger delete-button");
-  deleteButton.addEventListener("click", (event) => {
-    event.stopPropagation();
-    deleteBoard(board.board_id);
-  });
-
-  container.appendChild(deleteButton);
-
-  const boardName = document.createElement("span");
-  boardName.textContent = board.name;
-
-  container.appendChild(boardName);
-
-  boardElement.appendChild(container);
-
-  boardElement.addEventListener("click", () => {
-    handleClickBoard(board.board_id);
-    drawSubBoards(board.board_id);
-  });
-
-  return boardElement;
-}
 
 // Fetch subboards items of a specific board from backend API
 
@@ -96,22 +67,31 @@ async function drawSubBoards(e) {
       `http://localhost:8080/workflix-1.0/rest/board/${currentBoard}/subboards`
     );
     const data = await response.json();
-
-    const elementList = data.map((subboard) => {
-      return `<div class="list">
-                <div class="list-title">${subboard.name} 
-                  <button type="button" class="btn btn-danger delete-button" onclick="deleteList(${
-                    subboard.id
-                  })">Delete</button>
-                </div>
-                <div class="cards">
-                  ${drawCard(subboard.id)}
-                </div>
-                ${drawAddCard(subboard)}
-              </div>`;
+    console.log(data);
+    cardata=["• Frontend Design","• Backend Design","• Database Design","• Frontend Development","• Backend Development","• Database Development","• Testing","Deployment"]
+    data.forEach(async (subboard) => {
+      var card=await drawCard(subboard.subboard_id)
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+      var i=getRandomInt(7)
+      if(card==undefined){
+        card = cardata[i]
+      }
+      var addcard=await drawAddCard(subboard)
+      $("#subboards").append( `<div class="list">
+          <div class="list-title">${subboard.name} 
+            <button type="button" class="btn btn-danger delete-button" onclick="deleteList(${
+              subboard.subboard_id
+            })">Delete</button>
+          </div>
+          <div class="cards">
+            ${card }
+          </div>
+          ${await drawAddCard(subboard)}
+        </div>`)
     });
 
-    $("#subboards").html(elementList.join(""));
   } catch (error) {
     console.log(error);
   }
@@ -145,31 +125,24 @@ function handleClickBoard(e) {
 
 //draw card
 async function drawCard(subboardId) {
-  try {
-    const response = await fetch(
-      `http://localhost:8080/workflix-1.0/rest/subboard/${subboardId}/activities`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const data = await response.json();
-    console.log(data);
-
-    if (Array.isArray(data)) {
+  $.ajax({
+    url : `http://localhost:8080/workflix-1.0/rest/subboard/${subboardId}/activities`,
+    type : 'GET',
+    processData: false,
+    contentType: "application/json; charset=utf-8",
+    success : function(data) {
+      console.log(data)
       const elementCards = data.map(
-        (card) => `<div class="card">${card}</div>`
+        (card) => `<div class="card">${card.name}</div>`
       );
       return elementCards.join("");
-    }
-  } catch (error) {
-    console.log(error);
-  }
+    },error : function(request,error)
 
-  return "";
+    {
+        return "";
+    }
+
+  });
 }
 
 function drawAddCard(subboards, isAdding = false) {
@@ -326,7 +299,7 @@ $(function () {
 //     $("#listTitle").val("");
 //   });
 // });
-$(function () {
+$(function openListModal() {
   var $listTitleInput = $("#listTitle");
   var $listForm = $("#listForm");
   var $createListButton = $("#createListButton");

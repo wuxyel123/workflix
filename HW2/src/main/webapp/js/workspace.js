@@ -162,7 +162,7 @@ async function SendBoard(){
           $("#slider-wrapper").append(`
                 <div class="wrp-slide" onclick="GoBoard('${data.board_id}')">
                     <div class="news-slider__item swiper-slide">
-                        <a href="/workflix-1.0/html/boards.html?id=${data.board_id}" class="news__item">
+                        <a href="/workflix-1.0/html/boards.html?id=13" class="news__item">
                             <div class="news__title">
                                 ${data.name}
                             </div>
@@ -241,7 +241,7 @@ async function Create(){
 
 function GoBoard(id){
     localStorage.setItem("boardid",id)
-    window.location.href="/workflix-1.0/html/boards.html?id="+id
+    window.location.href="/workflix-1.0/html/boards.html?id=13"
 }
 
 
